@@ -69,10 +69,12 @@ for (var c in controllers) {
  * MIDDLEWEAR
  */
 
+/*
 // Error catcher placed at end of all controller routes
 app.use(function(req, res){ 
-  res.render('404', layoutConfig.layoutOptions(req)); 
+  res.render('404', {layout: true}); 
 });
+*/
 
 /*
  * SERVER START
