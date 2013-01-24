@@ -15,6 +15,7 @@ loc = loc[loc.length - 1];
 // Page specific inclusions
 switch (loc) {
   default:
+    includes.push("./js/display/index-display.js");
     break;
 }
 

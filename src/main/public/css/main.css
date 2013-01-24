@@ -44,8 +44,8 @@ body {
   background: -ms-linear-gradient(top, #ffffff 0%,#e0e0e0 50%,#ffffff 100%); /* IE10+ */
   background: linear-gradient(to bottom, #ffffff 0%,#e0e0e0 50%,#ffffff 100%); /* W3C */
   background-color: #BFBFBF;
-  box-shadow: 3px 3px 4px #000;
-  -moz-box-shadow: 3px 3px 4px #000;
+  box-shadow: 3px 3px 15px #000;
+  -moz-box-shadow: 3px 3px 15px #000;
   -webkit-box-shadow: 3px 3px 15px #000;
 }
 
@@ -55,16 +55,29 @@ body {
   z-index: 5;
 }
 
+.module {
+  display: inline-block;
+  width: 800px;
+  padding: 10px;
+  background-color: rgba(225, 225, 225, 0.8);
+  border-radius: 15px;
+  -moz-border-radius: 15px;
+}
+
 
 /*
  * INDEX STYLING
  */
 #main-content {
-  padding: 15px;
-  text-align: left;
-  position: relative;
+  padding: 140px;
+  padding-top: 80px;
 }
 
+.big-button-and-cannot-lie {
+  font-size: 2em;
+  width: 250px;
+  height: 75px;
+}
 
 /*
  * SITE ACCENTS
@@ -77,4 +90,16 @@ h1 {
 h2 {
   font-weight: normal;
   font-size: 2em;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.loading-hidden {
+  display: none;
 }

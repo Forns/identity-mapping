@@ -8,11 +8,27 @@ module.exports = function (app) {
   
   /*
    * GET /
-   *   Render the index with information about Optilite
+   *   Render the index with nav buttons for the project
    */
   app.get("/", function (req, res) {
     // Simply render the greeting page
     res.render("index", {layout: true});
+  });
+  
+  /*
+   * GET /about
+   *   Render the about page with information about the project
+   */
+  app.get("/about", function (req, res) {
+    res.render("about", {layout: true});
+  });
+  
+  /*
+   * GET /survey
+   *   Render the survey part I
+   */
+  app.get("/survey", function (req, res) {
+    res.render("survey", {layout: true});
   });
   
 }
