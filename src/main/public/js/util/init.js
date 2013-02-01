@@ -14,6 +14,9 @@ loc = loc[loc.length - 1];
 
 // Page specific inclusions
 switch (loc) {
+  case "survey":
+    includes.push("./js/util/survey-modules.js");
+    break;
   default:
     includes.push("./js/display/index-display.js");
     break;

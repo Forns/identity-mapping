@@ -5,5 +5,4 @@
  */
 
 $(function () {
-  console.log("placeholding!");
 });
