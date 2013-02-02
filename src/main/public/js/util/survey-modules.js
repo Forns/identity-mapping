@@ -72,6 +72,7 @@ $(function () {
     newForm: function (id) {
       this.id = (id) ? id : "form" + formId++;
       this.modules = [];
+      this.submitButtons = [];
       return this;
     },
     
@@ -79,6 +80,23 @@ $(function () {
     addModule: function (id, title, questions) {
       var newModule = new Module().newModule(id, title, questions);
       this.modules.push(newModule);
+      return this;
+    },
+    
+    // Allows for easy submission behavior for form
+    setSubmit: function (buttonText, container, behavior) {
+      var buttonId = this.id + "-submit";
+      
+      // Set a handle for the submit button on the form
+      this.submitButtons.push(buttonId);
+      
+      // Create a new button at the end of the given container
+      $("#" + container)
+        .append("<div><button id='" + buttonId + "' class='submit-button'>" + buttonText + "</button></div>");
+        
+      $("#" + buttonId)
+        .button()
+        .click(behavior);
       return this;
     },
     
@@ -93,7 +111,18 @@ $(function () {
       }
       
       // Then, we'll add the modules to the given container!
-      container.append(rendering);
+      container.prepend(rendering);
+      return this;
+    },
+    
+    // Removes the calling form from the DOM
+    deleteForm: function () {
+      for (var m in this.modules) {
+        $("#" + this.modules[m].id).remove();
+      }
+      for (var s in this.submitButtons) {
+        $("#" + this.submitButtons[s]).remove();
+      }
       return this;
     }
     
@@ -152,9 +181,9 @@ $(function () {
       var rendering = 
         "<div id='" + this.id + "' class='question'>" +
         "<p>" + this.text + "</p>" +
-        input +
+        "<div id='" + this.id + "-input' class='question-input'>" + input + "</div>" +
         "</div>";
-        
+      
       return rendering;
     }
     
@@ -168,42 +197,3 @@ $(function () {
   
 });
 
-/*
- * TESTING SECTION
- */
-
-// Create form to be displayed
-var form = $S.createForm("survey1");
-
-// Create modules and questions for the newly created form
-form.addModule(
-    // ID for this module
-    "mod-briefing",
-  
-    // Title for this module
-    "Identity Mapping Project Description",
-    
-    // List of questions for this module, if any
-    [
-      {
-        // ID handled automatically by the 
-        text: "Please read the following info about the study [truncated]..."
-      },
-      
-      {
-        text: "Here's an input!",
-        input: "<input type='text'>"
-      }
-    ]
-  )
-  .addModule(
-    "test2",
-    "Here's another Module buddy!",
-    
-    [
-      {
-        text: "I'm not your buddy, pal!"
-      }
-    ]
-  )
-  .render("container");

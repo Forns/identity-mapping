@@ -25,5 +25,16 @@
 }
 
 .question {
-  padding: 15px;
+  margin: 20px;
+}
+
+.question-input {
+  margin-top: 8px;
+}
+
+.submit-button {
+  margin-top: 20px;
+  width: 200px;
+  height: 50px;
+  float: right;
 }
