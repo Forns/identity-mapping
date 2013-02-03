@@ -145,10 +145,35 @@ $(function () {
       $("select.question-field")
         .children()
         .each(function () {
-          $(this).val($(this).text())
+          $(this).val($(this).text());
         });
       
       return this;
+    },
+    
+    // Parses the user's input by adding their responses to the hierarchical structure
+    // of this form; questions matching the designated class will be recorded
+    parseByModule: function (inputClass) {
+      var currentModule,
+          currentQuestion,
+          currentInput;
+          
+      // Iterate through each module...
+      for (var m in this.modules) {
+        currentModule = this.modules[m];
+        // Then iterate through every question in the module...
+        for (var q in currentModule.questions) {
+          currentQuestion = currentModule.questions[q];
+          // Some questions may have multiple inputs
+          currentInput = $("#" + currentQuestion.id + " " + inputClass)
+            .each(function () {
+              if ($(this).val()) {
+                currentQuestion[$(this).attr("name")] = $(this).val();
+              }
+            });
+        }
+      }
+          
     },
     
     // Removes the calling form from the DOM

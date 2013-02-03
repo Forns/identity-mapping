@@ -378,7 +378,6 @@ $(function() {
             "Indicate the number of blogs that you operate:",
           input:
             "<select class='question-field'>" +
-            "<option>Please select...</option>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -408,7 +407,6 @@ $(function() {
             "To how many other online forums do you belong?",
           input:
             "<select class='question-field'>" +
-            "<option>Please select...</option>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -437,7 +435,6 @@ $(function() {
             "To how many other social networks do you belong?",
           input:
             "<select class='question-field'>" +
-            "<option>Please select...</option>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -466,7 +463,6 @@ $(function() {
             "How many other digital gaming platforms do you use?",
           input:
             "<select class='question-field'>" +
-            "<option>Please select...</option>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -497,7 +493,6 @@ $(function() {
             "In how many other 3D virtual worlds do you participate?",
           input:
             "<select class='question-field'>" +
-            "<option>Please select...</option>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -516,7 +511,6 @@ $(function() {
             "Indicate the number of email accounts you have for your <strong>physical self</strong>:",
           input:
             "<select class='question-field'>" +
-            "<option>Please select...</option>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -530,7 +524,8 @@ $(function() {
       "Next",
       "container",
       function () {
-        console.log($("#" + stageI.id + "-form").serialize());
+        //console.log($("#" + stageI.id + "-form").serialize());
+        stageI.parseByModule("[class^=question-]");
         console.log(stageI);
         stageI.deleteForm();
       }
