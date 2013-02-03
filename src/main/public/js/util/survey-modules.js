@@ -88,22 +88,21 @@ $(function () {
       var buttonId = this.id + "-submit";
       
       // Set a handle for the submit button on the form
-      this.submitButtons.push(buttonId);
+      this.submitButtons.push({
+        text: buttonText,
+        id: buttonId,
+        container: container,
+        behavior: behavior
+      });
       
-      // Create a new button at the end of the given container
-      $("#" + container)
-        .append("<div><button id='" + buttonId + "' class='submit-button'>" + buttonText + "</button></div>");
-        
-      $("#" + buttonId)
-        .button()
-        .click(behavior);
       return this;
     },
     
     // Pushes the current form to the page inside the given container element
     render: function (container) {
       container = $("#" + container);
-      var rendering = "";
+      var rendering = "",
+          currentSubmit;
       
       // First, we'll iterate through each module
       for (var m in this.modules) {
@@ -112,6 +111,32 @@ $(function () {
       
       // Then, we'll add the modules to the given container!
       container.prepend(rendering);
+      
+      // ...iterating also through the submit buttons, if any
+      for (var s in this.submitButtons) {
+        currentSubmit = this.submitButtons[s];
+        
+        // Create a new button at the end of the given container
+        $("#" + currentSubmit.container)
+          .append("<div><button id='" + currentSubmit.id + "' class='submit-button'>" + currentSubmit.text + "</button></div>");
+          
+        $("#" + currentSubmit.id)
+          .button()
+          .click(currentSubmit.behavior);
+      }
+      
+      // Next, we want to make sure the inputs are properly named for serialization
+      $(".question-field").each(function () {
+        $(this).attr("name", $(this).parent().attr("id") + "-field");
+      });
+      
+      // Finally, make sure the select options have proper values
+      $("select.question-field")
+        .children()
+        .each(function () {
+          $(this).val($(this).text())
+        });
+      
       return this;
     },
     
@@ -121,7 +146,7 @@ $(function () {
         $("#" + this.modules[m].id).remove();
       }
       for (var s in this.submitButtons) {
-        $("#" + this.submitButtons[s]).remove();
+        $("#" + this.submitButtons[s].id).remove();
       }
       return this;
     }
