@@ -101,7 +101,7 @@ $(function () {
     // Pushes the current form to the page inside the given container element
     render: function (container) {
       container = $("#" + container);
-      var rendering = "",
+      var rendering = "<form id='" + this.id + "-form'>",
           currentSubmit;
       
       // First, we'll iterate through each module
@@ -110,7 +110,7 @@ $(function () {
       }
       
       // Then, we'll add the modules to the given container!
-      container.prepend(rendering);
+      container.prepend(rendering + "</form>");
       
       // ...iterating also through the submit buttons, if any
       for (var s in this.submitButtons) {
@@ -118,7 +118,7 @@ $(function () {
         
         // Create a new button at the end of the given container
         $("#" + currentSubmit.container)
-          .append("<div><button id='" + currentSubmit.id + "' class='submit-button'>" + currentSubmit.text + "</button></div>");
+          .append("<div class='submit-container'><button id='" + currentSubmit.id + "' class='submit-button'>" + currentSubmit.text + "</button></div>");
           
         $("#" + currentSubmit.id)
           .button()
@@ -129,6 +129,17 @@ $(function () {
       $(".question-field").each(function () {
         $(this).attr("name", $(this).parent().attr("id") + "-field");
       });
+      
+      // Checkboxes should be labeled and named for serialization
+      $(":checkbox")
+        .each(function () {
+          var currentBox = $(this).attr("label"),
+              currentId = (currentBox + "-cb").replace(" ", "-");
+          $(this)
+            .attr("id", currentId)
+            .attr("name", currentId)
+            .after("<label for='" + currentId + "'>" + currentBox + "</label>")
+        })
       
       // Finally, make sure the select options have proper values
       $("select.question-field")

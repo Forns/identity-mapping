@@ -11,7 +11,7 @@ $(function() {
       stageI = $S.createForm("stageI"),
       stageII = $S.createForm("stageII"),
       formContainer = "container";
-
+      
   /*
    * BRIEFING
    */
@@ -396,11 +396,11 @@ $(function() {
           text:
             "Indicate in which, if any, of the following forums you participate:",
           input:
-            "<input type='checkbox' class='question-checkbox'>Reddit</input>" +
-            "<input type='checkbox' class='question-checkbox'>Foursquare</input>" +
-            "<input type='checkbox' class='question-checkbox'>Digg</input>" +
-            "<input type='checkbox' class='question-checkbox'>4chan</input>" +
-            "<input type='checkbox' class='question-checkbox'>Pinterest</input>"
+            "<input type='checkbox' class='question-checkbox' label='Reddit' />" +
+            "<input type='checkbox' class='question-checkbox' label='Foursquare' />" +
+            "<input type='checkbox' class='question-checkbox' label='Digg' />" +
+            "<input type='checkbox' class='question-checkbox' label='4chan' />" +
+            "<input type='checkbox' class='question-checkbox' label='Pinterest' />"
         },
         
         {
@@ -426,10 +426,10 @@ $(function() {
           text:
             "Indicate in which, if any, of the following social networks you participate:",
           input:
-            "<input type='checkbox' class='question-checkbox'>Facebook</input>" +
-            "<input type='checkbox' class='question-checkbox'>Google Plus</input>" +
-            "<input type='checkbox' class='question-checkbox'>Twitter</input>" +
-            "<input type='checkbox' class='question-checkbox'>Linked In</input>"
+            "<input type='checkbox' class='question-checkbox' label='Facebook' />" +
+            "<input type='checkbox' class='question-checkbox' label='Google Plus' />" +
+            "<input type='checkbox' class='question-checkbox' label='Twitter' />" +
+            "<input type='checkbox' class='question-checkbox' label='Linked In' />"
         },
         
         {
@@ -455,10 +455,10 @@ $(function() {
           text:
             "Indicate whether you play games on any of the following digital gaming platforms:",
           input:
-            "<input type='checkbox' class='question-checkbox'>Steam</input>" +
-            "<input type='checkbox' class='question-checkbox'>X-box</input>" +
-            "<input type='checkbox' class='question-checkbox'>Playstation</input>" +
-            "<input type='checkbox' class='question-checkbox'>Wii</input>"
+            "<input type='checkbox' class='question-checkbox' label='Steam' />" +
+            "<input type='checkbox' class='question-checkbox' label='Xbox 360' />" +
+            "<input type='checkbox' class='question-checkbox' label='Playstation' />" +
+            "<input type='checkbox' class='question-checkbox' label='Wii' />"
         },
         
         {
@@ -484,12 +484,12 @@ $(function() {
           text:
             "Indicate whether you have an account or avatar in any of the following 3D virtual worlds:",
           input:
-            "<input type='checkbox' class='question-checkbox'>Second Life</input>" +
-            "<input type='checkbox' class='question-checkbox'>There</input>" +
-            "<input type='checkbox' class='question-checkbox'>Cloudparty</input>" +
-            "<input type='checkbox' class='question-checkbox'>IMVU</input>" +
-            "<input type='checkbox' class='question-checkbox'>Blue Mars</input>" +
-            "<input type='checkbox' class='question-checkbox'>SIMS</input>"
+            "<input type='checkbox' class='question-checkbox' label='Second Life' />" +
+            "<input type='checkbox' class='question-checkbox' label='There' />" +
+            "<input type='checkbox' class='question-checkbox' label='Cloudparty' />" +
+            "<input type='checkbox' class='question-checkbox' label='IMVU' />" +
+            "<input type='checkbox' class='question-checkbox' label='Blue Mars' />" +
+            "<input type='checkbox' class='question-checkbox' label='SIMS' />"
         },
         
         {
@@ -530,6 +530,8 @@ $(function() {
       "Next",
       "container",
       function () {
+        console.log($("#" + stageI.id + "-form").serialize());
+        console.log(stageI);
         stageI.deleteForm();
       }
     );

@@ -43,7 +43,11 @@
 
 .submit-button {
   margin-top: 20px;
+  margin-bottom: 30px;
   width: 200px;
   height: 50px;
-  float: right;
+}
+
+.submit-container {
+  text-align: right;
 }

@@ -28,6 +28,7 @@ body {
   background: -ms-radial-gradient(center, ellipse cover, #bfbfbf 0%,#8e8e8e 100%); /* IE10+ */
   background: radial-gradient(ellipse at center, #bfbfbf 0%,#8e8e8e 100%); /* W3C */
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-color: #8E8E8E;
 }
 
