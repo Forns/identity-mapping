@@ -138,6 +138,10 @@ $(function () {
           $(this)
             .attr("id", currentId)
             .attr("name", currentId)
+            .val("false")
+            .click(function () {
+              $(this).attr("value", ! ($(this).attr("value") === "true"));
+            })
             .after("<label for='" + currentId + "'>" + currentBox + "</label>")
         })
       
@@ -168,12 +172,13 @@ $(function () {
           currentInput = $("#" + currentQuestion.id + " " + inputClass)
             .each(function () {
               if ($(this).val()) {
-                currentQuestion[$(this).attr("name")] = $(this).val();
+                currentQuestion.responses[$(this).attr("name")] = $(this).val();
               }
             });
         }
       }
-          
+      
+      return this;
     },
     
     // Removes the calling form from the DOM
@@ -232,6 +237,7 @@ $(function () {
       this.id = (question.id) ? question.id : "question" + questionId++;
       this.text = question.text;
       this.input = question.input;
+      this.responses = {};
       return this;
     },
     

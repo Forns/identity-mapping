@@ -524,10 +524,26 @@ $(function() {
       "Next",
       "container",
       function () {
-        //console.log($("#" + stageI.id + "-form").serialize());
+        var currentModule,
+            currentQuestion;
+            
+        // We've named each input of interest as question-field or question-checkbox
+        // so we can gather the user responses by question
         stageI.parseByModule("[class^=question-]");
         console.log(stageI);
         stageI.deleteForm();
+        
+        // Now, we need to construct part II of the survey from the responses in part I
+        for (var m in stageI.modules) {
+          currentModule = stageI.modules[m];
+          stageII.addModule(
+            currentModule.id.replace("stageI", "stageII"),
+            currentModule.title,
+            []
+          );
+        }
+        
+        stageII.render("container");
       }
     );
   
