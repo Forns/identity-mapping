@@ -160,7 +160,8 @@ $(function () {
     parseByModule: function (inputClass) {
       var currentModule,
           currentQuestion,
-          currentInput;
+          currentInput,
+          currentVal;
           
       // Iterate through each module...
       for (var m in this.modules) {
@@ -171,8 +172,9 @@ $(function () {
           // Some questions may have multiple inputs
           currentInput = $("#" + currentQuestion.id + " " + inputClass)
             .each(function () {
-              if ($(this).val()) {
-                currentQuestion.responses[$(this).attr("name")] = $(this).val();
+              currentVal = $(this).val();
+              if (currentVal) {
+                currentModule.responses[$(this).attr("name")] = currentVal;
               }
             });
         }
@@ -204,6 +206,7 @@ $(function () {
       this.id = (id) ? id : "module" + moduleId++;
       this.title = title;
       this.questions = [];
+      this.responses = {};
       // Add all questions to this module for rendering
       for (var q in questionList) {
         this.questions.push(new Question().newQuestion(questionList[q]));
@@ -237,26 +240,21 @@ $(function () {
       this.id = (question.id) ? question.id : "question" + questionId++;
       this.text = question.text;
       this.input = question.input;
-      this.tags = (question.tags) ? question.tags : {};
-      this.responses = {};
       return this;
     },
     
     // Internal HTML-returning function to render a question with its inputs
     render: function () {
       var input = (this.input) ? this.input : "",
-          tagString = "";
       
-      // Make sure all of the tags are implemented
-      for (var t in this.tags) {
-        tagString += " " + t + "='" + this.tags[t] + "'"
-      }
-      
-      var rendering = 
+      rendering = 
         "<div id='" + this.id + "' class='question'>" +
         "<p>" + this.text + "</p>" +
-        "<div id='" + this.id + "-input' class='question-input'" + tagString + ">" + input + "</div>" +
+        "<div id='" + this.id + "-input' class='question-input'>" + input + "</div>" +
         "</div>";
+      
+      // No need to keep the input html
+      delete this.input;
       
       return rendering;
     }

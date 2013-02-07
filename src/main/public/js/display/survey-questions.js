@@ -385,7 +385,7 @@ $(function() {
           text:
             "Indicate the number of blogs that you operate:",
           input:
-            "<select class='question-field'>" +
+            "<select class='question-field' survey='count'>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -403,18 +403,18 @@ $(function() {
           text:
             "Indicate in which, if any, of the following forums you participate:",
           input:
-            "<input type='checkbox' class='question-checkbox' label='Reddit' />" +
-            "<input type='checkbox' class='question-checkbox' label='Foursquare' />" +
-            "<input type='checkbox' class='question-checkbox' label='Digg' />" +
-            "<input type='checkbox' class='question-checkbox' label='4chan' />" +
-            "<input type='checkbox' class='question-checkbox' label='Pinterest' />"
+            "<input type='checkbox' class='question-checkbox' label='Reddit' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Foursquare' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Digg' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='4chan' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Pinterest' survey='specific' />"
         },
         
         {
           text:
             "To how many other online forums do you belong?",
           input:
-            "<select class='question-field'>" +
+            "<select class='question-field' survey='count'>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -432,17 +432,17 @@ $(function() {
           text:
             "Indicate in which, if any, of the following social networks you participate:",
           input:
-            "<input type='checkbox' class='question-checkbox' label='Facebook' />" +
-            "<input type='checkbox' class='question-checkbox' label='Google Plus' />" +
-            "<input type='checkbox' class='question-checkbox' label='Twitter' />" +
-            "<input type='checkbox' class='question-checkbox' label='Linked In' />"
+            "<input type='checkbox' class='question-checkbox' label='Facebook' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Google Plus' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Twitter' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Linked In' survey='specific' />"
         },
         
         {
           text:
             "To how many other social networks do you belong?",
           input:
-            "<select class='question-field'>" +
+            "<select class='question-field' survey='count'>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -460,17 +460,17 @@ $(function() {
           text:
             "Indicate whether you play games on any of the following digital gaming platforms:",
           input:
-            "<input type='checkbox' class='question-checkbox' label='Steam' />" +
-            "<input type='checkbox' class='question-checkbox' label='Xbox 360' />" +
-            "<input type='checkbox' class='question-checkbox' label='Playstation' />" +
-            "<input type='checkbox' class='question-checkbox' label='Wii' />"
+            "<input type='checkbox' class='question-checkbox' label='Steam' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Xbox 360' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Playstation' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Wii' survey='specific' />"
         },
         
         {
           text:
             "How many other digital gaming platforms do you use?",
           input:
-            "<select class='question-field'>" +
+            "<select class='question-field' survey='count'>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -488,19 +488,19 @@ $(function() {
           text:
             "Indicate whether you have an account or avatar in any of the following 3D virtual worlds:",
           input:
-            "<input type='checkbox' class='question-checkbox' label='Second Life' />" +
-            "<input type='checkbox' class='question-checkbox' label='There' />" +
-            "<input type='checkbox' class='question-checkbox' label='Cloudparty' />" +
-            "<input type='checkbox' class='question-checkbox' label='IMVU' />" +
-            "<input type='checkbox' class='question-checkbox' label='Blue Mars' />" +
-            "<input type='checkbox' class='question-checkbox' label='SIMS' />"
+            "<input type='checkbox' class='question-checkbox' label='Second Life' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='There' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Cloudparty' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='IMVU' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Blue Mars' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='SIMS' survey='specific' />"
         },
         
         {
           text:
             "In how many other 3D virtual worlds do you participate?",
           input:
-            "<select class='question-field'>" +
+            "<select class='question-field' survey='count'>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -518,7 +518,7 @@ $(function() {
           text:
             "Indicate the number of email accounts you have for your <strong>physical self</strong>:",
           input:
-            "<select class='question-field'>" +
+            "<select class='question-field' survey='count'>" +
             "<option>0</option>" +
             "<option>1</option>" +
             "<option>2</option>" +
@@ -533,7 +533,11 @@ $(function() {
       "container",
       function () {
         var currentModule,
-            currentQuestion;
+            currentResponse,
+            currentFollowup,
+            currentMatch
+            specifics = [],
+            generals = [];
             
         // We've named each input of interest as question-field or question-checkbox
         // so we can gather the user responses by question
@@ -541,16 +545,112 @@ $(function() {
         console.log(stageI);
         stageI.deleteForm();
         
+        // Give stage II a nice description for the users
+        stageII.addModule(
+          "mod-stageII-brief",
+          "Identity Mapping: Stage II",
+          [
+            {
+              text:
+                "Stage II of the Identity Mapping Project seeks to gather more detailed information about " +
+                "your digital personas. Please provide as much description as possible in the following questions... " +
+                "and thank you!"
+            }
+          ]
+        );
+        
         // Now, we need to construct part II of the survey from the responses in part I
-        for (var m in stageI.modules) {
+        for (var m = 2; m < stageI.modules.length; m++) {
+          specifics = [];
+          generals = [];
+          currentFollowup = [];
           currentModule = stageI.modules[m];
+          
+          // First, we'll take a look at all of the responses in the current module...
+          for (var r in currentModule.responses) {
+            currentResponse = currentModule.responses[r];
+            currentMatch = r.match(/-cb$|-field$/g);
+            
+            // If the input requests no response, just move on
+            if (currentMatch === null) {
+              continue;
+            }
+            
+            switch(currentMatch[0]) {
+              // Some answers will ask specifics about the user's online persona, we'll handle these first
+              case "-cb":
+                // Only continue if the user actually selected this digital medium
+                if (currentResponse === "true") { // Relax, it's the string "true", not the Boolean
+                  specifics.push(
+                    {
+                      text:
+                        "You indicated that you use " + r.replace("-cb", "") + ". Please describe your " +
+                        "purpose or function when using this medium."
+                    }
+                  );
+                }
+                break;
+              // Some answers will simply be, "how many other instances of this platform do you use?"
+              case "-field":
+                currentResponse = parseInt(currentResponse);
+                for (var i = 1; i <= currentResponse; i++) {
+                  generals.push(
+                    {
+                      text: 
+                        "You indicated that you use additional " + currentModule.title + ". " +
+                        "Please describe your purpose or function when using the " +
+                        (function (num) {
+                          var addon;
+                          switch(num) {
+                            case 1:
+                              addon = "st";
+                              break;
+                            case 2:
+                              addon = "nd";
+                              break;
+                            case 3:
+                              addon = "rd";
+                              break;
+                            case 4:
+                            case 5:
+                              addon = "th";
+                              break;
+                            default:
+                              addon = "th";
+                              break;
+                          }
+                          
+                          return num + addon;
+                        })(i) +
+                        " additional instance."
+                    }
+                  );
+                }
+                break;
+              default:
+                continue;
+                break;
+            }
+          }
+          
+          // If we have any additional questions for this section, we'll add them here
+          currentFollowup = specifics.concat(generals);
+          if (currentFollowup.length === 0) {
+            currentFollowup.push({
+              text:
+                "There are no additional questions for this category."
+            });
+          }
+          
+          // Finally, add the module to the stage II form
           stageII.addModule(
             currentModule.id.replace("stageI", "stageII"),
             currentModule.title,
-            []
+            currentFollowup
           );
         }
         
+        // Then render stage II!
         stageII.render("container");
       }
     );
