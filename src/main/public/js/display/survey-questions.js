@@ -88,9 +88,17 @@ $(function() {
       [
         {
           text:
-            "What is your age? (in years)",
+            "In what year were you born?",
           input:
-            "<input class='question-field' type='text' />"
+            "<select class='question-field'><option>Please select...</option>" +
+            (function () {
+              var result = "";
+              for (var i = new Date().getFullYear(); i > 1900; i--) {
+                result += "<option>" + i + "</option>"
+              }
+              return result;
+            })() +
+            "</select>"
         },
         
         {

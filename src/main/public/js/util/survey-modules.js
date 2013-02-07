@@ -237,18 +237,25 @@ $(function () {
       this.id = (question.id) ? question.id : "question" + questionId++;
       this.text = question.text;
       this.input = question.input;
+      this.tags = (question.tags) ? question.tags : {};
       this.responses = {};
       return this;
     },
     
     // Internal HTML-returning function to render a question with its inputs
     render: function () {
-      var input = (this.input) ? this.input : "";
+      var input = (this.input) ? this.input : "",
+          tagString = "";
+      
+      // Make sure all of the tags are implemented
+      for (var t in this.tags) {
+        tagString += " " + t + "='" + this.tags[t] + "'"
+      }
       
       var rendering = 
         "<div id='" + this.id + "' class='question'>" +
         "<p>" + this.text + "</p>" +
-        "<div id='" + this.id + "-input' class='question-input'>" + input + "</div>" +
+        "<div id='" + this.id + "-input' class='question-input'" + tagString + ">" + input + "</div>" +
         "</div>";
       
       return rendering;
