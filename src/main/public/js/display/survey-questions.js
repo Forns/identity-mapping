@@ -732,7 +732,6 @@ $(function() {
                   targetSliders = $("[module=" + $(this).attr("module") + "]");
                   targetSliders
                     .each(function () {
-                      console.log($(this).slider("value"));
                       currentTotal += $(this).slider("value");
                       if ($(this).attr("id") !== activeSlider) {
                         inactiveValue += $(this).slider("value");
