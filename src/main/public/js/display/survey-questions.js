@@ -10,7 +10,18 @@ $(function() {
   var briefing = $S.createForm("briefing"),
       stageI = $S.createForm("stageI"),
       stageII = $S.createForm("stageII"),
-      formContainer = "container";
+      stageIII = $S.createForm("stageIII"),
+      formContainer = "container",
+      
+      // Constants to reduce repetition
+      countSelect = 
+        "<select class='question-field' survey='count'>" +
+        "<option>0</option>" +
+        "<option>1</option>" +
+        "<option>2</option>" +
+        "<option>3</option>" +
+        "<option>4</option>" +
+        "<option>5 or more</option></select>";
       
   /*
    * BRIEFING
@@ -385,13 +396,7 @@ $(function() {
           text:
             "Indicate the number of blogs that you operate:",
           input:
-            "<select class='question-field' survey='count'>" +
-            "<option>0</option>" +
-            "<option>1</option>" +
-            "<option>2</option>" +
-            "<option>3</option>" +
-            "<option>4</option>" +
-            "<option>5 or more</option></select>"
+            countSelect
         }
       ]
     )
@@ -414,13 +419,7 @@ $(function() {
           text:
             "To how many other online forums do you belong?",
           input:
-            "<select class='question-field' survey='count'>" +
-            "<option>0</option>" +
-            "<option>1</option>" +
-            "<option>2</option>" +
-            "<option>3</option>" +
-            "<option>4</option>" +
-            "<option>5 or more</option></select>"
+            countSelect
         }
       ]
     )
@@ -442,13 +441,7 @@ $(function() {
           text:
             "To how many other social networks do you belong?",
           input:
-            "<select class='question-field' survey='count'>" +
-            "<option>0</option>" +
-            "<option>1</option>" +
-            "<option>2</option>" +
-            "<option>3</option>" +
-            "<option>4</option>" +
-            "<option>5 or more</option></select>"
+            countSelect
         }
       ]
     )
@@ -470,13 +463,7 @@ $(function() {
           text:
             "How many other digital gaming platforms do you use?",
           input:
-            "<select class='question-field' survey='count'>" +
-            "<option>0</option>" +
-            "<option>1</option>" +
-            "<option>2</option>" +
-            "<option>3</option>" +
-            "<option>4</option>" +
-            "<option>5 or more</option></select>"
+            countSelect
         }
       ]
     )
@@ -500,13 +487,7 @@ $(function() {
           text:
             "In how many other 3D virtual worlds do you participate?",
           input:
-            "<select class='question-field' survey='count'>" +
-            "<option>0</option>" +
-            "<option>1</option>" +
-            "<option>2</option>" +
-            "<option>3</option>" +
-            "<option>4</option>" +
-            "<option>5 or more</option></select>"
+            countSelect
         }
       ]
     )
@@ -518,13 +499,7 @@ $(function() {
           text:
             "Indicate the number of email accounts you have for your <strong>physical self</strong>:",
           input:
-            "<select class='question-field' survey='count'>" +
-            "<option>0</option>" +
-            "<option>1</option>" +
-            "<option>2</option>" +
-            "<option>3</option>" +
-            "<option>4</option>" +
-            "<option>5 or more</option></select>"
+            countSelect
         }
       ]
     )
@@ -532,6 +507,9 @@ $(function() {
       "Next",
       "container",
       function () {
+        // Adjust the page scroll
+        $(window).scrollTop("#header");
+        
         var currentModule,
             currentResponse,
             currentFollowup,
@@ -542,8 +520,11 @@ $(function() {
         // We've named each input of interest as question-field or question-checkbox
         // so we can gather the user responses by question
         stageI.parseByModule("[class^=question-]");
-        console.log(stageI);
         stageI.deleteForm();
+        
+  /*
+   * STAGE II
+   */
         
         // Give stage II a nice description for the users
         stageII.addModule(
@@ -557,6 +538,36 @@ $(function() {
                 "and thank you!"
             }
           ]
+        )
+        .setSubmit(
+          "Submit!",
+          "container",
+          function () {
+            // Adjust the page scroll
+            $(window).scrollTop("#header");
+            stageII
+              .parseByModule("[class^=question-]")
+              .deleteForm();
+              
+            stageIII.addModule(
+              "mod-stageIII-debrief",
+              "Thank you!",
+              [
+                {
+                  text:
+                    "<strong>Thank you</strong> for participating in the Identity Mapping Project! Your responses have been recorded."
+                }
+              ]
+            )
+            .setSubmit(
+              "OK",
+              "container",
+              function () {
+                window.location = "/";
+              }
+            )
+            .render("container");
+          }
         );
         
         // Now, we need to construct part II of the survey from the responses in part I
@@ -611,10 +622,6 @@ $(function() {
                             case 3:
                               addon = "rd";
                               break;
-                            case 4:
-                            case 5:
-                              addon = "th";
-                              break;
                             default:
                               addon = "th";
                               break;
@@ -640,6 +647,28 @@ $(function() {
               text:
                 "There are no additional questions for this category."
             });
+          } else {
+            var currentQuestion,
+                newQuestions = [],
+                currentSliderId = "";
+            // We still need to add textareas to each question and add the frequency
+            // of use question
+            for (var i = 0; i < currentFollowup.length; i++) {
+              currentQuestion = currentFollowup[i];
+              currentQuestion.input = "<textarea class='question-field question-textarea' />";
+              newQuestions.push(currentQuestion);
+              
+              // Need a percentage of use slider now!
+              newQuestions.push(
+                {
+                  text:
+                    "Within this category, what percentage of the time do you use this medium compared to the others? (Please drag bar below)",
+                  input:
+                    "<p class='float-left'>0%</p><p class='float-right'>100%</p><br/><div class='question-slider'></div>"
+                }
+              );
+            }
+            currentFollowup = newQuestions;
           }
           
           // Finally, add the module to the stage II form
@@ -652,11 +681,64 @@ $(function() {
         
         // Then render stage II!
         stageII.render("container");
+        
+        // Set up the percentage sliders
+        $(".question-slider")
+          .slider(
+            {
+              min: 1,
+              max: 100,
+              step: 0.1
+            }
+          )
+          .each(function () {
+            var currentModule = $(this).closest("[class=module]").attr("id").replace("mod-stageII-", "");
+            $(this)
+              .attr("id", $(this).parent().attr("id") + "-slider")
+              .attr("name", $(this).attr("id"))
+              .attr("module", currentModule);
+          });
+        
+        // First, we have to group each category's sliders  
+        var sliderMap = {},
+            currentMod,
+            currentSlider,
+            currentTotal;  
+        $("[module]").each(function () {
+          currentMod = $(this).attr("module");
+          if (typeof(sliderMap[currentMod]) === "undefined") {
+            sliderMap[currentMod] = [];
+          }
+          sliderMap[currentMod].push($(this).attr("id"));
+        });
+        
+        // Next, we can assign functions to make them total 100% per category
+        for (var s in sliderMap) {
+          currentMod = sliderMap[s];
+          for (var sliderId in currentMod) {
+            currentSlider = currentMod[sliderId];
+            $("#" + currentSlider).slider(
+              {
+                value: 100 / currentMod.length,
+                stop: function (event, ui) {
+                  currentTotal = 0;
+                  $("[module=" + $(this).attr("module") + "]")
+                    .each(function () {
+                      currentTotal += $(this).slider("value");
+                      console.log(currentTotal);
+                    })
+                    .each(function () {
+                      $(this).slider({
+                        value: $(this).slider("value") - ((currentTotal - 100) / currentMod.length)
+                      });
+                    });
+                }
+              }
+            );
+          }
+        }
       }
     );
+    
   
-  /*
-   * STAGE II
-   */
-
 });

@@ -172,7 +172,7 @@ $(function () {
           // Some questions may have multiple inputs
           currentInput = $("#" + currentQuestion.id + " " + inputClass)
             .each(function () {
-              currentVal = $(this).val();
+              currentVal = $(this).attr("module") ? $(this).slider("value") : $(this).val();
               if (currentVal) {
                 currentModule.responses[$(this).attr("name")] = currentVal;
               }

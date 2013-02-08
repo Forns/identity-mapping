@@ -41,6 +41,14 @@
   margin-left: 50px;
 }
 
+.question-textarea {
+  height: 100px;
+}
+
+.question-slider {
+  margin-top: 5px;
+}
+
 .submit-button {
   margin-top: 20px;
   margin-bottom: 30px;
