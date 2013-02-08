@@ -379,12 +379,12 @@ $(function() {
           input:
             "<select class='question-field'>" +
             "<option>Please select...</option>" +
-            "<option>I did not go to high school (I completed less than 8 years of education)</option>" +
+            "<option>I did not go to high school (I completed at most 8 years of education)</option>" +
             "<option>I completed high school (I completed at most 12 years of education)</option>" +
             "<option>I completed college but do not have a 4 year / Bachelor\'s degree (I completed between 12 and 16 years of education)</option>" +
             "<option>I have a 4 year college degree / Bachelor\'s degree (I completed at most 16 years of education)</option>" +
             "<option>I have an advanced degree (Masters, PhD, Law, M.D., etc.)</option>" +
-            "<option>My educational background does not fit any of the above categories</option></select>"
+            "<option>My educational background does not fit into any of the above categories</option></select>"
         },
       ]
     )
@@ -658,15 +658,17 @@ $(function() {
               currentQuestion.input = "<textarea class='question-field question-textarea' />";
               newQuestions.push(currentQuestion);
               
-              // Need a percentage of use slider now!
-              newQuestions.push(
-                {
-                  text:
-                    "Within this category, what percentage of the time do you use this medium compared to the others? (Please drag bar below)",
-                  input:
-                    "<p class='float-left'>0%</p><p class='float-right'>100%</p><br/><div class='question-slider'></div>"
-                }
-              );
+              // Need a percentage of use slider now if there is more than one entry
+              if (currentFollowup.length > 1) {
+                newQuestions.push(
+                  {
+                    text:
+                      "Within this category, what percentage of the time do you use this medium compared to the others? (Please drag bar below)",
+                    input:
+                      "<p class='float-left'>0%</p><p class='float-right'>100%</p><br/><div class='question-slider'></div>"
+                  }
+                );
+              }
             }
             currentFollowup = newQuestions;
           }
@@ -703,7 +705,10 @@ $(function() {
         var sliderMap = {},
             currentMod,
             currentSlider,
-            currentTotal;  
+            currentTotal,
+            targetSliders,
+            activeSlider,
+            inactiveValue;  
         $("[module]").each(function () {
           currentMod = $(this).attr("module");
           if (typeof(sliderMap[currentMod]) === "undefined") {
@@ -721,16 +726,27 @@ $(function() {
               {
                 value: 100 / currentMod.length,
                 stop: function (event, ui) {
+                  activeSlider = $(this).attr("id");
                   currentTotal = 0;
-                  $("[module=" + $(this).attr("module") + "]")
+                  inactiveValue = 0;
+                  targetSliders = $("[module=" + $(this).attr("module") + "]");
+                  targetSliders
                     .each(function () {
+                      console.log($(this).slider("value"));
                       currentTotal += $(this).slider("value");
-                      console.log(currentTotal);
+                      if ($(this).attr("id") !== activeSlider) {
+                        inactiveValue += $(this).slider("value");
+                      }
                     })
                     .each(function () {
-                      $(this).slider({
-                        value: $(this).slider("value") - ((currentTotal - 100) / currentMod.length)
-                      });
+                      if ($(this).attr("id") !== activeSlider) {
+                        // Normalize each slider over the inactive values
+                        $(this).slider({
+                          value: $(this).slider("value") - ((currentTotal - 100) * ($(this).slider("value") / inactiveValue))
+                        });
+                      } else {
+                        activeSlider = "";
+                      }
                     });
                 }
               }
