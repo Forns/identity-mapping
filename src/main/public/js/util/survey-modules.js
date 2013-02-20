@@ -142,7 +142,8 @@ $(function () {
             .click(function () {
               $(this).attr("value", ! ($(this).attr("value") === "true"));
             })
-            .after("<label for='" + currentId + "'>" + currentBox + "</label>")
+            .addClass("checkbox")
+            .after("<label for='" + currentId + "'>" + currentBox + "</label><br/>");
         })
       
       // Finally, make sure the select options have proper values
