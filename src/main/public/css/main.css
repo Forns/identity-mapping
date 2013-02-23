@@ -54,6 +54,10 @@ body {
   z-index: 5;
 }
 
+#face-grid {
+  position: absolute;
+}
+
 .module {
   display: inline-block;
   width: 800px;
@@ -73,7 +77,7 @@ body {
 }
 
 .big-button-and-cannot-lie {
-  font-size: 2em;
+  font-size: 2em !important;
   width: 250px;
   height: 75px;
 }

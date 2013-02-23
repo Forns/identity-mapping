@@ -6,9 +6,7 @@
 
 // Setup include
 var loc = window.location.toString().split("/"),
-    includes = [
-      "./js/display/general-display.js"
-    ];
+    includes = [];
     
 loc = loc[loc.length - 1];
 
@@ -22,6 +20,8 @@ switch (loc) {
     includes.push("./js/display/index-display.js");
     break;
 }
+
+includes.push("./js/display/general-display.js");
 
 // Perform necessary inclusions
 include.includeInit(includes);

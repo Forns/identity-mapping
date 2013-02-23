@@ -5,4 +5,13 @@
  */
 
 $(function () {
+  // Experimental background animation
+  $("#container")
+    .prepend(
+      "<div id='face-grid'>" +
+        "<div class='row'>" +
+        "</div>" +
+      "</div>"
+    );
+    
 });

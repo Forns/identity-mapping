@@ -8,22 +8,14 @@ $(function () {
   
   // Begin with button setup
   $("#about-button")
-    .button(
-      {
-        icons: {primary: "ui-icon-clipboard"}
-      }
-    )
+    .button()
     .click(function () {
       window.location = "./about";
     })
     .removeClass("loading-hidden");
   
   $("#survey-button")
-    .button(
-      {
-        icons: {secondary: "ui-icon-circle-triangle-e"}
-      }
-    )
+    .button()
     .click(function () {
       window.location = "./survey";
     })
