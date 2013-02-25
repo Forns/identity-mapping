@@ -56,7 +56,8 @@ $(function () {
   // Finally, we'll seed each row with pictures
   for (var j = 0; j < faceCount; j++) {
     currentRow = parseInt(j / rowSize);
-    $("#face-row-" + currentRow).append("<div class='span2 face-img'><img src='../../assets/grid-images/adjusted-images/" + faceList[j] + ".png' /></div>");
+    $("#face-row-" + currentRow)
+      .append("<div class='span2 face-img'><img src='../../assets/grid-images/adjusted-images/" + faceList[j] + ".png' style='opacity: " + (1 - ((currentRow * 25) / 100)) + ";' /></div>");
   }
     
 });
