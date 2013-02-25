@@ -663,9 +663,16 @@ $(function() {
                 newQuestions.push(
                   {
                     text:
-                      "Within this category, what percentage of the time do you use this medium compared to the others? (Please drag bar below)",
+                      "On average, how often do you use this medium? (Please drag bar below)",
                     input:
-                      "<p class='float-left'>0%</p><p class='float-right'>100%</p><br/><div class='question-slider'></div>"
+                      "<div>" +
+                        "<div class='likert-cat'>Almost Never</div>" +
+                        "<div class='likert-cat'>At most yearly</div>" +
+                        "<div class='likert-cat text-center'>At most monthly</div>" +
+                        "<div class='likert-cat text-right'>At most weekly</div>" +
+                        "<div class='likert-cat text-right'>Daily</div>" +
+                      "</div>" +
+                      "<div class='question-slider'></div>"
                   }
                 );
               }
@@ -688,9 +695,9 @@ $(function() {
         $(".question-slider")
           .slider(
             {
-              min: 1,
-              max: 100,
-              step: 0.1
+              min: 0,
+              max: 4,
+              step: 1
             }
           )
           .each(function () {
@@ -700,58 +707,6 @@ $(function() {
               .attr("name", $(this).attr("id"))
               .attr("module", currentModule);
           });
-        
-        // First, we have to group each category's sliders  
-        var sliderMap = {},
-            currentMod,
-            currentSlider,
-            currentTotal,
-            targetSliders,
-            activeSlider,
-            inactiveValue;  
-        $("[module]").each(function () {
-          currentMod = $(this).attr("module");
-          if (typeof(sliderMap[currentMod]) === "undefined") {
-            sliderMap[currentMod] = [];
-          }
-          sliderMap[currentMod].push($(this).attr("id"));
-        });
-        
-        // Next, we can assign functions to make them total 100% per category
-        for (var s in sliderMap) {
-          currentMod = sliderMap[s];
-          for (var sliderId in currentMod) {
-            currentSlider = currentMod[sliderId];
-            $("#" + currentSlider).slider(
-              {
-                value: 100 / currentMod.length,
-                stop: function (event, ui) {
-                  activeSlider = $(this).attr("id");
-                  currentTotal = 0;
-                  inactiveValue = 0;
-                  targetSliders = $("[module=" + $(this).attr("module") + "]");
-                  targetSliders
-                    .each(function () {
-                      currentTotal += $(this).slider("value");
-                      if ($(this).attr("id") !== activeSlider) {
-                        inactiveValue += $(this).slider("value");
-                      }
-                    })
-                    .each(function () {
-                      if ($(this).attr("id") !== activeSlider) {
-                        // Normalize each slider over the inactive values
-                        $(this).slider({
-                          value: $(this).slider("value") - ((currentTotal - 100) * ($(this).slider("value") / inactiveValue))
-                        });
-                      } else {
-                        activeSlider = "";
-                      }
-                    });
-                }
-              }
-            );
-          }
-        }
       }
     );
     

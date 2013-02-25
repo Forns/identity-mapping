@@ -49,6 +49,11 @@
   margin-top: 5px;
 }
 
+.likert-cat {
+  display: inline-block;
+  width: 20%;
+}
+
 .submit-button {
   margin-top: 20px;
   margin-bottom: 30px;
@@ -57,5 +62,17 @@
 }
 
 .submit-container {
+  text-align: right;
+}
+
+/**
+ *   ACCENTS
+ */
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
   text-align: right;
 }
