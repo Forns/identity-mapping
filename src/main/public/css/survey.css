@@ -45,13 +45,8 @@
   height: 100px;
 }
 
-.question-slider {
-  margin-top: 5px;
-}
-
-.likert-cat {
-  display: inline-block;
-  width: 20%;
+.scale-button {
+  width: 250px;
 }
 
 .submit-button {

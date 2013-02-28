@@ -59,12 +59,6 @@ $(function() {
             "<strong>Please Note:</strong> Your responses are completely anonymous and we will not ask for any identifying information such as email addresses or account names. " + 
             "We are only interested in whether, and to what extent, you have a presence in a particular digital domain. " +
             "As such, please answer each question as honestly and fully as possible so we can obtain accurate information."
-        },
-        
-        {
-          text:
-            "<strong>Thank you</strong> in advance for your participation in the project. Please tell others about this website and have them come map their identity. " +
-            "Our goal is to generate thousands or even millions of identity maps from around the globe and chart the nature of identity in the contemporary world."
         }
       ]
     )
@@ -379,12 +373,13 @@ $(function() {
           input:
             "<select class='question-field'>" +
             "<option>Please select...</option>" +
-            "<option>I did not go to high school (I completed at most 8 years of education)</option>" +
-            "<option>I completed high school (I completed at most 12 years of education)</option>" +
-            "<option>I completed college but do not have a 4 year / Bachelor\'s degree (I completed between 12 and 16 years of education)</option>" +
-            "<option>I have a 4 year college degree / Bachelor\'s degree (I completed at most 16 years of education)</option>" +
-            "<option>I have an advanced degree (Masters, PhD, Law, M.D., etc.)</option>" +
-            "<option>My educational background does not fit into any of the above categories</option></select>"
+            "<option>I did not complete high school</option>" +
+            "<option>Completed high school / Received my GED</option>" +
+            "<option>2 year college / Associate's degree</option>" +
+            "<option>4 year college / Bachelor's degree</option>" +
+            "<option>Master's Degree</option>" +
+            "<option>Doctoral Degree</option>" +
+            "<option>My education does not fit into any of these categories</option></select>"
         },
       ]
     )
@@ -406,7 +401,7 @@ $(function() {
       [
         {
           text:
-            "Indicate in which, if any, of the following forums you participate:",
+            "Do you participate in any of the following online forums? Check all that apply:",
           input:
             "<input type='checkbox' class='question-checkbox' label='Reddit' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='Foursquare' survey='specific' />" +
@@ -429,7 +424,7 @@ $(function() {
       [
         {
           text:
-            "Indicate in which, if any, of the following social networks you participate:",
+            "Do you belong to any of the following social networks? Check all that apply:",
           input:
             "<input type='checkbox' class='question-checkbox' label='Facebook' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='Google Plus' survey='specific' />" +
@@ -451,7 +446,7 @@ $(function() {
       [
         {
           text:
-            "Indicate whether you play games on any of the following digital gaming platforms:",
+            "Do you use any of the following digital gaming platforms? Check all that apply:",
           input:
             "<input type='checkbox' class='question-checkbox' label='Steam' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='Xbox 360' survey='specific' />" +
@@ -485,7 +480,7 @@ $(function() {
         
         {
           text:
-            "In how many other 3D virtual worlds do you participate?",
+            "How many other 3D virtual worlds do you use?",
           input:
             countSelect
         }
@@ -493,7 +488,7 @@ $(function() {
     )
     .addModule(
       "mod-stageI-email",
-      "Email",
+      "Emails",
       [
         {
           text:
@@ -511,6 +506,7 @@ $(function() {
         $(window).scrollTop("#header");
         
         var currentModule,
+            currentSingularTitle,
             currentResponse,
             currentFollowup,
             currentMatch
@@ -534,7 +530,7 @@ $(function() {
             {
               text:
                 "Stage II of the Identity Mapping Project seeks to gather more detailed information about " +
-                "your digital personas. Please provide as much description as possible in the following questions... " +
+                "your involvement in each domain. Please provide as much description as possible in the following questions... " +
                 "and thank you!"
             }
           ]
@@ -556,6 +552,12 @@ $(function() {
                 {
                   text:
                     "<strong>Thank you</strong> for participating in the Identity Mapping Project! Your responses have been recorded."
+                },
+        
+                {
+                  text:
+                    "<strong>Please tell others</strong> about this website and have them come map their identity! " +
+                    "Our goal is to generate thousands or even millions of identity maps from around the globe and chart the nature of identity in the contemporary world."
                 }
               ]
             )
@@ -576,6 +578,7 @@ $(function() {
           generals = [];
           currentFollowup = [];
           currentModule = stageI.modules[m];
+          currentSingularTitle = currentModule.title.substring(0, currentModule.title.length - 1);
           
           // First, we'll take a look at all of the responses in the current module...
           for (var r in currentModule.responses) {
@@ -596,7 +599,7 @@ $(function() {
                     {
                       text:
                         "You indicated that you use " + r.replace("-cb", "") + ". Please describe your " +
-                        "purpose or function when using this medium."
+                        "purpose or function when using this " + currentSingularTitle + "."
                     }
                   );
                 }
@@ -629,7 +632,7 @@ $(function() {
                           
                           return num + addon;
                         })(i) +
-                        " additional instance."
+                        " " + currentSingularTitle + "."
                     }
                   );
                 }
@@ -663,16 +666,16 @@ $(function() {
                 newQuestions.push(
                   {
                     text:
-                      "On average, how often do you use this medium? (Please drag bar below)",
+                      "How often do you typically use this " + currentSingularTitle + "? (Please select one below)",
                     input:
-                      "<div>" +
-                        "<div class='likert-cat'>Almost Never</div>" +
-                        "<div class='likert-cat'>At most yearly</div>" +
-                        "<div class='likert-cat text-center'>At most monthly</div>" +
-                        "<div class='likert-cat text-right'>At most weekly</div>" +
-                        "<div class='likert-cat text-right'>Daily</div>" +
-                      "</div>" +
-                      "<div class='question-slider'></div>"
+                      "<div class='text-center'><div class='btn-group btn-group-vertical scale-container' data-toggle='buttons-radio'>" +
+                        "<button type='button' class='btn scale-button'>Multiple times a day</button>" +
+                        "<button type='button' class='btn scale-button'>Daily / Almost daily</button>" +
+                        "<button type='button' class='btn scale-button'>Several times a week</button>" +
+                        "<button type='button' class='btn scale-button'>Weekly</button>" +
+                        "<button type='button' class='btn scale-button'>Several times a month</button>" +
+                        "<button type='button' class='btn scale-button'>Less than once a month</button>" +
+                      "</div></div>"
                   }
                 );
               }
@@ -690,23 +693,6 @@ $(function() {
         
         // Then render stage II!
         stageII.render("container");
-        
-        // Set up the percentage sliders
-        $(".question-slider")
-          .slider(
-            {
-              min: 0,
-              max: 4,
-              step: 1
-            }
-          )
-          .each(function () {
-            var currentModule = $(this).closest("[class=module]").attr("id").replace("mod-stageII-", "");
-            $(this)
-              .attr("id", $(this).parent().attr("id") + "-slider")
-              .attr("name", $(this).attr("id"))
-              .attr("module", currentModule);
-          });
       }
     );
     

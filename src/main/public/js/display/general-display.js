@@ -57,7 +57,7 @@ $(function () {
   for (var j = 0; j < faceCount; j++) {
     currentRow = parseInt(j / rowSize);
     $("#face-row-" + currentRow)
-      .append("<div class='span2 face-img'><img src='../../assets/grid-images/adjusted-images/" + faceList[j] + ".png' style='opacity: " + (1 - ((currentRow * 25) / 100)) + ";' /></div>");
+      .append("<div class='span2 face-img'><img src='../../assets/grid-images/" + faceList[j] + ".png' /></div>");
   }
     
 });
