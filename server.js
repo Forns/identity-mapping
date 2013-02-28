@@ -12,6 +12,7 @@ var express = require('express'),
     
     // Secure app config
     app = module.exports = express(),
+    webAppPort = process.env.IMP_PORT || 4000,
     security = {},
     database,
     controllers;
@@ -80,6 +81,6 @@ app.use(function(req, res){
  * SERVER START
  */
 
-app.listen(4000);
-console.log('[!] Express server listening on port 4000 in %s mode', app.settings.env);
+app.listen(webAppPort);
+console.log('[!] Express server listening on port %d in %s mode', webAppPort, app.settings.env);
 
