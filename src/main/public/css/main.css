@@ -12,13 +12,8 @@
   vertical-align: baseline;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-}
-
 body {
-  font-family: Verdana, Arial, sans-serif;
+  font-family: Arial, sans-serif;
   font-size: 1em;
   text-align: center;
   background: -moz-radial-gradient(center, ellipse cover, #bfbfbf 0%, #8e8e8e 100%); /* FF3.6+ */
@@ -33,8 +28,7 @@ body {
 }
 
 #header {
-  padding-top: 20px;
-  height: 105px;
+  padding: 40px;
   background: #ffffff; /* Old browsers */
   background: -moz-linear-gradient(top, #ffffff 0%, #e0e0e0 50%, #ffffff 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#e0e0e0), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
