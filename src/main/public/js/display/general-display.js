@@ -34,30 +34,46 @@ $(function () {
         "rob2"
       ],
       faceCount = faceList.length,
-      rowSize = 5,
-      faceRows = parseInt(faceCount / rowSize),
-      faceContainer,
-      currentRow;
-      
+      faceRepeat = 4,
+      faceContainer = $("<div id='face-grid'></div>"),
+      faceLoad = faceCount * faceRepeat,
+      faceInterval,
+      faceImage,
+      i, j;
   
-  // Add the face-grid background container
-  $("#container")
-    .prepend(
-      "<div id='face-grid'>" +
-      "</div>"
-    );
-  faceContainer = $("#face-grid");
-  
-  // Now we'll add the number of rows
-  for (var i = 0; i < faceRows; i++) {
-    faceContainer.append("<div id='face-row-" + i + "' class='row'></div>");
+  // Add the pictures: CSS is set up so that they wrap into
+  // rows automagically.  For sufficient fill-age, we add them
+  // a few times over.
+  for (j = 0; j < faceRepeat; j += 1) {
+    for (i = 0, max = faceCount; i < max; i += 1) {
+      faceImage = $("<img/>")
+        .addClass("img-polaroid face-img")
+        .attr({
+          src: "../../assets/grid-images/" + faceList[i] + ".png"
+        });
+
+      // This crazy thing is there so that the grid does not
+      // appear until everything is loaded.  The property check
+      // for complete is needed in Firefox, which does not fire
+      // the load event if the image is already in the browser cache.
+      if (faceImage.prop("complete")) {
+	  faceLoad -= 1;
+      } else {
+          faceImage.load(function () { faceLoad -= 1; });
+      }
+      faceContainer.append(faceImage);
+    }
   }
-  
-  // Finally, we'll seed each row with pictures
-  for (var j = 0; j < faceCount; j++) {
-    currentRow = parseInt(j / rowSize);
-    $("#face-row-" + currentRow)
-      .append("<div class='span2 face-img'><img src='../../assets/grid-images/" + faceList[j] + ".png' /></div>");
-  }
-    
+
+
+  // Once all images have loaded, add the face-grid background
+  // container.  We go to these lengths because, on some browsers,
+  // the layout is done before the images are all loaded, resulting
+  // in some jarring rearrangement as images appear.
+  faceInterval = setInterval(function () {
+    if (!faceLoad) {
+      $("#container").prepend(faceContainer);
+      clearInterval(faceInterval);
+    }
+  });
 });
