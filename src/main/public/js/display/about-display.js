@@ -38,8 +38,8 @@ $(function () {
           text:
             "<strong>Thank you</strong> for your interest in the Identity Mapping Project!",
           input:
-            "<button id='survey-button' class='btn float-right'>Map My Identity</button>" +
-            "<button id='home-button' class='btn float-right'>Home</button><br/>"
+            "<button id='survey-button' class='btn btn-info pull-right'>Map My Identity</button>" +
+            "<button id='home-button' class='btn btn-info pull-right'>Home</button><br/>"
         }
       ]
     )

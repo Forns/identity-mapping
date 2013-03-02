@@ -118,8 +118,12 @@ $(function () {
         
         // Create a new button at the end of the given container
         $("#" + currentSubmit.container)
-          .append("<div class='submit-container'><button id='" + currentSubmit.id + "' class='submit-button'>" + currentSubmit.text + "</button></div>");
-          
+          .append(
+            "<div class='submit-container'><button id='" + currentSubmit.id +
+            "' class='submit-button btn btn-large btn-primary'>" + currentSubmit.text +
+            "</button></div>"
+          );
+
         $("#" + currentSubmit.id)
           .button()
           .click(currentSubmit.behavior);

@@ -59,12 +59,14 @@ body {
 }
 
 .module {
-  display: inline-block;
   width: 800px;
   padding: 10px;
   background-color: rgba(225, 225, 225, 0.8);
   border-radius: 15px;
   -moz-border-radius: 15px;
+  box-shadow: 0 8px 12px #444;
+  -moz-box-shadow: 0 8px 12px #444;
+  -webkit-box-shadow: 0 8px 12px #444;
 }
 
 
