@@ -71,37 +71,34 @@ body {
  * INDEX STYLING
  */
 #main-content {
+  display: table;
   padding-top: 80px;
+  width: 100%;
 }
 
-.big-button-and-cannot-lie {
+#main-content > div {
+  display: table-row;
+}
+
+#main-content > div > div {
+  display: table-cell;
+  padding: 25px 0;
+  width: 50%;
+}
+
+button.big-button-and-cannot-lie {
+  box-shadow: 0 8px 24px #000;
+  -moz-box-shadow: 0 8px 24px #000;
+  -webkit-box-shadow: 0 8px 24px #000;
   font-size: 2em !important;
-  width: 350px;
-  height: 175px;
-  margin: 25px;
+  font-weight: bold;
+  padding: 75px 0;
+  width: 75%;
 }
 
 /*
  * SITE ACCENTS
  */
-h1 {
-  font-weight: normal;
-  font-size: 3em;
-}
-
-h2 {
-  font-weight: normal;
-  font-size: 2em;
-}
-
-.float-left {
-  float: left;
-}
-
-.float-right {
-  float: right;
-}
-
 .loading-hidden {
   display: none;
 }
