@@ -139,6 +139,7 @@ $(function () {
         .each(function () {
           var currentBox = $(this).attr("label"),
               currentId = (currentBox + "-cb").replace(" ", "-");
+          
           $(this)
             .attr("id", currentId)
             .attr("name", currentId)
@@ -147,7 +148,8 @@ $(function () {
               $(this).attr("value", ! ($(this).attr("value") === "true"));
             })
             .addClass("checkbox")
-            .after("<label for='" + currentId + "'>" + currentBox + "</label><br/>");
+            .replaceWith("<label class='checkbox'>" + $(this)[0].outerHTML + currentBox + "</label>");
+          
         })
       
       // Finally, make sure the select options have proper values
