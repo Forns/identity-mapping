@@ -13,10 +13,11 @@ $(function () {
   
   var faceList = [
         "adam1",
-        "brett1",
         "facebook",
+        "brett1",
         "freddy1",
         "brett2",
+        "googlePlus",
         "andrew1",
         "adam2",
         "bailey1",
@@ -27,6 +28,7 @@ $(function () {
         "joe1",
         "rob1",
         "andrew2",
+        "secondLife",
         "jessica1",
         "katie1",
         "kelly2"
