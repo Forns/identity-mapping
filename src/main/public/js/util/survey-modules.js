@@ -144,12 +144,13 @@ $(function () {
             .attr("id", currentId)
             .attr("name", currentId)
             .val("false")
-            .click(function () {
-              $(this).attr("value", ! ($(this).attr("value") === "true"));
-            })
             .addClass("checkbox")
             .replaceWith("<label class='checkbox'>" + $(this)[0].outerHTML + currentBox + "</label>");
           
+          $("#" + currentId)
+            .click(function () {
+              $(this).attr("value", ! ($(this).attr("value") === "true"));
+            });
         })
       
       // Finally, make sure the select options have proper values

@@ -17,7 +17,7 @@ $(function () {
       [
         {
           text:
-            "<strong>The goal</strong> of the Identity Mapping Project is to generate thousands or even millions of identity maps " +
+            "<strong>The goal</strong> of the Identity Mapping Project is to generate thousands or millions of identity maps " +
             "from around the globe and chart the nature of identity in the contemporary digital world."
         },
         
@@ -30,8 +30,8 @@ $(function () {
         
         {
           text:
-            "<strong>To participate</strong> in the project, just click on the \"Map My Identity\" button below or on the home page, and complete " +
-            "the brief, anonymous survey. After you're done, you can download a free, color-coded map of your identity."
+            "<strong>To participate</strong> in the project, just click on the \"Map My Identity\" button below or on the home page and complete " +
+            "the brief, anonymous survey. After you're done you can download a free, color-coded map of your identity."
         },
         
         {

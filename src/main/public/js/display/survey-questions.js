@@ -33,25 +33,25 @@ $(function() {
       "mod-briefing",
     
       // Title for this module
-      "Identity Mapping Project",
+      "Complete the Identity Mapping Survey and Download a Free Map of Your Identity",
       
       // List of questions for this module, if any
       [
         {
           text: 
-            "<strong>Part I of this Survey</strong> will ask you to provide the following:<br/>" +
+            "<strong>Part I of the Survey</strong> will ask you to provide the following:<br/>" +
             "(1) Basic information about your Physical Self (such as your age, sex, education, and country of residence), and <br/>" +
-            "(2) a broad overview of your presence in each of 6 digital domains: Email, Blogs, On-Line Forums, Social Networks, Digital Gaming, and 3D Virtual Worlds."
+            "(2) a broad overview of your presence in each of 6 digital domains: Blogs, On-Line Forums, Social Networks, Digital Gaming Platforms, 3D Virtual Worlds, and Emails."
         },
         
         {
           text:
-            "<strong>Part II of this Survey</strong> will ask you to provide more detailed information about your involvement in each digital domain where you currently have a presence."
+            "<strong>Part II of the Survey</strong> will ask you to provide more detailed information about your involvement in each digital domain where you currently have a presence."
         },
         
         {
           text:
-            "<strong>After you complete the survey</strong>, a graphical representation of your current identity will automatically be generated that can be downloaded for free."
+            "<strong>After you complete the survey</strong>, a color-coded map of your current identity will automatically be generated that can be downloaded for free."
         },
         
         {
@@ -63,7 +63,7 @@ $(function() {
       ]
     )
     .setSubmit(
-      "Next",
+      "Take the Survey",
       "container",
       function () {
         briefing.deleteForm();
@@ -78,12 +78,12 @@ $(function() {
   stageI
     .addModule(
       "mod-stageI-brief",
-      "Identity Mapping: Stage I",
+      "Identity Mapping Survey: Part I",
       [
         {
           text:
             "Please answer the following questions as completely and honestly as possible. Your answers are kept entirely anonymous. " +
-            "This section of the survey asks about your physical self and an overview of your virtual involvement."
+            "This section of the survey asks about your physical self and an overview of your involvement in various digital platforms."
         }
       ]
     )
@@ -93,7 +93,7 @@ $(function() {
       [
         {
           text:
-            "In what year were you born?",
+            "What year were you born?",
           input:
             "<select class='question-field'><option>Please select...</option>" +
             (function () {
@@ -403,16 +403,16 @@ $(function() {
           text:
             "Do you participate in any of the following online forums? Check all that apply:",
           input:
-            "<input type='checkbox' class='question-checkbox' label='Reddit' survey='specific' />" +
-            "<input type='checkbox' class='question-checkbox' label='Foursquare' survey='specific' />" +
-            "<input type='checkbox' class='question-checkbox' label='Digg' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='4chan' survey='specific' />" +
-            "<input type='checkbox' class='question-checkbox' label='Pinterest' survey='specific' />"
+            "<input type='checkbox' class='question-checkbox' label='Digg' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Foursquare' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Pinterest' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Reddit' survey='specific' />"
         },
         
         {
           text:
-            "To how many other online forums do you belong?",
+            "How many other online forums do you participate in?",
           input:
             countSelect
         }
@@ -428,13 +428,13 @@ $(function() {
           input:
             "<input type='checkbox' class='question-checkbox' label='Facebook' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='Google Plus' survey='specific' />" +
-            "<input type='checkbox' class='question-checkbox' label='Twitter' survey='specific' />" +
-            "<input type='checkbox' class='question-checkbox' label='Linked In' survey='specific' />"
+            "<input type='checkbox' class='question-checkbox' label='Linked In' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Twitter' survey='specific' />"
         },
         
         {
           text:
-            "To how many other social networks do you belong?",
+            "How many other social networks do you participate in?",
           input:
             countSelect
         }
@@ -448,10 +448,10 @@ $(function() {
           text:
             "Do you use any of the following digital gaming platforms? Check all that apply:",
           input:
-            "<input type='checkbox' class='question-checkbox' label='Steam' survey='specific' />" +
-            "<input type='checkbox' class='question-checkbox' label='Xbox 360' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='Playstation' survey='specific' />" +
-            "<input type='checkbox' class='question-checkbox' label='Wii' survey='specific' />"
+            "<input type='checkbox' class='question-checkbox' label='Steam' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Wii' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Xbox 360' survey='specific' />"
         },
         
         {
@@ -470,12 +470,12 @@ $(function() {
           text:
             "Indicate whether you have an account or avatar in any of the following 3D virtual worlds:",
           input:
-            "<input type='checkbox' class='question-checkbox' label='Second Life' survey='specific' />" +
-            "<input type='checkbox' class='question-checkbox' label='There' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Blue Mars' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='Cloudparty' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='IMVU' survey='specific' />" +
-            "<input type='checkbox' class='question-checkbox' label='Blue Mars' survey='specific' />" +
-            "<input type='checkbox' class='question-checkbox' label='SIMS' survey='specific' />"
+            "<input type='checkbox' class='question-checkbox' label='Second Life' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='SIMS' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='There' survey='specific' />"
         },
         
         {
