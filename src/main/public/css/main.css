@@ -80,13 +80,7 @@ body {
 }
 
 #main-content > div {
-  display: table-row;
-}
-
-#main-content > div > div {
-  display: table-cell;
-  padding: 25px 0;
-  width: 50%;
+  text-align: center;
 }
 
 button.big-button-and-cannot-lie {
@@ -95,8 +89,10 @@ button.big-button-and-cannot-lie {
   -webkit-box-shadow: 0 8px 24px #000;
   font-size: 2em !important;
   font-weight: bold;
-  padding: 75px 0;
-  width: 75%;
+  margin: 10px;
+  margin-top: 150px;
+  height: 180px;
+  width: 380px;
 }
 
 /*
