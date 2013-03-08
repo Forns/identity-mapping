@@ -119,7 +119,7 @@ $(function() {
         
         {
           text:
-            "In what country do you live?",
+            "What country do you live in?",
           input:
             "<select class='question-field'>" + 
             "<option value=''>Please select...</option>" + 
@@ -464,7 +464,7 @@ $(function() {
     )
     .addModule(
       "mod-stageI-virtual-environments",
-      "Virtual Environments",
+      "3D Virtual Worlds",
       [
         {
           text:
@@ -499,7 +499,7 @@ $(function() {
       ]
     )
     .setSubmit(
-      "Next",
+      "Go to Part II",
       "container",
       function () {
         // Adjust the page scroll
@@ -525,11 +525,11 @@ $(function() {
         // Give stage II a nice description for the users
         stageII.addModule(
           "mod-stageII-brief",
-          "Identity Mapping: Stage II",
+          "Identity Mapping Survey: Part II",
           [
             {
               text:
-                "Stage II of the Identity Mapping Project seeks to gather more detailed information about " +
+                "Part II of the survey seeks to gather more detailed information about " +
                 "your involvement in each domain. Please provide as much description as possible in the following questions... " +
                 "and thank you!"
             }
@@ -557,7 +557,7 @@ $(function() {
                 {
                   text:
                     "<strong>Please tell others</strong> about this website and have them come map their identity! " +
-                    "Our goal is to generate thousands or even millions of identity maps from around the globe and chart the nature of identity in the contemporary world."
+                    "Our goal is to generate thousands or millions of identity maps from around the globe and chart the nature of identity in the contemporary world."
                 }
               ]
             )
@@ -661,25 +661,22 @@ $(function() {
               currentQuestion.input = "<textarea class='question-field question-textarea' />";
               newQuestions.push(currentQuestion);
               
-              // Need a percentage of use slider now if there is more than one entry
-              if (currentFollowup.length > 1) {
-                newQuestions.push(
-                  {
-                    text:
-                      "How often do you typically use this " + currentSingularTitle + "? (Please select one below)",
-                    input:
-                      "<div class='text-center'><div class='btn-group btn-group-vertical scale-container' data-toggle='buttons-radio'>" +
-                        "<button type='button' class='btn scale-button'>Multiple times a day</button>" +
-                        "<button type='button' class='btn scale-button'>Daily / Almost daily</button>" +
-                        "<button type='button' class='btn scale-button'>Several times a week</button>" +
-                        "<button type='button' class='btn scale-button'>Weekly</button>" +
-                        "<button type='button' class='btn scale-button'>Several times a month</button>" +
-                        "<button type='button' class='btn scale-button'>Less than once a month</button>" +
-                      "</div></div>"
-                  }
-                );
-              }
-            }
+              newQuestions.push(
+                {
+                  text:
+                    "How often do you typically use this " + currentSingularTitle + "? (Please select one below)",
+                  input:
+                    "<div class='text-center'><div class='btn-group btn-group-vertical scale-container' data-toggle='buttons-radio'>" +
+                      "<button type='button' class='btn scale-button'>Multiple times a day</button>" +
+                      "<button type='button' class='btn scale-button'>Daily / Almost daily</button>" +
+                      "<button type='button' class='btn scale-button'>Several times a week</button>" +
+                      "<button type='button' class='btn scale-button'>Weekly</button>" +
+                      "<button type='button' class='btn scale-button'>Several times a month</button>" +
+                      "<button type='button' class='btn scale-button'>Less than once a month</button>" +
+                    "</div></div>"
+                }
+              );
+          }
             currentFollowup = newQuestions;
           }
           
