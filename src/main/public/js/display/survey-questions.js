@@ -40,8 +40,8 @@ $(function() {
         {
           text: 
             "<strong>Part I of the Survey</strong> will ask you to provide the following:<br/>" +
-            "(1) Basic information about your Physical Self (such as your age, sex, education, and country of residence), and <br/>" +
-            "(2) a broad overview of your presence in each of 6 digital domains: Blogs, On-Line Forums, Social Networks, Digital Gaming Platforms, 3D Virtual Worlds, and Emails."
+            "(1) Basic information about your Physical Self (such as your age, sex, education, and country of residence)<br/>" +
+            "(2) A broad overview of your presence in each of 6 digital domains: Blogs, On-Line Forums, Social Networks, Digital Gaming Platforms, 3D Virtual Worlds, and Emails."
         },
         
         {
@@ -51,7 +51,7 @@ $(function() {
         
         {
           text:
-            "<strong>After you complete the survey</strong>, a color-coded map of your current identity will automatically be generated that can be downloaded for free."
+            "<strong>After you complete the survey</strong>, you&rsquo;ll be able to download a free color-coded map of your current identity."
         },
         
         {
@@ -83,7 +83,7 @@ $(function() {
         {
           text:
             "Please answer the following questions as completely and honestly as possible. Your answers are kept entirely anonymous. " +
-            "This section of the survey asks about your physical self and an overview of your involvement in various digital platforms."
+            "This section of the survey asks about your physical self and an overview of your involvement in various digital domains."
         }
       ]
     )
@@ -95,29 +95,21 @@ $(function() {
           text:
             "What year were you born?",
           input:
-            "<select class='question-field'><option>Please select...</option>" +
-            (function () {
-              var result = "";
-              for (var i = new Date().getFullYear(); i > 1900; i--) {
-                result += "<option>" + i + "</option>"
-              }
-              return result;
-            })() +
-            "</select>"
+	    "<input class='question-field' type='date' placeholder='1990'/>"
+	    // TODO Insert validation code that requires a number >= 1900.
         },
         
         {
           text:
             "What is your sex?",
           input:
-            "<select class='question-field'>" +
-            "<option>Please select...</option>" +
-            "<option>Male</option>" +
-            "<option>Female</option>" +
-            "<option>Transgender</option></select>"
+	    "<label class='radio'><input name='sex' type='radio'/> Male</label>" +
+            "<label class='radio'><input name='sex' type='radio'/> Female</label>" +
+            "<label class='radio'><input name='sex' type='radio'/> Transgender</label>"
         },
         
         {
+	  // TODO Convert into an autocomplete text field.
           text:
             "What country do you live in?",
           input:
@@ -366,20 +358,21 @@ $(function() {
             "<option value='Zimbabwe'>Zimbabwe</option>" +
             "</select>"
         },
-        
+
+        // TODO Convert all other select/option elements into radio buttons.
         {
           text:
             "What is your highest level of education?",
           input:
-            "<select class='question-field'>" +
-            "<option>Please select...</option>" +
-            "<option>I did not complete high school</option>" +
-            "<option>Completed high school / Received my GED</option>" +
-            "<option>2 year college / Associate's degree</option>" +
-            "<option>4 year college / Bachelor's degree</option>" +
-            "<option>Master's Degree</option>" +
-            "<option>Doctoral Degree</option>" +
-            "<option>My education does not fit into any of these categories</option></select>"
+            "<label class='radio'><input type='radio' name='edu'/> I did not complete high school</label>" +
+            "<label class='radio'><input type='radio' name='edu'/> Completed high school / Received my GED</label>" +
+            "<label class='radio'><input type='radio' name='edu'/> 2 year college / Associate's degree</label>" +
+            "<label class='radio'><input type='radio' name='edu'/> 4 year college / Bachelor's degree</label>" +
+            "<label class='radio'><input type='radio' name='edu'/> Master's Degree</label>" +
+            "<label class='radio'><input type='radio' name='edu'/> Doctoral Degree</label>" +
+            "<label class='radio'><input type='radio' name='edu'/> My highest level of education does not fit into any of these categories.  Please explain in the box below:</label>" +
+	    // TODO Code for enabling/disabling alternative degree field.
+	    "<input placeholder='Alternative degree'/>"
         },
       ]
     )
@@ -472,10 +465,13 @@ $(function() {
           input:
             "<input type='checkbox' class='question-checkbox' label='Blue Mars' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='Cloudparty' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Hipihi' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='IMVU' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='Second Life' survey='specific' />" +
             "<input type='checkbox' class='question-checkbox' label='SIMS' survey='specific' />" +
-            "<input type='checkbox' class='question-checkbox' label='There' survey='specific' />"
+            "<input type='checkbox' class='question-checkbox' label='There' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='Utherverse' survey='specific' />" +
+            "<input type='checkbox' class='question-checkbox' label='World of Warcraft' survey='specific' />"
         },
         
         {
@@ -492,7 +488,7 @@ $(function() {
       [
         {
           text:
-            "Indicate the number of email accounts you have for your <strong>physical self</strong>:",
+            "Indicate the number of email accounts you have for your <strong>Physical Self</strong>:",
           input:
             countSelect
         }
@@ -529,9 +525,10 @@ $(function() {
           [
             {
               text:
-                "Part II of the survey seeks to gather more detailed information about " +
-                "your involvement in each domain. Please provide as much description as possible in the following questions... " +
-                "and thank you!"
+                "Part II of the survey will gather more detailed information about " +
+                "your involvement in each digital domain where you currently have a presence.  " +
+                "Please provide as much description as possible as you answer the questions in Part II... " +
+                "thank you!"
             }
           ]
         )
@@ -557,14 +554,21 @@ $(function() {
                 {
                   text:
                     "<strong>Please tell others</strong> about this website and have them come map their identity! " +
-                    "Our goal is to generate thousands or millions of identity maps from around the globe and chart the nature of identity in the contemporary world."
+                    "Our goal is to generate thousands or millions of identity maps from around the globe and chart the nature of identity in today&rsquo;s digital world."
+                },
+
+                {
+                  text:
+                    "<strong>To create your identity map</strong>, please click on the button below."
                 }
               ]
             )
             .setSubmit(
-              "OK",
+              // TODO Check the size of this button.
+              "Create My Identity Map",
               "container",
               function () {
+                // TODO This should eventually go to an identity map display.
                 window.location = "/";
               }
             )
