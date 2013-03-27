@@ -41,7 +41,7 @@ $(function() {
           text: 
             "<strong>Part I of the Survey</strong> will ask you to provide the following:<br/>" +
             "(1) Basic information about your Physical Self (such as your age, sex, education, and country of residence)<br/>" +
-            "(2) A broad overview of your presence in each of 6 digital domains: Blogs, On-Line Forums, Social Networks, Digital Gaming Platforms, 3D Virtual Worlds, and Emails."
+            "(2) A broad overview of your presence in each of six digital domains: Blogs, On-Line Forums, Social Networks, Digital Gaming Platforms, 3D Virtual Worlds, and Emails."
         },
         
         {
@@ -362,17 +362,12 @@ $(function() {
         // TODO Convert all other select/option elements into radio buttons.
         {
           text:
-            "What is your highest level of education?",
+            "How many years of formal education have you completed?",
           input:
-            "<label class='radio'><input type='radio' name='edu'/> I did not complete high school</label>" +
-            "<label class='radio'><input type='radio' name='edu'/> Completed high school / Received my GED</label>" +
-            "<label class='radio'><input type='radio' name='edu'/> 2 year college / Associate's degree</label>" +
-            "<label class='radio'><input type='radio' name='edu'/> 4 year college / Bachelor's degree</label>" +
-            "<label class='radio'><input type='radio' name='edu'/> Master's Degree</label>" +
-            "<label class='radio'><input type='radio' name='edu'/> Doctoral Degree</label>" +
-            "<label class='radio'><input type='radio' name='edu'/> My highest level of education does not fit into any of these categories.  Please explain in the box below:</label>" +
-	    // TODO Code for enabling/disabling alternative degree field.
-	    "<input placeholder='Alternative degree'/>"
+            "<label class='radio'><input type='radio' name='edu'/>Less than 12 years</label>" +
+            "<label class='radio'><input type='radio' name='edu'/>12 years</label>" +
+            "<label class='radio'><input type='radio' name='edu'/>13-16 years</label>" +
+            "<label class='radio'><input type='radio' name='edu'/>More than 16 years</label>"
         },
       ]
     )
@@ -527,8 +522,8 @@ $(function() {
               text:
                 "Part II of the survey will gather more detailed information about " +
                 "your involvement in each digital domain where you currently have a presence.  " +
-                "Please provide as much description as possible as you answer the questions in Part II... " +
-                "thank you!"
+                "Please provide as much description as possible as you answer the questions in Part II. " +
+                "Thank you!"
             }
           ]
         )
@@ -593,7 +588,23 @@ $(function() {
             if (currentMatch === null) {
               continue;
             }
-            
+
+            // TODO If the user did not indicate any particular digital domain, eliminate
+            //      it from Part II.
+
+          // TODO The first question should be restructured as follows:
+          //
+          //      You indicated that you use xxxxxxxxx.  How many names/usernames/accounts/avatars/characters
+          //      do you have in xxxxxxxxxx?
+          //
+          // Possible responses are 1, 2, 3, 4, 5 or more (just like with blogs).
+          // If 1, then ask questions as they currently are.  If 2 or more, then ask:
+          //
+          // - Please describe why you use different names/usernames/accounts/avatars/characters
+          //
+          // - Indicate frequency for the account/name/user/avatar that you use the most;
+          //   indicate the total frequency that you use all other accounts/names/users/avatars.
+
             switch(currentMatch[0]) {
               // Some answers will ask specifics about the user's online persona, we'll handle these first
               case "-cb":
@@ -602,6 +613,7 @@ $(function() {
                   specifics.push(
                     {
                       text:
+                        // JD: Indicate the number of instances per domain here.
                         "You indicated that you use " + r.replace("-cb", "") + ". Please describe your " +
                         "purpose or function when using this " + currentSingularTitle + "."
                     }
@@ -668,14 +680,12 @@ $(function() {
               newQuestions.push(
                 {
                   text:
-                    "How often do you typically use this " + currentSingularTitle + "? (Please select one below)",
+                    "How often do you typically use this " + currentSingularTitle + "?",
                   input:
                     "<div class='text-center'><div class='btn-group btn-group-vertical scale-container' data-toggle='buttons-radio'>" +
-                      "<button type='button' class='btn scale-button'>Multiple times a day</button>" +
-                      "<button type='button' class='btn scale-button'>Daily / Almost daily</button>" +
-                      "<button type='button' class='btn scale-button'>Several times a week</button>" +
-                      "<button type='button' class='btn scale-button'>Weekly</button>" +
-                      "<button type='button' class='btn scale-button'>Several times a month</button>" +
+                      "<button type='button' class='btn scale-button'>Daily</button>" +
+                      "<button type='button' class='btn scale-button'>Weekly/several times a week</button>" +
+                      "<button type='button' class='btn scale-button'>Monthly/several times a month</button>" +
                       "<button type='button' class='btn scale-button'>Less than once a month</button>" +
                     "</div></div>"
                 }
@@ -683,7 +693,7 @@ $(function() {
           }
             currentFollowup = newQuestions;
           }
-          
+
           // Finally, add the module to the stage II form
           stageII.addModule(
             currentModule.id.replace("stageI", "stageII"),
