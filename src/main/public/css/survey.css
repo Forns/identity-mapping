@@ -39,7 +39,7 @@
   width: 500px;
 }
 
-.question-checkbox {
+.question-checkbox, .question-radio {
   margin: 5px;
   margin-left: 50px;
 }

@@ -99,7 +99,7 @@ $(function () {
     },
     
     // Pushes the current form to the page inside the given container element
-    render: function (container) {
+    render: function (container, callback) {
       container = $("#" + container);
       var rendering = "<form id='" + this.id + "-form'>",
           currentSubmit;
@@ -159,6 +159,10 @@ $(function () {
         .each(function () {
           $(this).val($(this).text());
         });
+        
+      if (callback) {
+        callback();
+      }
       
       return this;
     },
@@ -170,10 +174,11 @@ $(function () {
           currentQuestion,
           currentInput,
           currentVal;
-          
+      
       // Iterate through each module...
       for (var m in this.modules) {
         currentModule = this.modules[m];
+        console.log(currentModule);
         // Then iterate through every question in the module...
         for (var q in currentModule.questions) {
           currentQuestion = currentModule.questions[q];
@@ -187,7 +192,6 @@ $(function () {
             });
         }
       }
-      
       return this;
     },
     
@@ -269,11 +273,33 @@ $(function () {
     
   }
   
+  /*
+   * SURVEY MODULE FUNCTIONS
+   */
+  
   // Creates a new form in which to hold survey modules
   $S.createForm = function (id) {
     var newForm = new Form().newForm(id);
     return newForm;
-  }
+  };
+  
+  // Substitutes a bootstrap autofill for a select menu with the given id
+  $S.convertSelectToAutofill = function (id) {
+    var currentSelect = $("#" + id),
+        currentOptions = $("option", currentSelect),
+        itemList = "[";
+        
+    currentOptions.each(function () {
+      itemList += "\"" + $(this).html() + "\", ";
+    });
+    // Shave off the last space and comma, then cap it with a bracket
+    itemList = itemList.substring(0, itemList.length - 2) + "]";
+    itemList = itemList.replace(/'/g, "");
+    
+    currentSelect.replaceWith(
+      "<input id='" + id + "' type='text' data-provide='typeahead' data-source='" + itemList + "' >"
+    );
+  };
   
 });
 

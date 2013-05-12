@@ -14,14 +14,13 @@ $(function() {
       formContainer = "container",
       
       // Constants to reduce repetition
-      countSelect = 
-        "<select class='question-field' survey='count'>" +
-        "<option>0</option>" +
-        "<option>1</option>" +
-        "<option>2</option>" +
-        "<option>3</option>" +
-        "<option>4</option>" +
-        "<option>5 or more</option></select>";
+      countRadio = 
+        "<label class='radio'><input name='--name--' type='radio' survey='count' checked />0</label>" +
+        "<label class='radio'><input name='--name--' type='radio' survey='count' />1</label>" +
+        "<label class='radio'><input name='--name--' type='radio' survey='count' />2</label>" +
+        "<label class='radio'><input name='--name--' type='radio' survey='count' />3</label>" +
+        "<label class='radio'><input name='--name--' type='radio' survey='count' />4</label>" +
+        "<label class='radio'><input name='--name--' type='radio' survey='count' />5 or more</label>";
       
   /*
    * BRIEFING
@@ -67,7 +66,12 @@ $(function() {
       "container",
       function () {
         briefing.deleteForm();
-        stageI.render(formContainer);
+        stageI.render(formContainer, function() {
+          $S.convertSelectToAutofill("country-select");
+          $("#country-select")
+            .addClass("question-field")
+            .attr("name", "country-select")
+        });
       }
     )
     .render(formContainer);
@@ -103,17 +107,17 @@ $(function() {
           text:
             "What is your sex?",
           input:
-	    "<label class='radio'><input name='sex' type='radio'/> Male</label>" +
+	          "<label class='radio'><input name='sex' type='radio'/> Male</label>" +
             "<label class='radio'><input name='sex' type='radio'/> Female</label>" +
             "<label class='radio'><input name='sex' type='radio'/> Transgender</label>"
         },
         
         {
-	  // TODO Convert into an autocomplete text field.
           text:
             "What country do you live in?",
           input:
-            "<select class='question-field'>" + 
+            // Later converted to an auto-complete
+            "<select id='country-select' class='question-field'>" + 
             "<option value=''>Please select...</option>" + 
             "<option value='United States'>United States</option>" + 
             "<option value='United Kingdom'>United Kingdom</option>" + 
@@ -359,7 +363,6 @@ $(function() {
             "</select>"
         },
 
-        // TODO Convert all other select/option elements into radio buttons.
         {
           text:
             "How many years of formal education have you completed?",
@@ -379,7 +382,7 @@ $(function() {
           text:
             "Indicate the number of blogs that you operate:",
           input:
-            countSelect
+            countRadio.replace(/--name--/g, "blogs-radio")
         }
       ]
     )
@@ -402,7 +405,7 @@ $(function() {
           text:
             "How many other online forums do you participate in?",
           input:
-            countSelect
+            countRadio.replace(/--name--/g, "forums-radio")
         }
       ]
     )
@@ -424,7 +427,7 @@ $(function() {
           text:
             "How many other social networks do you participate in?",
           input:
-            countSelect
+            countRadio.replace(/--name--/g, "social-net-radio")
         }
       ]
     )
@@ -446,7 +449,7 @@ $(function() {
           text:
             "How many other digital gaming platforms do you use?",
           input:
-            countSelect
+            countRadio.replace(/--name--/g, "gaming-platform-radio")
         }
       ]
     )
@@ -473,7 +476,7 @@ $(function() {
           text:
             "How many other 3D virtual worlds do you use?",
           input:
-            countSelect
+            countRadio.replace(/--name--/g, "virtual-world-radio")
         }
       ]
     )
@@ -485,7 +488,7 @@ $(function() {
           text:
             "Indicate the number of email accounts you have for your <strong>Physical Self</strong>:",
           input:
-            countSelect
+            countRadio.replace(/--name--/g, "email-radio")
         }
       ]
     )
