@@ -7,7 +7,7 @@
 
 // Constants to reduce repetition
 var countRadio = 
-      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='count' />0</label>" +
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='count' checked />0</label>" +
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='count' />1</label>" +
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='count' />2</label>" +
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='count' />3</label>" +

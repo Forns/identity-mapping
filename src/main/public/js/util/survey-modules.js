@@ -175,7 +175,9 @@ $(function () {
               $(this).parent().parent().val($(this).val());
             });
             
-          $(this).parent().parent().attr("name", $(this).attr("label"));
+          $(this).parent().parent()
+            .attr("name", $(this).attr("label"))
+            .val("undefined");
         });
       
       // Finally, make sure the select options have proper values

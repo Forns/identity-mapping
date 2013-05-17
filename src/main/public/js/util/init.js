@@ -14,6 +14,8 @@ loc = loc[loc.length - 1];
 switch (loc) {
   case "survey":
     includes.push("./js/display/module-list.js");
+    includes.push("./js/lib/jquery.qtip.min.js");
+    includes.push("./js/lib/jquery.validate.min.js");
     includes.push("./js/util/survey-modules.js");
     includes.push("./js/display/survey-questions.js");
     break;
