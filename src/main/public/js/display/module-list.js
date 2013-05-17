@@ -40,7 +40,12 @@ var countRadio =
             
             {
               text:
-                "<strong>Part II of the Survey</strong> will ask you to provide more detailed information about your involvement in each digital domain where you currently have a presence."
+                "<strong>Part II of the Survey</strong> will ask you to list the number of distinct names / usernames / accounts / avatars / characters you operate in a particular domain."
+            },
+            
+            {
+              text:
+                "<strong>Part III of the Survey</strong> will ask you to provide more detailed information about your involvement in each digital domain where you currently have a presence."
             },
             
             {
