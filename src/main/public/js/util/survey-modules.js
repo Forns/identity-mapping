@@ -151,7 +151,32 @@ $(function () {
             .click(function () {
               $(this).attr("value", ! ($(this).attr("value") === "true"));
             });
-        })
+        });
+      
+      var radioNames = {};
+      // Radio buttons should be named for serialization
+      $(":radio")
+        .each(function () {
+          var currentGroup = $(this).attr("name"),
+              currentId;
+          
+          if(typeof(radioNames[currentGroup]) === "undefined") {
+            radioNames[currentGroup] = 0;
+          } else {
+            radioNames[currentGroup] += 1; 
+          }
+          
+          currentId = currentGroup + "-" + radioNames[currentGroup];
+          
+          $(this)
+            .attr("id", currentId)
+            .val($(this).parent().text())
+            .click(function () {
+              $(this).parent().parent().val($(this).val());
+            });
+            
+          $(this).parent().parent().attr("name", $(this).attr("label"));
+        });
       
       // Finally, make sure the select options have proper values
       $("select.question-field")
@@ -185,7 +210,7 @@ $(function () {
           // Some questions may have multiple inputs
           currentInput = $("#" + currentQuestion.id + " " + inputClass)
             .each(function () {
-              currentVal = $(this).attr("module") ? $(this).slider("value") : $(this).val();
+              currentVal = $(this).val();
               if (currentVal) {
                 currentModule.responses[$(this).attr("name")] = currentVal;
               }

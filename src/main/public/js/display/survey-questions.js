@@ -13,9 +13,16 @@ $(function() {
       stageIMods = moduleList.stageI,
       stageII = $S.createForm("stageII"),
       stageIIMods = moduleList.stageII,
+      stageIISpecifics = {},
+      stageIIGenerals = {},
+      stageIII = $S.createForm("stageIII"),
+      stageIIIMods = moduleList.stageIII,
       stageIV = $S.createForm("stageIV"),
       stageIVMods = moduleList.stageIV,
       formContainer = "container",
+      
+      // Flags
+      surveyComplete = false,
       
       // Converts a number to its English ranking representation
       numToRank = function (num) {
@@ -141,34 +148,7 @@ $(function() {
         stageII.addModule(
           stageIIMods.briefing.id,
           stageIIMods.briefing.title,
-          stageIIMods.briefing.questions
-        )
-        .setSubmit(
-          "Submit!",
-          "container",
-          function () {
-            // Adjust the page scroll
-            $(window).scrollTop("#header");
-            stageII
-              .parseByModule("[class^=question-]")
-              .deleteForm();
-              
-            stageIV.addModule(
-              stageIVMods.id,
-              stageIVMods.title,
-              stageIVMods.questions
-            )
-            .setSubmit(
-              // TODO Check the size of this button.
-              "Create My Identity Map",
-              "container",
-              function () {
-                // TODO This should eventually go to an identity map display.
-                window.location = "/";
-              }
-            )
-            .render("container");
-          }
+          (stageI.modules.length > 1) ? stageIIMods.briefing.questions : stageIIMods.empty.questions
         );
         
         // Now, we need to construct part II of the survey from the responses in part I
@@ -180,31 +160,14 @@ $(function() {
           currentSingularTitle = currentModule.title.substring(0, currentModule.title.length - 1);
           
           // First, we'll take a look at all of the responses in the current module...
-          console.log(currentModule.responses);
           for (var r in currentModule.responses) {
             currentResponse = currentModule.responses[r];
-            currentMatch = r.match(/-cb$|-field$/g);
+            currentMatch = r.match(/-cb$|-radio$/g);
             
             // If the input requests no response, just move on
             if (currentMatch === null) {
               continue;
             }
-
-            // TODO If the user did not indicate any particular digital domain, eliminate
-            //      it from Part II.
-
-          // TODO The first question should be restructured as follows:
-          //
-          //      You indicated that you use xxxxxxxxx.  How many names/usernames/accounts/avatars/characters
-          //      do you have in xxxxxxxxxx?
-          //
-          // Possible responses are 1, 2, 3, 4, 5 or more (just like with blogs).
-          // If 1, then ask questions as they currently are.  If 2 or more, then ask:
-          //
-          // - Please describe why you use different names/usernames/accounts/avatars/characters
-          //
-          // - Indicate frequency for the account/name/user/avatar that you use the most;
-          //   indicate the total frequency that you use all other accounts/names/users/avatars.
 
             switch(currentMatch[0]) {
               // Some answers will ask specifics about the user's online persona, we'll handle these first
@@ -215,22 +178,26 @@ $(function() {
                     {
                       text:
                         // JD: Indicate the number of instances per domain here.
-                        "You indicated that you use " + r.replace("-cb", "") + ". Please describe your " +
-                        "purpose or function when using this " + currentSingularTitle + "."
+                        "You indicated that you use " + r.replace("-cb", "") + ". How many names, " +
+                        "usernames, accounts, avatars, and characters do you have in this " + currentSingularTitle + "?",
+                        
+                      domain: r.replace("-cb", "")
                     }
                   );
                 }
                 break;
               // Some answers will simply be, "how many other instances of this platform do you use?"
-              case "-field":
+              case "-radio":
                 currentResponse = parseInt(currentResponse);
                 for (var i = 1; i <= currentResponse; i++) {
                   generals.push(
                     {
                       text: 
                         "You indicated that you use additional " + currentModule.title + ". " +
-                        "Please describe your purpose or function when using the " + numToRank(i) +
-                        " " + currentSingularTitle + "."
+                        "How many names, usernames, accounts, avatars, and characters do you have in " +
+                        "the " + numToRank(i) +" " + currentSingularTitle + "?",
+                        
+                      domain: currentSingularTitle
                     }
                   );
                 }
@@ -243,51 +210,173 @@ $(function() {
           
           // If we have any additional questions for this section, we'll add them here
           currentFollowup = specifics.concat(generals);
-          if (currentFollowup.length === 0) {
-            currentFollowup.push({
-              text:
-                "There are no additional questions for this category."
-            });
-          } else {
+          stageIISpecifics[currentModule.id.replace("stageI", "stageII")] = specifics;
+          stageIIGenerals[currentModule.id.replace("stageI", "stageII")] = generals;
+          if (currentFollowup.length !== 0) {
             var currentQuestion,
-                newQuestions = [],
-                currentSliderId = "";
-            // We still need to add textareas to each question and add the frequency
-            // of use question
+                newQuestions = [];
+                
+            // Now, add the questions to the module
             for (var i = 0; i < currentFollowup.length; i++) {
               currentQuestion = currentFollowup[i];
-              currentQuestion.input = "<textarea class='question-field question-textarea' />";
+              currentQuestion.input = countRadio.replace(/--name--/g, currentModule.id.replace("stageI", "stageII") + "-radio-" + i);
               newQuestions.push(currentQuestion);
-              
-              newQuestions.push(
-                {
-                  text:
-                    "How often do you typically use this " + currentSingularTitle + "?",
-                  input:
-                    "<div class='text-center'><div class='btn-group btn-group-vertical scale-container' data-toggle='buttons-radio'>" +
-                      "<button type='button' class='btn scale-button'>Daily</button>" +
-                      "<button type='button' class='btn scale-button'>Weekly/several times a week</button>" +
-                      "<button type='button' class='btn scale-button'>Monthly/several times a month</button>" +
-                      "<button type='button' class='btn scale-button'>Less than once a month</button>" +
-                    "</div></div>"
-                }
-              );
-          }
+            }
             currentFollowup = newQuestions;
+            
+            // Finally, add the module to the stage II form
+            stageII.addModule(
+              currentModule.id.replace("stageI", "stageII"),
+              currentModule.title,
+              currentFollowup
+            );
           }
-
-          // Finally, add the module to the stage II form
-          stageII.addModule(
-            currentModule.id.replace("stageI", "stageII"),
-            currentModule.title,
-            currentFollowup
-          );
         }
         
         // Then render stage II!
-        stageII.render("container");
+        stageII
+          .setSubmit(
+            "Go to Part III",
+            "container",
+            function () {
+              // Adjust the page scroll
+              $(window).scrollTop("#header");
+              stageII
+                .parseByModule("[class^=question-]")
+                .deleteForm();
+
+  /*
+   * STAGE III
+   */
+              // Stage III begins with a descriptive title section
+              stageIII.addModule(
+                stageIIIMods.briefing.id,
+                stageIIIMods.briefing.title,
+                (stageII.modules.length > 1) ? stageIIIMods.briefing.questions : stageIIIMods.empty.questions
+              );
+              
+              var currentFollowup,
+                  currentQuestion,
+                  currentModule,
+                  currentSingularTitle,
+                  currentSpecifics,
+                  currentGenerals,
+                  responseCount,
+                  generalCount,
+                  generalTrack,
+                  emptyResponse = true;
+              
+              // Now, we need to construct part III of the survey from the responses in part II
+              for (var m = 1; m < stageII.modules.length; m++) {
+                currentFollowup = [];
+                currentQuestion = {};
+                currentModule = stageII.modules[m];
+                currentSingularTitle = currentModule.title.substring(0, currentModule.title.length - 1);
+                currentSpecifics = stageIISpecifics[currentModule.id];
+                currentGenerals = stageIIGenerals[currentModule.id];
+                responseCount = 0;
+                generalCount = 1;
+                generalTrack = 0;
+                emptyResponse = false;
+                
+                if (currentSpecifics.length === 0 && currentGenerals.length === 0) {
+                  continue;
+                }
+                
+                // First, we'll take a look at all of the responses in the current module...
+                for (var r in currentModule.responses) {
+                  currentResponse = parseInt(currentModule.responses[r]);
+                  
+                  for (var i = 1; i <= currentResponse; i++) {
+                    currentQuestion = {};
+                    // If the number of responses is greater than the number of "specifics", then we know
+                    // we're on to the general questions
+                    if (responseCount < currentSpecifics.length) {
+                      currentQuestion.text =
+                        "You indicated that you operate " + currentResponse + " name(s) / username(s) / account(s) / avatar(s) / character(s) " +
+                        "in " + currentSpecifics[responseCount].domain + ". Please describe your purpose or " +
+                        "function when using the " + numToRank(i) +  " name / username / account / avatar / character."
+                    } else {
+                      currentQuestion.text =
+                        "You indicated that you operate " + currentResponse + " name(s) / username(s) / account(s) / avatar(s) / character(s) " +
+                        "in the " + numToRank(generalCount) + " additional " + currentGenerals[responseCount - currentSpecifics.length].domain + ". Please describe your purpose or " +
+                        "function when using the " + numToRank(i) + " name / username / account / avatar / character."
+                      generalTrack++;
+                      
+                      // Correctly labels the current additional blog 
+                      if (generalTrack === currentResponse) {
+                        generalCount++;
+                        generalTrack = 0;
+                      }
+                    }
+                    currentQuestion.input = "<textarea class='question-field question-textarea' />";
+                    currentFollowup.push(currentQuestion);
+                    
+                    // Then, ask about the frequency of use
+                    currentFollowup.push(
+                      {
+                        text:
+                          "How often do you typically use this name / username / account / avatar / character?",
+                        input:
+                          frequencyRadio.replace(/--name--/g, r.replace("stageII", "stageIII"))
+                      }
+                    );
+                  }
+                  
+                  responseCount++;
+                }
+                
+                // Finally, add the module to the stage III form
+                stageIII.addModule(
+                  currentModule.id.replace("stageII", "stageIII"),
+                  currentModule.title,
+                  currentFollowup
+                );
+              }
+              
+              // Render stage III
+              stageIII
+                .setSubmit(
+                  "Submit!",
+                  "container",
+                  function () {
+                    // Adjust the page scroll
+                    $(window).scrollTop("#header");
+                    stageIII
+                      .parseByModule("[class^=question-]")
+                      .deleteForm();
+                      
+                    surveyComplete = true;
+                    
+                    stageIV.addModule(
+                      stageIVMods.id,
+                      stageIVMods.title,
+                      stageIVMods.questions
+                    )
+                    .setSubmit(
+                      "Create My Identity Map",
+                      "container",
+                      function () {
+                        // TODO This should eventually go to an identity map display.
+                        window.location = "/";
+                      }
+                    )
+                    .render("container");
+                  }
+                )
+                .render("container");
+            }
+          )
+          .render("container");
       }
     );
     
-  
+  // Warn the user that they have not submitted their survey yet if they
+  // are at an adequate point of progress
+  $(window).on("beforeunload", function () {
+    if (!surveyComplete) {
+      return "[!] WARNING: You have not yet completed the survey.";
+    }
+  });
+    
 });

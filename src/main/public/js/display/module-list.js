@@ -7,13 +7,19 @@
 
 // Constants to reduce repetition
 var countRadio = 
-      "<label class='radio'><input name='--name--' type='radio' survey='count' checked />0</label>" +
-      "<label class='radio'><input name='--name--' type='radio' survey='count' />1</label>" +
-      "<label class='radio'><input name='--name--' type='radio' survey='count' />2</label>" +
-      "<label class='radio'><input name='--name--' type='radio' survey='count' />3</label>" +
-      "<label class='radio'><input name='--name--' type='radio' survey='count' />4</label>" +
-      "<label class='radio'><input name='--name--' type='radio' survey='count' />5 or more</label>";
-    
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='count' />0</label>" +
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='count' />1</label>" +
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='count' />2</label>" +
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='count' />3</label>" +
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='count' />4</label>" +
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='count' />5 or more</label>",
+      
+    frequencyRadio = 
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='frequency' />Daily</label>" +
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='frequency' />Weekly / Several times a week</label>" +
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='frequency' />Monthly / Several times a month</label>" +
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='frequency' />Less than once a month</label>",
+          
     // List of modules
     moduleList = {
       
@@ -486,10 +492,45 @@ var countRadio =
           questions: [
             {
               text:
-                "Part II of the survey will gather more detailed information about " +
+                "Part II of the survey will gather information about the various accounts you operate " +
+                "in each digital domain. Thank you!"
+            }
+          ]
+        },
+        
+        empty: {
+          questions: [
+            {
+              text:
+                "You indicated that you do not use any digital medium! Please click the button below to continue the survey."
+            }
+          ]
+        }
+      },
+      
+      /*
+       * STAGE III
+       */
+      stageIII: {
+        briefing: {
+          id: "mod-stageIII-brief",
+          title: "Identity Mapping Survey: Part III",
+          questions: [
+            {
+              text:
+                "Part III of the survey will gather more detailed information about " +
                 "your involvement in each digital domain where you currently have a presence.  " +
                 "Please provide as much description as possible as you answer the questions in Part II. " +
                 "Thank you!"
+            }
+          ]
+        },
+        
+        empty: {
+          questions: [
+            {
+              text:
+                "You indicated that you do not operate any accounts! Please click the button below to continue the survey."
             }
           ]
         }
