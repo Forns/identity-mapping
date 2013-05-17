@@ -13,10 +13,12 @@ loc = loc[loc.length - 1];
 // Page specific inclusions
 switch (loc) {
   case "survey":
+    includes.push("./js/display/module-list.js");
     includes.push("./js/util/survey-modules.js");
     includes.push("./js/display/survey-questions.js");
     break;
   case "about":
+    includes.push("./js/display/module-list.js");
     includes.push("./js/util/survey-modules.js");
     includes.push("./js/display/about-display.js");
     break;
