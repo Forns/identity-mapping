@@ -407,10 +407,10 @@ var countRadio =
               text:
                 "Do you belong to any of the following social networks? Check all that apply:",
               input:
-                "<input type='checkbox' class='question-checkbox' label='Online-Dating Site' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Facebook' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Google Plus' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Linked In' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='Online Dating Site' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Twitter' survey='specific' />"
             },
             
@@ -457,12 +457,12 @@ var countRadio =
                 "<input type='checkbox' class='question-checkbox' label='Blue Mars' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Cloudparty' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Hipihi' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='Kaneva' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='IMVU' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Second Life' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='SIMS' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='There' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Utherverse' survey='specific' />" +
-                "<input type='checkbox' class='question-checkbox' label='Kaneva' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='World of Warcraft' survey='specific' />"
             },
             
