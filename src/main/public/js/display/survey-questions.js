@@ -178,10 +178,10 @@ $(function() {
                     {
                       text:
                         // JD: Indicate the number of instances per domain here.
-                        "You indicated that you use " + r.replace("-cb", "") + ". How many names, " +
+                        "You indicated that you use " + r.replace("-cb", "").replace(/-/g, " ") + ". How many names, " +
                         "usernames, accounts, avatars, and characters do you have in this " + currentSingularTitle + "?",
                         
-                      domain: r.replace("-cb", "")
+                      domain: r.replace("-cb", "").replace(/-/g, " ")
                     }
                   );
                 }

@@ -86,8 +86,7 @@ var countRadio =
               text:
                 "What year were you born?",
               input:
-                "<input class='question-field' type='date' placeholder='1990'/>"
-                // TODO Insert validation code that requires a number >= 1900.
+                "<input class='question-field' type='date' />"
             },
             
             {
@@ -356,7 +355,8 @@ var countRadio =
               input:
                 "<label class='radio'><input type='radio' name='edu'/>Less than 12 years</label>" +
                 "<label class='radio'><input type='radio' name='edu'/>12 years</label>" +
-                "<label class='radio'><input type='radio' name='edu'/>13-16 years</label>" +
+                "<label class='radio'><input type='radio' name='edu'/>13-15 years</label>" +
+                "<label class='radio'><input type='radio' name='edu'/>16 years</label>" +
                 "<label class='radio'><input type='radio' name='edu'/>More than 16 years</label>"
             },
           ]
@@ -407,6 +407,7 @@ var countRadio =
               text:
                 "Do you belong to any of the following social networks? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox' label='Online-Dating Site' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Facebook' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Google Plus' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Linked In' survey='specific' />" +
@@ -461,6 +462,7 @@ var countRadio =
                 "<input type='checkbox' class='question-checkbox' label='SIMS' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='There' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Utherverse' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='Kaneva' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='World of Warcraft' survey='specific' />"
             },
             
