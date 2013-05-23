@@ -49,12 +49,7 @@ var countRadio =
             
             {
               text:
-                "<strong>Part II of the Survey</strong> will ask you to list the number of distinct names / usernames / accounts / avatars / characters you operate in a particular domain."
-            },
-            
-            {
-              text:
-                "<strong>Part IIa of the Survey</strong> will ask you to provide more detailed information about your involvement in each digital domain where you currently have a presence. Please provide as much description as possible as you answer the questions in Part II. Thank you!"
+                "<strong>Part II of the Survey</strong> will ask you to provide more detailed information about your involvement in each digital domain where you currently have a presence."
             },
 
             {
@@ -570,18 +565,18 @@ var countRadio =
                 "<p>The last section of the survey finds out " +
                 "whether there are any <i>Crossover Accounts</i> in your digital identity.  " +
                 "What is a &ldquo;Crossover Account?&rdquo;  " +
-                "A crossover account is when you create a user name " +
-                "(other than your physical name) in a digital application " +
+                "A crossover account is when you (1) create a user name " +
+                "<strong>that is different from your physical name</strong> in a digital application " +
                 "(e.g., email, Facebook, Twitter, virtual worlds, etc.) " +
-                "and later use this identity in one or more <i>other</i> digital applications.</p>" +
+                "and (2) you later use this identity in another digital applications.</p>" +
 
                 "<p>For example, let&rsquo;s say your physical name is &ldquo;John Smith&rdquo; " +
                 "and you create a user name or identity of &ldquo;Merlin Merlot&rdquo; on Facebook.  " +
                 "Then, at a later point, Merlin Merlot becomes the name of an avatar you control in a virtual world, " +
                 "or a character you control in a digital gaming platform, " +
-                "or a Twitter handler you use, or an email account name.  " +
+                "or a Twitter handle you use, or an email account name.  " +
                 "In each case, the identity of Merlin Merlot was created in one digital domain or application (Facebook), " +
-                "and has now &ldquo;crossed over&rdquo; into one or more other digital domain or application " +
+                "and has now &ldquo;crossed over&rdquo; into one or more other digital domains or applications " +
                 "(virtual world, digital gaming, Twitter, email).</p>"
 	    }
           ]
