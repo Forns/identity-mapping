@@ -15,6 +15,8 @@ $(function() {
       stageIIMods = moduleList.stageII,
       stageIISpecifics = {},
       stageIIGenerals = {},
+      stageIIa = $S.createForm("stageIIa"),
+      stageIIaMods = moduleList.stageIIa,
       stageIII = $S.createForm("stageIII"),
       stageIIIMods = moduleList.stageIII,
       stageIV = $S.createForm("stageIV"),
@@ -237,7 +239,7 @@ $(function() {
         // Then render stage II!
         stageII
           .setSubmit(
-            "Go to Part III",
+            "Go to Part IIa",
             "container",
             function () {
               // Adjust the page scroll
@@ -247,13 +249,13 @@ $(function() {
                 .deleteForm();
 
   /*
-   * STAGE III
+   * STAGE IIa
    */
-              // Stage III begins with a descriptive title section
-              stageIII.addModule(
-                stageIIIMods.briefing.id,
-                stageIIIMods.briefing.title,
-                (stageII.modules.length > 1) ? stageIIIMods.briefing.questions : stageIIIMods.empty.questions
+              // Stage IIa begins with a descriptive title section
+              stageIIa.addModule(
+                stageIIaMods.briefing.id,
+                stageIIaMods.briefing.title,
+                (stageII.modules.length > 1) ? stageIIaMods.briefing.questions : stageIIaMods.empty.questions
               );
               
               var currentFollowup,
@@ -327,39 +329,57 @@ $(function() {
                   responseCount++;
                 }
                 
-                // Finally, add the module to the stage III form
-                stageIII.addModule(
-                  currentModule.id.replace("stageII", "stageIII"),
+                // Finally, add the module to the stage IIa form
+                stageIIa.addModule(
+                  currentModule.id.replace("stageII", "stageIIa"),
                   currentModule.title,
                   currentFollowup
                 );
               }
               
-              // Render stage III
-              stageIII
+              // Render stage IIa
+              stageIIa
                 .setSubmit(
-                  "Submit!",
+                  "Go to Part III",
                   "container",
                   function () {
                     // Adjust the page scroll
                     $(window).scrollTop("#header");
-                    stageIII
+                    stageIIa
                       .parseByModule("[class^=question-]")
                       .deleteForm();
-                      
-                    surveyComplete = true;
-                    
-                    stageIV.addModule(
-                      stageIVMods.id,
-                      stageIVMods.title,
-                      stageIVMods.questions
-                    )
+
+                    stageIII.addModule(
+		      stageIIIMods.briefing.id,
+                      stageIIIMods.briefing.title,
+		      stageIIIMods.briefing.questions
+		    )
                     .setSubmit(
-                      "Create My Identity Map",
+                      "Submit!",
                       "container",
                       function () {
-                        // TODO This should eventually go to an identity map display.
-                        window.location = "/";
+                        // Adjust the page scroll                                                                                                              
+                        $(window).scrollTop("#header");
+                        stageIII
+                          .parseByModule("[class^=question-]")
+                          .deleteForm();
+
+                        surveyComplete = true;
+                    
+                        stageIV.addModule(
+                          stageIVMods.id,
+                          stageIVMods.title,
+                          stageIVMods.questions
+                        )
+                        .setSubmit(
+                          "Create My Identity Map",
+                          "container",
+                          function () {
+                            // TODO This should eventually go to an identity map display.
+                            window.location = "/";
+                          }
+                        )
+                        .render("container");
                       }
                     )
                     .render("container");
