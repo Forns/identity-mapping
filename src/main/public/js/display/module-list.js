@@ -20,6 +20,15 @@ var countRadio =
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='frequency' />Monthly / Several times a month</label>" +
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='frequency' />Less than once a month</label>",
           
+    countSelect = 
+       "<select class='question-field' survey='count' name='--name--'>" +
+       "<option>0</option>" +
+       "<option>1</option>" +
+       "<option>2</option>" +
+       "<option>3</option>" +
+       "<option>4</option>" +
+       "<option>5 or more</option></select>",
+
     // List of modules
     moduleList = {
       
@@ -370,7 +379,7 @@ var countRadio =
               text:
                 "Indicate the number of blogs that you operate:",
               input:
-                countRadio.replace(/--name--/g, "blogs-radio")
+                countSelect.replace(/--name--/g, "blogs-radio")
             }
           ]
         },
@@ -394,7 +403,7 @@ var countRadio =
               text:
                 "How many other online forums do you participate in?",
               input:
-                countRadio.replace(/--name--/g, "forums-radio")
+                countSelect.replace(/--name--/g, "forums-radio")
             }
           ]
         },
@@ -418,7 +427,7 @@ var countRadio =
               text:
                 "How many other social networks do you participate in?",
               input:
-                countRadio.replace(/--name--/g, "social-net-radio")
+                countSelect.replace(/--name--/g, "social-net-radio")
             }
           ]
         },
@@ -441,7 +450,7 @@ var countRadio =
               text:
                 "How many other digital gaming platforms do you use?",
               input:
-                countRadio.replace(/--name--/g, "gaming-platform-radio")
+                countSelect.replace(/--name--/g, "gaming-platform-radio")
             }
           ]
         },
@@ -470,7 +479,7 @@ var countRadio =
               text:
                 "How many other 3D virtual worlds do you use?",
               input:
-                countRadio.replace(/--name--/g, "virtual-world-radio")
+                countSelect.replace(/--name--/g, "virtual-world-radio")
             }
           ]
         },
@@ -483,7 +492,7 @@ var countRadio =
               text:
                 "Indicate the number of email accounts you have for your <strong>Physical Self</strong>:",
               input:
-                countRadio.replace(/--name--/g, "email-radio")
+                countSelect.replace(/--name--/g, "email-radio")
             }
           ]
         },

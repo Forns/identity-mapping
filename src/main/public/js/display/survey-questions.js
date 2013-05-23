@@ -131,7 +131,7 @@ $(function() {
             currentSingularTitle,
             currentResponse,
             currentFollowup,
-            currentMatch
+            currentMatch,
             specifics = [],
             generals = [];
             
@@ -162,7 +162,7 @@ $(function() {
           // First, we'll take a look at all of the responses in the current module...
           for (var r in currentModule.responses) {
             currentResponse = currentModule.responses[r];
-            currentMatch = r.match(/-cb$|-radio$/g);
+            currentMatch = r.match(/-cb$|-radio$|-field$/g);
             
             // If the input requests no response, just move on
             if (currentMatch === null) {
@@ -187,6 +187,7 @@ $(function() {
                 }
                 break;
               // Some answers will simply be, "how many other instances of this platform do you use?"
+              case "-field":
               case "-radio":
                 currentResponse = parseInt(currentResponse);
                 for (var i = 1; i <= currentResponse; i++) {
