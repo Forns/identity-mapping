@@ -222,7 +222,7 @@ $(function() {
             // Now, add the questions to the module
             for (var i = 0; i < currentFollowup.length; i++) {
               currentQuestion = currentFollowup[i];
-              currentQuestion.input = countRadio.replace(/--name--/g, currentModule.id.replace("stageI", "stageII") + "-radio-" + i);
+              currentQuestion.input = countSelect.replace(/--name--/g, currentModule.id.replace("stageI", "stageII") + "-radio-" + i);
               newQuestions.push(currentQuestion);
             }
             currentFollowup = newQuestions;
