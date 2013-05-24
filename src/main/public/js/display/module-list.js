@@ -508,8 +508,9 @@ var countRadio =
           questions: [
             {
               text:
-                "Part II of the survey will gather information about the various accounts you operate " +
-                "in each digital domain. Thank you!"
+                "Part II of the survey will ask you to provide more detailed information about your involvement " +
+                "in each digital domain where you currently have a presence. Once again, please answer the questions " +
+                "as fully and accurately as possible. Thank you!"
             }
           ]
         },
@@ -568,7 +569,7 @@ var countRadio =
                       "A crossover account is when you (1) create a user name " +
                       "<strong>that is different from your physical name</strong> in a digital application " +
                       "(e.g., email, Facebook, Twitter, virtual worlds, etc.) " +
-                      "and (2) you later use this identity in another digital applications.</p>" +
+                      "and (2) you later use this identity in another digital application.</p>" +
       
                       "<p>For example, let&rsquo;s say your physical name is &ldquo;John Smith&rdquo; " +
                       "and you create a user name or identity of &ldquo;Merlin Merlot&rdquo; on Facebook.  " +
