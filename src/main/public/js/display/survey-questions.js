@@ -270,7 +270,7 @@ $(function() {
                   emptyResponse = true,
                   noFollowups = true;
               
-              // Now, we need to construct part III of the survey from the responses in part II
+              // Now, we need to construct part IIa of the survey from the responses in part II
               for (var m = 1; m < stageII.modules.length; m++) {
                 currentFollowup = [];
                 currentQuestion = {};
@@ -293,21 +293,39 @@ $(function() {
                 for (var r in currentModule.responses) {
                   currentResponse = parseInt(currentModule.responses[r]);
                   
-                  for (var i = 1; i <= currentResponse; i++) {
+                  // Only continue if the current response requires more inquiry
+                  if (currentResponse > 0) {
                     noFollowups = false;
                     currentQuestion = {};
                     // If the number of responses is greater than the number of "specifics", then we know
                     // we're on to the general questions
                     if (responseCount < currentSpecifics.length) {
-                      currentQuestion.text =
-                        "You indicated that you operate " + currentResponse + " name(s) / username(s) / account(s) / avatar(s) / character(s) " +
-                        "in " + currentSpecifics[responseCount].domain + ". Please describe your purpose or " +
-                        "function when using the " + numToRank(i) +  " name / username / account / avatar / character."
+                      // We have a different question for the unique case versus the multiple accounts case
+                      if (currentResponse === 1) {
+                        currentQuestion.text =
+                          "You indicated that you operate 1 name / username / account / avatar / character " +
+                          "in " + currentSpecifics[responseCount].domain + ". Please describe your purpose or " +
+                          "function when using this name / username / account / avatar / character."
+                      } else {
+                        currentQuestion.text =
+                          "You indicated that you operate " + currentResponse + " names / usernames / accounts / avatars / characters " +
+                          "in " + currentSpecifics[responseCount].domain + ". Please explain the reason you have multiple " +
+                          currentSpecifics[responseCount].domain + " accounts. Furthermore, please explain the individual purpose or function " +
+                          "of each account."
+                      }
                     } else {
-                      currentQuestion.text =
-                        "You indicated that you operate " + currentResponse + " name(s) / username(s) / account(s) / avatar(s) / character(s) " +
-                        "in the " + numToRank(generalCount) + " additional " + currentGenerals[responseCount - currentSpecifics.length].domain + ". Please describe your purpose or " +
-                        "function when using the " + numToRank(i) + " name / username / account / avatar / character."
+                      if (currentResponse === 1) {
+                        currentQuestion.text =
+                          "You indicated that you operate 1 name / username / account / avatar / character " +
+                          "in the " + numToRank(generalCount) + " additional " + currentGenerals[responseCount - currentSpecifics.length].domain + ". Please describe your purpose or " +
+                          "function when using this name / username / account / avatar / character."
+                      } else {
+                        currentQuestion.text =
+                          "You indicated that you operate " + currentResponse + " names / usernames / accounts / avatars / characters " +
+                          "in the " + numToRank(generalCount) + " additional " + currentGenerals[responseCount - currentSpecifics.length].domain + ". Please explain the reason you have multiple " +
+                          currentGenerals[responseCount - currentSpecifics.length].domain + " accounts. Furthermore, please explain the individual purpose or function " +
+                          "of each account."
+                      }
                       generalTrack++;
                       
                       // Correctly labels the current additional blog 
@@ -320,14 +338,16 @@ $(function() {
                     currentFollowup.push(currentQuestion);
                     
                     // Then, ask about the frequency of use
-                    currentFollowup.push(
-                      {
-                        text:
-                          "How often do you typically use this name / username / account / avatar / character?",
-                        input:
-                          frequencyRadio.replace(/--name--/g, r.replace("stageII", "stageIII"))
-                      }
-                    );
+                    for (var i = 1; i <= currentResponse; i++) {
+                      currentFollowup.push(
+                        {
+                          text:
+                            "How often do you typically use the " + ((currentResponse === 1) ? "" : numToRank(i)) + " name / username / account / avatar / character?",
+                          input:
+                            frequencyRadio.replace(/--name--/g, r.replace("stageII", "stageIII"))
+                        }
+                      );
+                    }
                   }
                   
                   responseCount++;
@@ -355,12 +375,51 @@ $(function() {
                       .parseByModule("[class^=question-]")
                       .deleteForm();
 
+                    // Add the stage III description
                     stageIII.addModule(
 		                  stageIIIMods.briefing.id,
                       stageIIIMods.briefing.title,
             		      stageIIIMods.briefing.questions
-            		    )
-                    .setSubmit(
+            		    );
+            		    
+            		    var currentFollowup,
+                      currentQuestion,
+                      currentModule,
+                      currentSingularTitle,
+                      currentSpecifics,
+                      currentGenerals,
+                      responseCount,
+                      generalCount,
+                      generalTrack,
+                      emptyResponse = true,
+                      noFollowups = true;
+            		    
+            		    // Now, we need to construct part III of the survey from the responses in part II
+                    for (var m = 1; m < stageII.modules.length; m++) {
+                      currentFollowup = [];
+                      currentQuestion = {};
+                      currentModule = stageII.modules[m];
+                      currentSingularTitle = currentModule.title.substring(0, currentModule.title.length - 1);
+                      currentSpecifics = stageIISpecifics[currentModule.id];
+                      currentGenerals = stageIIGenerals[currentModule.id];
+                      responseCount = 0;
+                      generalCount = 1;
+                      generalTrack = 0;
+                      noFollowups = true;
+                      
+                      // Make sure there were at least some followups to perform for this section
+                      if ((currentSpecifics.length === 0 && currentGenerals.length === 0)) {
+                        continue;
+                      }
+                      emptyResponse = false;
+                      
+                      // First, we'll take a look at all of the responses in the current module...
+                      for (var r in currentModule.responses) {
+                        currentResponse = parseInt(currentModule.responses[r]);
+                      }
+                    }
+            		    
+                    stageIII.setSubmit(
                       "Submit!",
                       "container",
                       function () {
