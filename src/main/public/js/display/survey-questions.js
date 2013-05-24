@@ -267,7 +267,8 @@ $(function() {
                   responseCount,
                   generalCount,
                   generalTrack,
-                  emptyResponse = true;
+                  emptyResponse = true,
+                  noFollowups = true;
               
               // Now, we need to construct part III of the survey from the responses in part II
               for (var m = 1; m < stageII.modules.length; m++) {
@@ -280,17 +281,20 @@ $(function() {
                 responseCount = 0;
                 generalCount = 1;
                 generalTrack = 0;
-                emptyResponse = false;
+                noFollowups = true;
                 
-                if (currentSpecifics.length === 0 && currentGenerals.length === 0) {
+                // Make sure there were at least some followups to perform for this section
+                if ((currentSpecifics.length === 0 && currentGenerals.length === 0)) {
                   continue;
                 }
+                emptyResponse = false;
                 
                 // First, we'll take a look at all of the responses in the current module...
                 for (var r in currentModule.responses) {
                   currentResponse = parseInt(currentModule.responses[r]);
                   
                   for (var i = 1; i <= currentResponse; i++) {
+                    noFollowups = false;
                     currentQuestion = {};
                     // If the number of responses is greater than the number of "specifics", then we know
                     // we're on to the general questions
@@ -329,12 +333,14 @@ $(function() {
                   responseCount++;
                 }
                 
-                // Finally, add the module to the stage IIa form
-                stageIIa.addModule(
-                  currentModule.id.replace("stageII", "stageIIa"),
-                  currentModule.title,
-                  currentFollowup
-                );
+                // Finally, add the module to the stage IIa form as long as there are followups
+                if (!noFollowups) {
+                  stageIIa.addModule(
+                    currentModule.id.replace("stageII", "stageIIa"),
+                    currentModule.title,
+                    currentFollowup
+                  );
+                }
               }
               
               // Render stage IIa
@@ -350,10 +356,10 @@ $(function() {
                       .deleteForm();
 
                     stageIII.addModule(
-		      stageIIIMods.briefing.id,
+		                  stageIIIMods.briefing.id,
                       stageIIIMods.briefing.title,
-		      stageIIIMods.briefing.questions
-		    )
+            		      stageIIIMods.briefing.questions
+            		    )
                     .setSubmit(
                       "Submit!",
                       "container",

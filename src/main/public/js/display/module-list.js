@@ -558,38 +558,38 @@ var countRadio =
       stageIII: {
         briefing: {
           id: "mod-stageIII-brief",
-	  title: "Identity Mapping Survey: Part III",
-	  questions: [
-	    {
-	      text:
-                "<p>The last section of the survey finds out " +
-                "whether there are any <i>Crossover Accounts</i> in your digital identity.  " +
-                "What is a &ldquo;Crossover Account?&rdquo;  " +
-                "A crossover account is when you (1) create a user name " +
-                "<strong>that is different from your physical name</strong> in a digital application " +
-                "(e.g., email, Facebook, Twitter, virtual worlds, etc.) " +
-                "and (2) you later use this identity in another digital applications.</p>" +
-
-                "<p>For example, let&rsquo;s say your physical name is &ldquo;John Smith&rdquo; " +
-                "and you create a user name or identity of &ldquo;Merlin Merlot&rdquo; on Facebook.  " +
-                "Then, at a later point, Merlin Merlot becomes the name of an avatar you control in a virtual world, " +
-                "or a character you control in a digital gaming platform, " +
-                "or a Twitter handle you use, or an email account name.  " +
-                "In each case, the identity of Merlin Merlot was created in one digital domain or application (Facebook), " +
-                "and has now &ldquo;crossed over&rdquo; into one or more other digital domains or applications " +
-                "(virtual world, digital gaming, Twitter, email).</p>"
-	    }
+	        title: "Identity Mapping Survey: Part III",
+      	  questions: [
+      	    {
+      	      text:
+                      "<p>The last section of the survey finds out " +
+                      "whether there are any <i>Crossover Accounts</i> in your digital identity.  " +
+                      "What is a &ldquo;Crossover Account?&rdquo;  " +
+                      "A crossover account is when you (1) create a user name " +
+                      "<strong>that is different from your physical name</strong> in a digital application " +
+                      "(e.g., email, Facebook, Twitter, virtual worlds, etc.) " +
+                      "and (2) you later use this identity in another digital applications.</p>" +
+      
+                      "<p>For example, let&rsquo;s say your physical name is &ldquo;John Smith&rdquo; " +
+                      "and you create a user name or identity of &ldquo;Merlin Merlot&rdquo; on Facebook.  " +
+                      "Then, at a later point, Merlin Merlot becomes the name of an avatar you control in a virtual world, " +
+                      "or a character you control in a digital gaming platform, " +
+                      "or a Twitter handle you use, or an email account name.  " +
+                      "In each case, the identity of Merlin Merlot was created in one digital domain or application (Facebook), " +
+                      "and has now &ldquo;crossed over&rdquo; into one or more other digital domains or applications " +
+                      "(virtual world, digital gaming, Twitter, email).</p>"
+      	    }
           ]
-	},
+      },
 
         empty: {
-	  questions: [
-	    {
-	      text:
-                "Under construction!"
-	    }
+      	  questions: [
+      	    {
+      	      text:
+                      "Under construction!"
+      	    }
           ]
-	}
+      	}
       },
       /*
        * STAGE IV
