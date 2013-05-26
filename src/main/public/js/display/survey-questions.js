@@ -68,12 +68,7 @@ $(function() {
       "container",
       function () {
         briefing.deleteForm();
-        stageI.render(formContainer, function() {
-          $S.convertSelectToAutofill("country-select");
-          $("#country-select")
-            .addClass("question-field")
-            .attr("name", "country-select")
-        });
+        stageI.render(formContainer);
       }
     )
     .render(formContainer);

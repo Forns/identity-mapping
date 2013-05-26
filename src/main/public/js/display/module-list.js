@@ -28,6 +28,19 @@ var countRadio =
        "<option>3</option>" +
        "<option>4</option>" +
        "<option>5 or more</option></select>",
+       
+    yearSelect =
+      "<select id='demo-year-select' class='question-field'>" +
+      "<option>Please select...</option>" +
+      (function() {
+        var result = "",
+            currentYear = new Date().getFullYear();
+        for (var i = 0; i < 150; i++) {
+          result += "<option>" + (currentYear - i) + "</option>"
+        }
+        return result;
+      })() +
+      "</select>",
 
     // List of modules
     moduleList = {
@@ -95,7 +108,7 @@ var countRadio =
               text:
                 "What year were you born?",
               input:
-                "<input class='question-field' type='date' />"
+                yearSelect
             },
             
             {
@@ -111,7 +124,6 @@ var countRadio =
               text:
                 "What country do you live in?",
               input:
-                // Later converted to an auto-complete
                 "<select id='country-select' class='question-field'>" + 
                 "<option value=''>Please select...</option>" + 
                 "<option value='United States'>United States</option>" + 
@@ -563,22 +575,22 @@ var countRadio =
       	  questions: [
       	    {
       	      text:
-                      "<p>The last section of the survey finds out " +
-                      "whether there are any <i>Crossover Accounts</i> in your digital identity.  " +
-                      "What is a &ldquo;Crossover Account?&rdquo;  " +
-                      "A crossover account is when you (1) create a user name " +
-                      "<strong>that is different from your physical name</strong> in a digital application " +
-                      "(e.g., email, Facebook, Twitter, virtual worlds, etc.) " +
-                      "and (2) you later use this identity in another digital application.</p>" +
-      
-                      "<p>For example, let&rsquo;s say your physical name is &ldquo;John Smith&rdquo; " +
-                      "and you create a user name or identity of &ldquo;Merlin Merlot&rdquo; on Facebook.  " +
-                      "Then, at a later point, Merlin Merlot becomes the name of an avatar you control in a virtual world, " +
-                      "or a character you control in a digital gaming platform, " +
-                      "or a Twitter handle you use, or an email account name.  " +
-                      "In each case, the identity of Merlin Merlot was created in one digital domain or application (Facebook), " +
-                      "and has now &ldquo;crossed over&rdquo; into one or more other digital domains or applications " +
-                      "(virtual world, digital gaming, Twitter, email).</p>"
+                "<p>The last section of the survey finds out " +
+                "whether there are any <i>Crossover Accounts</i> in your digital identity.  " +
+                "What is a &ldquo;Crossover Account?&rdquo;  " +
+                "A crossover account is when you (1) create a user name " +
+                "<strong>that is different from your physical name</strong> in a digital application " +
+                "(e.g., email, Facebook, Twitter, virtual worlds, etc.) " +
+                "and (2) you later use this identity in another digital application.</p>" +
+
+                "<p>For example, let&rsquo;s say your physical name is &ldquo;John Smith&rdquo; " +
+                "and you create a user name or identity of &ldquo;Merlin Merlot&rdquo; on Facebook.  " +
+                "Then, at a later point, Merlin Merlot becomes the name of an avatar you control in a virtual world, " +
+                "or a character you control in a digital gaming platform, " +
+                "or a Twitter handle you use, or an email account name.  " +
+                "In each case, the identity of Merlin Merlot was created in one digital domain or application (Facebook), " +
+                "and has now &ldquo;crossed over&rdquo; into one or more other digital domains or applications " +
+                "(virtual world, digital gaming, Twitter, email).</p>"
       	    }
           ]
       },
@@ -587,7 +599,7 @@ var countRadio =
       	  questions: [
       	    {
       	      text:
-                      "Under construction!"
+                "Under construction!"
       	    }
           ]
       	}
