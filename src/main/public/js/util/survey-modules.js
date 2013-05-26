@@ -73,6 +73,7 @@ $(function () {
       this.id = (id) ? id : "form" + formId++;
       this.modules = [];
       this.submitButtons = [];
+      this.rendered = false;
       return this;
     },
     
@@ -102,6 +103,7 @@ $(function () {
     render: function (container, callback) {
       container = $("#" + container);
       var rendering = "<form id='" + this.id + "-form'>",
+          lastModule = this.modules[this.modules.length - 1],
           currentSubmit;
       
       // First, we'll iterate through each module
@@ -117,7 +119,7 @@ $(function () {
         currentSubmit = this.submitButtons[s];
         
         // Create a new button at the end of the given container
-        $("#" + currentSubmit.container)
+        $("#" + lastModule.id)
           .append(
             "<div class='submit-container'><button id='" + currentSubmit.id +
             "' class='submit-button btn btn-large btn-primary'>" + currentSubmit.text +
@@ -191,6 +193,7 @@ $(function () {
         callback();
       }
       
+      this.rendered = true;
       return this;
     },
     
@@ -230,6 +233,8 @@ $(function () {
       for (var s in this.submitButtons) {
         $("#" + this.submitButtons[s].id).remove();
       }
+      
+      this.rendered = false;
       return this;
     }
     
@@ -246,12 +251,16 @@ $(function () {
       this.title = title;
       this.questions = [];
       this.responses = {};
+      this.rendered = false;
       // Add all questions to this module for rendering
       for (var q in questionList) {
         this.questions.push(new Question().newQuestion(questionList[q]));
       }
       return this;
     },
+    
+    // Removes a question in the current Module and animates its removal
+    // if the particular module has already been rendered
     
     // Internal HTML-returning function to render a module with its questions
     render: function () {
@@ -264,6 +273,7 @@ $(function () {
       }
       
       rendering += "</div>";
+      this.rendered = true;
       return rendering;
     }
     

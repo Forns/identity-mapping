@@ -35,7 +35,11 @@ $(function () {
       ],
       faceCount = faceList.length,
       faceRepeat = 4,
-      faceContainer = $("<div id='face-grid'></div>"),
+      faceContainer = $("<div id='face-grid' class='face-margins-even'></div>"),
+      // The ideal, css set margins for the case grid;
+      // They are defined here soas to be invariant to later adjustment
+      faceContainerMarginLeft = -80,
+      faceContainerMarginRight = -80,
       faceLoad = faceCount * faceRepeat,
       faceInterval,
       faceImage,
@@ -64,7 +68,30 @@ $(function () {
       faceContainer.append(faceImage);
     }
   }
-
+  
+  // Fix for the face tiles in the event that the window is too small
+  // to accommodate an even number of tiles; we adjust the faceContainer
+  // on the sides (margins left and right) in order to facilitate a cleaner
+  // look for the main buttons
+  $(window).resize(function () {
+    // Width of each tile in pixels plus border
+    var faceWidth = 180 + 2 * parseInt($(".face-img").css("margin")),
+        effectiveWindow = $(window).width() - faceContainerMarginLeft - faceContainerMarginRight;
+    
+    // If we can fit an even number of tiles into the grid, then we'll do so
+    if (Math.floor(effectiveWindow / faceWidth) % 2 === 0) {
+      faceContainer
+        .removeClass("face-margins-odd")
+        .addClass("face-margins-even");
+    
+    // Otherwise, there's only enough room for an odd quantity, so we'll modify
+    // the face container margins
+    } else {
+      faceContainer
+        .removeClass("face-margins-even")
+        .addClass("face-margins-odd");
+    }
+  });
 
   // Once all images have loaded, add the face-grid background
   // container.  We go to these lengths because, on some browsers,
@@ -73,6 +100,7 @@ $(function () {
   faceInterval = setInterval(function () {
     if (!faceLoad) {
       $("#container").prepend(faceContainer);
+      $(window).trigger("resize");
       clearInterval(faceInterval);
     }
   });

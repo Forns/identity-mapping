@@ -48,9 +48,16 @@ body {
 }
 
 #face-grid {
-  margin: 20px -80px;
   position: fixed;
   z-index: -10;
+}
+
+.face-margins-even {
+  margin: 20px -80px;
+}
+
+.face-margins-odd {
+  margin: 20px 20px;
 }
 
 .face-img {
