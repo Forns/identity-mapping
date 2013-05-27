@@ -61,7 +61,8 @@ $(function () {
       // Form, Module, and Question IDs for dynamic naming if no ids are provided
       formId = 0,
       moduleId = 0,
-      questionId = 0;
+      questionId = 0,
+      followupCount = 0;
   
   /*
    * FORM CONFIGURATION
@@ -259,8 +260,71 @@ $(function () {
       return this;
     },
     
-    // Removes a question in the current Module and animates its removal
+    // Removes a question in the calling Module and animates its removal
     // if the particular module has already been rendered
+    removeQuestionByIndex: function (index) {
+      this.questions[index].removeQuestion();
+      this.questions.splice(index, 1);
+      return this;
+    },
+    
+    // Adds a question in the calling Module and animates its addition
+    // if the particular module has already been rendered
+    // If the isFollowup flag is true, then the added question will have
+    // an id of the form [previous_question_name]-followup# where # is an
+    // incrementing value
+    addQuestionByIndex: function (index, question, isFollowup) {
+      var q = question,
+          rendering;
+      if (typeof(question) !== "Question") {
+        q = new Question().newQuestion(question);
+      }
+      if (isFollowup) {
+        q.id = ($("#" + this.questions[index - 1].id))
+          ? this.questions[index - 1].id + "-followup" + followupCount++
+          : this.id + "-followup" + followupCount++;
+      }
+      rendering = q.render();
+      
+      // Make sure the stated index always properly adds to the question
+      // list (acts as a push if it's too high an index)
+      if (index > this.questions.length) {
+        index = this.questions.length;
+      }
+      
+      // Now, add the HTML where it belongs in the survey
+      if (index === 0) {
+        $("#" + this.id).prepend(rendering);
+      } else {
+        $("#" + this.questions[index - 1].id).after(rendering);
+      }
+      
+      this.questions.splice(index, 0, q);
+      
+      // Animate the question addition if the current module has been rendered
+      if (this.rendered) {
+        $("#" + this.questions[index].id).slideDown();
+      }
+      
+      return this;
+    },
+    
+    // Adds a question in the calling Module after the question with
+    // the given id. If no such id is found, the question is not added.
+    // If the isFollowup flag is true, then the added question will have
+    // an id of the form [previous_question_name]-followup# where # is an
+    // incrementing value
+    addQuestionAfter: function (afterQuestion, question, isFollowup) {
+      var i = 0;
+      while (i < this.questions.length) {
+        if (this.questions[i].id === afterQuestion) {
+          this.addQuestionByIndex(i + 1, question, isFollowup);
+          return this;
+        }
+        i++;
+      }
+      return this;
+    },
     
     // Internal HTML-returning function to render a module with its questions
     render: function () {
@@ -289,7 +353,18 @@ $(function () {
       this.id = (question.id) ? question.id : "question" + questionId++;
       this.text = question.text;
       this.input = question.input;
+      this.rendered = false;
       return this;
+    },
+    
+    // Removes the current question, and animates its removal if it's been rendered
+    removeQuestion: function () {
+      if (this.rendered) {
+        $("#" + this.id)
+          .slideUp(function () {
+            $(this).remove();
+          });
+      }
     },
     
     // Internal HTML-returning function to render a question with its inputs
@@ -304,6 +379,7 @@ $(function () {
       
       // No need to keep the input html
       delete this.input;
+      this.rendered = false;
       
       return rendering;
     }
