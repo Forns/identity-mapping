@@ -22,6 +22,7 @@ $(function() {
       stageIV = $S.createForm("stageIV"),
       stageIVMods = moduleList.stageIV,
       formContainer = "container",
+      finalAnswers = {},
       
       // Flags
       surveyComplete = false,
@@ -130,12 +131,20 @@ $(function() {
       stageIMods.email.title,
       stageIMods.email.questions
     )
+    // Submit function for Stage I -> Stage II
     .setSubmit(
       "Go to Part II",
       "container",
       function () {
         // Adjust the page scroll
         $(window).scrollTop("#header");
+        
+        // Collect the demographic data first
+        finalAnswers["demo"] = {};
+        finalAnswers["demo"]["birth-year"] = $("#demo-year-select").val();
+        finalAnswers["demo"]["sex"] = $("input:radio[name='sex']:checked").val();
+        finalAnswers["demo"]["country"] = $("#country-select").val();
+        finalAnswers["demo"]["education"] = $("input:radio[name='edu']:checked").val();
         
         var currentModule,
             currentSingularTitle,

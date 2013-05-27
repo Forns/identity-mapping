@@ -304,9 +304,9 @@ var countRadio =
               text:
                 "What is your sex?",
               input:
-                "<label class='radio'><input name='sex' type='radio'/> Male</label>" +
-                "<label class='radio'><input name='sex' type='radio'/> Female</label>" +
-                "<label class='radio'><input name='sex' type='radio'/> Transgender</label>"
+                "<label class='radio'><input name='sex' type='radio'/>Male</label>" +
+                "<label class='radio'><input name='sex' type='radio'/>Female</label>" +
+                "<label class='radio'><input name='sex' type='radio'/>Transgender</label>"
             },
             
             {
