@@ -68,7 +68,20 @@ $(function() {
       "container",
       function () {
         briefing.deleteForm();
-        stageI.render(formContainer);
+        stageI.render(formContainer, function () {
+          // Quick fix for our two edge case items (emails and blogs)
+          // that require different checkbox titles than their values
+          $("#mod-stageI-blogs :checkbox")
+            .attr("id", "Blogs-cb")
+            .attr("name", "Blogs-cb");
+          $("#mod-stageI-email :checkbox")
+            .attr("id", "Emails-cb")
+            .attr("name", "Emails-cb");
+          $("#Emails-cb, #Blogs-cb")
+            .click(function () {
+              $(this).attr("value", ! ($(this).attr("value") === "true"));
+            });
+        });
       }
     )
     .render(formContainer);

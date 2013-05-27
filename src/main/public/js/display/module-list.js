@@ -48,7 +48,7 @@ var countRadio =
       "Blogs": {
         verb: "operate",
         account: "Blogs",
-        countQuestion: "How many blog accounts do you operate in the"
+        countQuestion: "How many blog accounts do you operate?"
       },
       
       // Online Forums
@@ -227,7 +227,7 @@ var countRadio =
       "Emails": {
         verb: "use",
         account: "email accounts",
-        countQuestion: "How many email accounts do you operate in the"
+        countQuestion: "How many email accounts do you operate?"
       }
     }
 
@@ -578,9 +578,9 @@ var countRadio =
           questions: [
             {
               text:
-                "Indicate the number of blogs that you operate:",
+                "Do you operate one or more Blog?",
               input:
-                countSelect.replace(/--name--/g, "blogs-radio")
+                "<input type='checkbox' class='question-checkbox' label='Yes, I operate one or more blog' survey='specific' />"
             }
           ]
         },
@@ -691,9 +691,9 @@ var countRadio =
           questions: [
             {
               text:
-                "Indicate the number of email accounts you have for your <strong>Physical Self</strong>:",
+                "Do you possess one or more email accounts for your <strong>Physical Self</strong>?",
               input:
-                countSelect.replace(/--name--/g, "email-radio")
+                "<input type='checkbox' class='question-checkbox' label='Yes, I operate one or more email accounts' survey='specific' />"
             }
           ]
         },
