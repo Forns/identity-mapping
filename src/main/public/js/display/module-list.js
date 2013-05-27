@@ -41,6 +41,195 @@ var countRadio =
         return result;
       })() +
       "</select>",
+      
+    // Map that consists of the proper verb / account combinations of various digital mediums
+    idiomMap = {
+      // Blogs
+      "Blogs": {
+        verb: "operate",
+        account: "Blogs",
+        countQuestion: "How many blog accounts do you operate in the"
+      },
+      
+      // Online Forums
+      "Online Forums": {
+        verb: "participate in",
+        account: "Online Forums",
+        countQuestion: "How many forum accounts do you operate in the"
+      },
+      
+      "4chan": {
+        verb: "use",
+        account: "accounts / tripcodes",
+        countQuestion: "How many accounts / tripcodes do you operate on 4chan?"
+      },
+      
+      "Digg": {
+        verb: "use",
+        account: "accounts",
+        countQuestion: "How many accounts do you operate on Digg?"
+      },
+      
+      "Foursquare": {
+        verb: "use",
+        account: "accounts",
+        countQuestion: "How many accounts do you operate on Foursquare?"
+      },
+      
+      "Pinterest": {
+        verb: "use",
+        account: "accounts",
+        countQuestion: "How many accounts do you operate on Pinterest?"
+      },
+      
+      "Reddit": {
+        verb: "use",
+        account: "accounts",
+        countQuestion: "How many accounts do you operate on Reddit?"
+      },
+      
+      // Social Networks
+      "Social Networks": {
+        verb: "use",
+        account: "Social Networks",
+        countQuestion: "How many profiles do you have in the"
+      },
+      
+      "Facebook": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have on Facebook?"
+      },
+      
+      "Google Plus": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have on Google Plus?"
+      },
+      
+      "Linked In": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have on Linked In?"
+      },
+      
+      "Online Dating Sites": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have across Online Dating Sites?"
+      },
+      
+      "Twitter": {
+        verb: "use",
+        account: "handles",
+        countQuestion: "How many handles do you have on Twitter?"
+      },
+      
+      // Digital Gaming Platforms
+      "Digital Gaming Platforms": {
+        verb: "use",
+        account: "Digital Gaming Platforms",
+        countQuestion: "During the last 6 months, in how many games have you been an active player within the"
+      },
+      
+      "Playstation": {
+        verb: "use",
+        account: "Playstation",
+        countQuestion: "During the last 6 months, how many games have you actively played on the Playstation?"
+      },
+      
+      "Steam": {
+        verb: "use",
+        account: "Steam",
+        countQuestion: "During the last 6 months, how many games have you actively played on Steam?"
+      },
+      
+      "Wii": {
+        verb: "use",
+        account: "Wii",
+        countQuestion: "During the last 6 months, how many games have you actively played on the Wii?"
+      },
+      
+      "Xbox 360": {
+        verb: "use",
+        account: "Xbox 360",
+        countQuestion: "During the last 6 months, how many games have you actively played on the Xbox 360?"
+      },
+      
+      // 3D Virtual Worlds
+      "3D Virtual Worlds": {
+        verb: "participate in",
+        account: "3D Virtual Worlds",
+        countQuestion: "How many avatars do you currently have in the"
+      },
+      
+      "Blue Mars": {
+        verb: "participate in",
+        account: "Blue Mars",
+        countQuestion: "How many avatars do you currently have in Blue Mars?"
+      },
+      
+      "Cloudparty": {
+        verb: "participate in",
+        account: "Cloudparty",
+        countQuestion: "How many avatars do you currently have in Cloudparty?"
+      },
+      
+      "Hipihi": {
+        verb: "participate in",
+        account: "Hipihi",
+        countQuestion: "How many avatars do you currently have in Hipihi?"
+      },
+      
+      "Kaneva": {
+        verb: "participate in",
+        account: "Kaneva",
+        countQuestion: "How many avatars do you currently have in Kaneva?"
+      },
+      
+      "IMVU": {
+        verb: "participate in",
+        account: "IMVU",
+        countQuestion: "How many avatars do you currently have in IMVU?"
+      },
+      
+      "Second Life": {
+        verb: "participate in",
+        account: "Second Life",
+        countQuestion: "How many avatars do you currently have in Second Life?"
+      },
+      
+      "SIMS": {
+        verb: "participate in",
+        account: "SIMS",
+        countQuestion: "How many avatars do you currently have in SIMS?"
+      },
+      
+      "There": {
+        verb: "participate in",
+        account: "There",
+        countQuestion: "How many avatars do you currently have in There?"
+      },
+      
+      "Utherverse": {
+        verb: "participate in",
+        account: "Utherverse",
+        countQuestion: "How many avatars do you currently have in Utherverse?"
+      },
+      
+      "World of Warcraft": {
+        verb: "participate in",
+        account: "World of Warcraft",
+        countQuestion: "How many avatars do you currently have in World of Warcraft?"
+      },
+      
+      // Emails
+      "Emails": {
+        verb: "use",
+        account: "email accounts",
+        countQuestion: "How many email accounts do you operate in the"
+      }
+    }
 
     // List of modules
     moduleList = {
@@ -431,7 +620,7 @@ var countRadio =
                 "<input type='checkbox' class='question-checkbox' label='Facebook' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Google Plus' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Linked In' survey='specific' />" +
-                "<input type='checkbox' class='question-checkbox' label='Online Dating Site' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='Online Dating Sites' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Twitter' survey='specific' />"
             },
             

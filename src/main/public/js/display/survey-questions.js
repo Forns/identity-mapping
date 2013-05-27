@@ -126,11 +126,13 @@ $(function() {
         
         var currentModule,
             currentSingularTitle,
+            currentDomain,
             currentResponse,
             currentFollowup,
             currentMatch,
             specifics = [],
-            generals = [];
+            generals = [],
+            generalModifier;
             
         // We've named each input of interest as question-field or question-checkbox
         // so we can gather the user responses by question
@@ -171,29 +173,30 @@ $(function() {
               case "-cb":
                 // Only continue if the user actually selected this digital medium
                 if (currentResponse === "true") { // Relax, it's the string "true", not the Boolean
+                  currentDomain = r.replace("-cb", "").replace(/-/g, " ");
                   specifics.push(
                     {
                       text:
                         // JD: Indicate the number of instances per domain here.
-                        "You indicated that you use " + r.replace("-cb", "").replace(/-/g, " ") + ". How many names, " +
-                        "usernames, accounts, avatars, and characters do you have in this " + currentSingularTitle + "?",
+                        "You indicated that you " + idiomMap[currentDomain].verb + " " + currentDomain + ". " +
+                        idiomMap[currentDomain].countQuestion,
                         
-                      domain: r.replace("-cb", "").replace(/-/g, " ")
+                      domain: currentDomain
                     }
                   );
                 }
                 break;
               // Some answers will simply be, "how many other instances of this platform do you use?"
               case "-field":
-              case "-radio":
                 currentResponse = parseInt(currentResponse);
+                generalModifier = (currentModule.title === "Emails" || currentModule.title === "Blogs") ? "" : "additional";
                 for (var i = 1; i <= currentResponse; i++) {
                   generals.push(
                     {
                       text: 
-                        "You indicated that you use additional " + currentModule.title + ". " +
-                        "How many names, usernames, accounts, avatars, and characters do you have in " +
-                        "the " + numToRank(i) +" " + currentSingularTitle + "?",
+                        "You indicated that you " + idiomMap[currentModule.title].verb + " one or more " + generalModifier + " " +
+                        idiomMap[currentModule.title].account + ". " + idiomMap[currentModule.title].countQuestion + " " +
+                        numToRank(i) + " " + generalModifier + " " + currentSingularTitle + "?",
                         
                       domain: currentSingularTitle
                     }
@@ -439,16 +442,20 @@ $(function() {
                             window.location = "/";
                           }
                         )
-                        .render("container");
+                        .render(formContainer);
                       }
                     )
-                    .render("container");
+                    .render(formContainer);
                   }
                 )
-                .render("container");
+                .render(formContainer);
             }
           )
-          .render("container");
+          // Need a callback to attach event listeners to the stage 2 "number of accounts"
+          // questions to dynamically add questions underneath them
+          .render(formContainer, function () {
+            
+          });
       }
     );
     

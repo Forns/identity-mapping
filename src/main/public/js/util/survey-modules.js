@@ -209,7 +209,6 @@ $(function () {
       // Iterate through each module...
       for (var m in this.modules) {
         currentModule = this.modules[m];
-        console.log(currentModule);
         // Then iterate through every question in the module...
         for (var q in currentModule.questions) {
           currentQuestion = currentModule.questions[q];
