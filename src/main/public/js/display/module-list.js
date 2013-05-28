@@ -727,34 +727,6 @@ var countRadio =
       },
       
       /*
-       * STAGE IIa
-       */
-      stageIIa: {
-        briefing: {
-          id: "mod-stageIIa-brief",
-          title: "Identity Mapping Survey: Part IIa",
-          questions: [
-            {
-              text:
-                "Part IIa of the survey will gather more detailed information about " +
-                "your involvement in each digital domain where you currently have a presence.  " +
-                "Please provide as much description as possible as you answer the questions in Part II. " +
-                "Thank you!"
-            }
-          ]
-        },
-        
-        empty: {
-          questions: [
-            {
-              text:
-                "You indicated that you do not operate any accounts! Please click the button below to continue the survey."
-            }
-          ]
-        }
-      },
-      
-      /*
        * STAGE III
        */
       stageIII: {
