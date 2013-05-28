@@ -85,6 +85,16 @@ $(function () {
       return this;
     },
     
+    // Returns the module matching the given id
+    getModuleById: function (id) {
+      for (var m in this.modules) {
+        if (this.modules[m].id === id) {
+          return this.modules[m];
+        }
+      }
+      return null;
+    },
+    
     // Allows for easy submission behavior for form
     setSubmit: function (buttonText, container, behavior) {
       var buttonId = this.id + "-submit";
@@ -259,11 +269,47 @@ $(function () {
       return this;
     },
     
+    // Returns the question with the matching id
+    getQuestionById: function (id) {
+      for (var q in this.questions) {
+        if (this.questions[q].id === id) {
+          return this.questions[q];
+        }
+      }
+      return null;
+    },
+    
     // Removes a question in the calling Module and animates its removal
     // if the particular module has already been rendered
     removeQuestionByIndex: function (index) {
       this.questions[index].removeQuestion();
       this.questions.splice(index, 1);
+      return this;
+    },
+    
+    // Removes an exact or set of matching question ids in the calling module,
+    // and animates its removal if the particular module has already been
+    // rendered
+    removeQuestionsById: function (pattern, exactMatch) {
+      // Exact match by default
+      if (typeof(exactMatch) === "undefined") {
+        exactMatch = true;
+      }
+      if (exactMatch) {
+        for (var q = 0; q < this.questions.length; q++) {
+          if (this.questions[q].id === pattern) {
+            this.removeQuestionByIndex(q);
+            return this;
+          }
+        }
+      } else {
+        for (var q = 0; q < this.questions.length; q++) {
+          if (this.questions[q].id.match(pattern)) {
+            this.removeQuestionByIndex(q);
+            q--;
+          }
+        }
+      }
       return this;
     },
     
@@ -352,6 +398,7 @@ $(function () {
       this.id = (question.id) ? question.id : "question" + questionId++;
       this.text = question.text;
       this.input = question.input;
+      this.domain = question.domain;
       this.rendered = false;
       return this;
     },
@@ -378,7 +425,7 @@ $(function () {
       
       // No need to keep the input html
       delete this.input;
-      this.rendered = false;
+      this.rendered = true;
       
       return rendering;
     }

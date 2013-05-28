@@ -47,6 +47,14 @@ $(function() {
         }
         
         return num + addon;
+      },
+      
+      // Finds the correct preceding article for the given noun
+      correctIndefiniteArticle = function (noun) {
+        if (["a", "e", "i", "o", "u"].indexOf(noun[0].toLowerCase()) !== -1) {
+          return "an";
+        }
+        return "a";
       };
       
   /*
@@ -230,7 +238,7 @@ $(function() {
                         idiomMap[currentModule.title].account + ". " + idiomMap[currentModule.title].countQuestion + " " +
                         numToRank(i) + " " + generalModifier + " " + currentSingularTitle + "?",
                         
-                      domain: currentSingularTitle
+                      domain: currentModule.title
                     }
                   );
                 }
@@ -486,7 +494,57 @@ $(function() {
           // Need a callback to attach event listeners to the stage 2 "number of accounts"
           // questions to dynamically add questions underneath them
           .render(formContainer, function () {
-            
+            $("select[survey='count']")
+              .change(function () {
+                var currentId = $(this).parent().attr("id").split("-")[0],
+                    currentValue = parseInt($(this).val()),
+                    currentModule = stageII.getModuleById($("#" + currentId).closest(".module").attr("id")),
+                    currentQuestion = currentModule.getQuestionById(currentId),
+                    currentIdioms = idiomMap[currentQuestion.domain],
+                    currentSingularTitle = currentIdioms.account.substring(0, currentIdioms.account.length - 1);
+                    
+                // Begin by removing questions from the calling module
+                currentModule
+                  .removeQuestionsById(currentId + "-frequency-", false)
+                  .removeQuestionsById(currentId + "-purpose", false);
+                  
+                // Add the description question as long as the input wasn't 0
+                if (currentValue > 0) {
+                  currentModule.addQuestionAfter(
+                    currentId,
+                    {
+                      id:
+                        currentId + "-purpose",
+                      text:
+                        (currentValue === 1)
+                          ? "You indicated that you " + currentIdioms.verb + " " + correctIndefiniteArticle(currentQuestion.domain) +
+                          " " + currentQuestion.domain + " " + currentSingularTitle + ". What is your function or purpose in using this " +
+                          currentSingularTitle + "?"
+                          : "You indicated that you " + currentIdioms.verb + " multiple " + " " + currentQuestion.domain + " " +
+                          currentIdioms.account + ". Please explain the reason that you " + currentIdioms.verb + " multiple " + currentIdioms.account +
+                          " and then describe the different purpose or function of each " + currentSingularTitle + ".",
+                      input:
+                        "<textarea class='question-field question-textarea' />"
+                    }
+                  );
+                }
+                  
+                // Now, for each of the number of accounts indicated, ask the frequency of use question
+                for (var i = currentValue; i >= 1; i--) {
+                  currentModule.addQuestionAfter(
+                    currentId,
+                    {
+                      id:
+                        currentId + "-frequency-" + i,
+                      text:
+                        "How often do you " + currentIdioms.verb + " the " + numToRank(i) + " " +
+                        currentSingularTitle + "?",
+                      input:
+                        frequencyRadio.replace(/--name--/g, currentId + "-frequency-" + i + "-radio")
+                    }
+                  );
+                }
+              });
           });
       }
     );

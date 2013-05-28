@@ -47,20 +47,20 @@ var countRadio =
       // Blogs
       "Blogs": {
         verb: "operate",
-        account: "Blogs",
+        account: "accounts",
         countQuestion: "How many blog accounts do you operate?"
       },
       
       // Online Forums
       "Online Forums": {
-        verb: "participate in",
-        account: "Online Forums",
+        verb: "operate",
+        account: "accounts",
         countQuestion: "How many forum accounts do you operate in the"
       },
       
       "4chan": {
         verb: "use",
-        account: "accounts / tripcodes",
+        account: "accounts",
         countQuestion: "How many accounts / tripcodes do you operate on 4chan?"
       },
       
@@ -128,105 +128,105 @@ var countRadio =
       // Digital Gaming Platforms
       "Digital Gaming Platforms": {
         verb: "use",
-        account: "Digital Gaming Platforms",
+        account: "games",
         countQuestion: "During the last 6 months, in how many games have you been an active player within the"
       },
       
       "Playstation": {
         verb: "use",
-        account: "Playstation",
+        account: "games",
         countQuestion: "During the last 6 months, how many games have you actively played on the Playstation?"
       },
       
       "Steam": {
         verb: "use",
-        account: "Steam",
+        account: "games",
         countQuestion: "During the last 6 months, how many games have you actively played on Steam?"
       },
       
       "Wii": {
         verb: "use",
-        account: "Wii",
+        account: "games",
         countQuestion: "During the last 6 months, how many games have you actively played on the Wii?"
       },
       
       "Xbox 360": {
         verb: "use",
-        account: "Xbox 360",
+        account: "games",
         countQuestion: "During the last 6 months, how many games have you actively played on the Xbox 360?"
       },
       
       // 3D Virtual Worlds
       "3D Virtual Worlds": {
-        verb: "participate in",
-        account: "3D Virtual Worlds",
+        verb: "operate",
+        account: "avatars",
         countQuestion: "How many avatars do you currently have in the"
       },
       
       "Blue Mars": {
-        verb: "participate in",
-        account: "Blue Mars",
+        verb: "operate",
+        account: "avatars",
         countQuestion: "How many avatars do you currently have in Blue Mars?"
       },
       
       "Cloudparty": {
-        verb: "participate in",
-        account: "Cloudparty",
+        verb: "operate",
+        account: "avatars",
         countQuestion: "How many avatars do you currently have in Cloudparty?"
       },
       
       "Hipihi": {
-        verb: "participate in",
-        account: "Hipihi",
+        verb: "operate",
+        account: "avatars",
         countQuestion: "How many avatars do you currently have in Hipihi?"
       },
       
       "Kaneva": {
-        verb: "participate in",
-        account: "Kaneva",
+        verb: "operate",
+        account: "avatars",
         countQuestion: "How many avatars do you currently have in Kaneva?"
       },
       
       "IMVU": {
-        verb: "participate in",
-        account: "IMVU",
+        verb: "operate",
+        account: "avatars",
         countQuestion: "How many avatars do you currently have in IMVU?"
       },
       
       "Second Life": {
-        verb: "participate in",
-        account: "Second Life",
+        verb: "operate",
+        account: "avatars",
         countQuestion: "How many avatars do you currently have in Second Life?"
       },
       
       "SIMS": {
-        verb: "participate in",
-        account: "SIMS",
+        verb: "operate",
+        account: "avatars",
         countQuestion: "How many avatars do you currently have in SIMS?"
       },
       
       "There": {
-        verb: "participate in",
-        account: "There",
+        verb: "operate",
+        account: "avatars",
         countQuestion: "How many avatars do you currently have in There?"
       },
       
       "Utherverse": {
-        verb: "participate in",
-        account: "Utherverse",
+        verb: "operate",
+        account: "avatars",
         countQuestion: "How many avatars do you currently have in Utherverse?"
       },
       
       "World of Warcraft": {
-        verb: "participate in",
-        account: "World of Warcraft",
+        verb: "operate",
+        account: "avatars",
         countQuestion: "How many avatars do you currently have in World of Warcraft?"
       },
       
       // Emails
       "Emails": {
         verb: "use",
-        account: "email accounts",
+        account: "accounts",
         countQuestion: "How many email accounts do you operate?"
       }
     }
