@@ -196,6 +196,11 @@ $(function() {
                 // Only continue if the user actually selected this digital medium
                 if (currentResponse === "true") { // Relax, it's the string "true", not the Boolean
                   currentDomain = r.replace("-cb", "").replace(/-/g, " ");
+                  // Add the domain to the answers list if it doesn't already exist
+                  if (typeof(finalAnswers[currentModule.title]) === "undefined") {
+                    finalAnswers[currentModule.title] = {};
+                  }
+                  finalAnswers[currentModule.title][currentDomain] = {};
                   specifics.push(
                     {
                       text:
@@ -213,6 +218,11 @@ $(function() {
                 currentResponse = parseInt(currentResponse);
                 generalModifier = (currentModule.title === "Emails" || currentModule.title === "Blogs") ? "" : "additional";
                 for (var i = 1; i <= currentResponse; i++) {
+                  // Add the domain to the answers list if it doesn't already exist
+                  if (typeof(finalAnswers[currentModule.title]) === "undefined") {
+                    finalAnswers[currentModule.title] = {};
+                  }
+                  finalAnswers[currentModule.title][currentModule.title + "-" + i] = {};
                   generals.push(
                     {
                       text: 
