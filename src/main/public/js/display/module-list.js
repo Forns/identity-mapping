@@ -55,7 +55,8 @@ var countRadio =
       "Online Forums": {
         verb: "operate",
         account: "accounts",
-        countQuestion: "How many forum accounts do you operate in the"
+        countQuestion: "How many forum accounts do you operate in the",
+        general: true // Flag to show that this requires a followup description
       },
       
       "4chan": {
@@ -92,7 +93,8 @@ var countRadio =
       "Social Networks": {
         verb: "use",
         account: "Social Networks",
-        countQuestion: "How many profiles do you have in the"
+        countQuestion: "How many profiles do you have in the",
+        general: true // Flag to show that this requires a followup description
       },
       
       "Facebook": {
@@ -129,7 +131,8 @@ var countRadio =
       "Digital Gaming Platforms": {
         verb: "use",
         account: "games",
-        countQuestion: "During the last 6 months, in how many games have you been an active player within the"
+        countQuestion: "During the last 6 months, in how many games have you been an active player within the",
+        general: true // Flag to show that this requires a followup description
       },
       
       "Playstation": {
@@ -160,65 +163,66 @@ var countRadio =
       "3D Virtual Worlds": {
         verb: "operate",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in the"
+        countQuestion: "How many avatars do you currently have in the",
+        general: true // Flag to show that this requires a followup description
       },
       
       "Blue Mars": {
-        verb: "operate",
+        verb: "participate in",
         account: "avatars",
         countQuestion: "How many avatars do you currently have in Blue Mars?"
       },
       
       "Cloudparty": {
-        verb: "operate",
+        verb: "participate in",
         account: "avatars",
         countQuestion: "How many avatars do you currently have in Cloudparty?"
       },
       
       "Hipihi": {
-        verb: "operate",
+        verb: "participate in",
         account: "avatars",
         countQuestion: "How many avatars do you currently have in Hipihi?"
       },
       
       "Kaneva": {
-        verb: "operate",
+        verb: "participate in",
         account: "avatars",
         countQuestion: "How many avatars do you currently have in Kaneva?"
       },
       
       "IMVU": {
-        verb: "operate",
+        verb: "participate in",
         account: "avatars",
         countQuestion: "How many avatars do you currently have in IMVU?"
       },
       
       "Second Life": {
-        verb: "operate",
+        verb: "participate in",
         account: "avatars",
         countQuestion: "How many avatars do you currently have in Second Life?"
       },
       
       "SIMS": {
-        verb: "operate",
+        verb: "participate in",
         account: "avatars",
         countQuestion: "How many avatars do you currently have in SIMS?"
       },
       
       "There": {
-        verb: "operate",
+        verb: "participate in",
         account: "avatars",
         countQuestion: "How many avatars do you currently have in There?"
       },
       
       "Utherverse": {
-        verb: "operate",
+        verb: "participate in",
         account: "avatars",
         countQuestion: "How many avatars do you currently have in Utherverse?"
       },
       
       "World of Warcraft": {
-        verb: "operate",
+        verb: "participate in",
         account: "avatars",
         countQuestion: "How many avatars do you currently have in World of Warcraft?"
       },
@@ -227,7 +231,7 @@ var countRadio =
       "Emails": {
         verb: "use",
         account: "accounts",
-        countQuestion: "How many email accounts do you operate?"
+        countQuestion: "How many email accounts do you have?"
       }
     }
 
@@ -578,7 +582,7 @@ var countRadio =
           questions: [
             {
               text:
-                "Do you operate one or more Blog?",
+                "Do you operate one or more Blogs?",
               input:
                 "<input type='checkbox' class='question-checkbox' label='Yes, I operate one or more blog' survey='specific' />"
             }
@@ -691,7 +695,7 @@ var countRadio =
           questions: [
             {
               text:
-                "Do you possess one or more email accounts for your <strong>Physical Self</strong>?",
+                "Do you have any email accounts for your <strong>Physical Self</strong>?",
               input:
                 "<input type='checkbox' class='question-checkbox' label='Yes, I operate one or more email accounts' survey='specific' />"
             }

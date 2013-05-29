@@ -284,6 +284,9 @@ $(function() {
                 .parseByModule("[class^=question-]")
                 .deleteForm();
                 
+              console.log(stageII.responses);
+              console.log(finalAnswers);
+                
   /*
    * STAGE III
    */
@@ -335,11 +338,13 @@ $(function() {
                     currentModule = stageII.getModuleById($("#" + currentId).closest(".module").attr("id")),
                     currentQuestion = currentModule.getQuestionById(currentId),
                     currentIdioms = idiomMap[currentQuestion.domain],
-                    currentSingularTitle = currentIdioms.account.substring(0, currentIdioms.account.length - 1);
+                    currentSingularTitle = currentIdioms.account.substring(0, currentIdioms.account.length - 1),
+                    currentSingularDomain = currentQuestion.domain.substring(0, currentQuestion.domain.length - 1);
                     
                 // Begin by removing questions from the calling module
                 currentModule
                   .removeQuestionsById(currentId + "-frequency-", false)
+                  .removeQuestionsById(currentId + "-definition", false)
                   .removeQuestionsById(currentId + "-purpose", false);
                   
                 // Add the description question as long as the input wasn't 0
@@ -378,11 +383,26 @@ $(function() {
                     }
                   );
                 }
+                
+                // Add the followup question for the general domains asking what the name of the "other"
+                // domain is
+                if (currentIdioms.general && currentValue !== 0) {
+                  currentModule.addQuestionAfter(
+                    currentId,
+                    {
+                      id:
+                        currentId + "-definition",
+                      text:
+                        "Please provide the name of this additional " + currentSingularDomain + " below:",
+                      input:
+                        "<input type='text' class='question-field' />"
+                    }
+                  );
+                }
               });
           }); // Stage II render and callback
           
-      } // Stage I setSubmit 
-    );
+      }); // Stage I setSubmit
     
   // Warn the user that they have not submitted their survey yet if they
   // are at an adequate point of progress
