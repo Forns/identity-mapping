@@ -284,8 +284,10 @@ $(function() {
                 .parseByModule("[class^=question-]")
                 .deleteForm();
                 
-              console.log(stageII.responses);
               console.log(finalAnswers);
+              for (var m in stageII.modules) {
+                console.log(stageII.modules[m].responses);
+              }
                 
   /*
    * STAGE III
@@ -339,7 +341,8 @@ $(function() {
                     currentQuestion = currentModule.getQuestionById(currentId),
                     currentIdioms = idiomMap[currentQuestion.domain],
                     currentSingularTitle = currentIdioms.account.substring(0, currentIdioms.account.length - 1),
-                    currentSingularDomain = currentQuestion.domain.substring(0, currentQuestion.domain.length - 1);
+                    currentSingularDomain = currentQuestion.domain.substring(0, currentQuestion.domain.length - 1),
+                    currentRadio;
                     
                 // Begin by removing questions from the calling module
                 currentModule
@@ -363,7 +366,7 @@ $(function() {
                           currentIdioms.account + ". Please explain the reason that you " + currentIdioms.verb + " multiple " + currentIdioms.account +
                           " and then describe the different purpose or function of each " + currentSingularTitle + ".",
                       input:
-                        "<textarea class='question-field question-textarea' />"
+                        "<textarea name='" + currentId + "-purpose' class='question-field question-textarea' />"
                     }
                   );
                 }
@@ -382,6 +385,21 @@ $(function() {
                         frequencyRadio.replace(/--name--/g, currentId + "-frequency-" + i + "-radio")
                     }
                   );
+                  
+                  // Set up handlers and attributes of the new radio set
+                  currentRadio = $("[name='" + currentId + "-frequency-" + i + "-radio']");
+                  console.log(currentRadio)
+                  currentRadio.each(function () {
+                    $(this)
+                      .val($(this).parent().text())
+                      .click(function () {
+                        $(this).parent().parent().val($(this).val());
+                      });
+                      
+                    $(this).parent().parent()
+                      .attr("name", $(this).attr("label"))
+                      .val("undefined");
+                  });
                 }
                 
                 // Add the followup question for the general domains asking what the name of the "other"
@@ -395,7 +413,7 @@ $(function() {
                       text:
                         "Please provide the name of this additional " + currentSingularDomain + " below:",
                       input:
-                        "<input type='text' class='question-field' />"
+                        "<input name='" + currentId + "-definition' type='text' class='question-field' />"
                     }
                   );
                 }
