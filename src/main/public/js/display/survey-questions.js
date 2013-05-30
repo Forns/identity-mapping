@@ -77,16 +77,21 @@ $(function() {
         briefing.deleteForm();
         stageI.render(formContainer, function () {
           // Quick fix for our two edge case items (emails and blogs)
-          // that require different checkbox titles than their values
-          $("#mod-stageI-blogs :checkbox")
-            .attr("id", "Blogs-cb")
-            .attr("name", "Blogs-cb");
-          $("#mod-stageI-email :checkbox")
-            .attr("id", "Emails-cb")
-            .attr("name", "Emails-cb");
-          $("#Emails-cb, #Blogs-cb")
-            .click(function () {
-              $(this).attr("value", ! ($(this).attr("value") === "true"));
+          // that require different radio labels than their values
+          $("[name='Blogs-radio']:radio:nth(0)").val("true");
+          $("[name='Blogs-radio']:radio:nth(1)").val("false");
+          $("[name='Emails-radio']:radio:nth(0)").val("true");
+          $("[name='Emails-radio']:radio:nth(1)").val("false");
+          $("[name='Blogs-radio']:radio, [name='Emails-radio']:radio")
+            .each(function () {
+              $(this)
+                .click(function () {
+                  $(this).parent().parent().val($(this).val());
+                });
+                
+              $(this).parent().parent()
+                .attr("name", $(this).attr("label"))
+                .val("undefined");
             });
         });
       }
@@ -199,10 +204,11 @@ $(function() {
 
             switch(currentMatch[0]) {
               // Some answers will ask specifics about the user's online persona, we'll handle these first
+              case "-radio":
               case "-cb":
                 // Only continue if the user actually selected this digital medium
                 if (currentResponse === "true") { // Relax, it's the string "true", not the Boolean
-                  currentDomain = r.replace("-cb", "").replace(/-/g, " ");
+                  currentDomain = r.replace("-cb", "").replace("-radio", "").replace(/-/g, " ");
                   // Add the domain to the answers list if it doesn't already exist
                   if (typeof(finalAnswers[currentModule.title]) === "undefined") {
                     finalAnswers[currentModule.title] = {};
@@ -294,16 +300,15 @@ $(function() {
                   currentSpecificDomain,
                   otherDomainCounter,
                   frequencyCounter;
-                  
-              console.log(finalAnswers);
-                  
+              
+              // Go through each module and examine the responses; we can make claims about the format of the
+              // responses and their respective domains based on the survey-module question associated with it,
+              // as well as the order of questions
               for (var m = 1; m < stageII.modules.length; m++) {
                 otherDomainCounter = 0;
                 frequencyCounter = 0;
                 currentModule = stageII.modules[m];
                 currentArchdomain = currentModule.title;
-                console.log(currentModule.questions);
-                console.log(currentModule);
                 for (var r in currentModule.responses) {
                   // Really sloppy, survey-modules admittedly sucks :(
                   currentQuestion = currentModule.getQuestionById(r.split("-")[0]);
@@ -340,10 +345,6 @@ $(function() {
                       finalAnswers[currentArchdomain][currentSpecificDomain]["definition"] = currentResponse;
                       break;
                   }
-                  console.log(currentQuestion);
-                  console.log(currentResponse);
-                  console.log(currentMatch);
-                  console.log(currentQuestion.domain);
                 }
               }
               

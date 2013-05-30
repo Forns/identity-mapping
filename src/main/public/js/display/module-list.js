@@ -19,7 +19,11 @@ var countRadio =
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='frequency' />Weekly / Several times a week</label>" +
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='frequency' />Monthly / Several times a month</label>" +
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='frequency' />Less than once a month</label>",
-          
+      
+    booleanRadio =
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='boolean' value='true' />Yes</label>" +
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='boolean' value='false' />No</label>",
+      
     countSelect = 
        "<select class='question-field' survey='count' name='--name--'>" +
        "<option>0</option>" +
@@ -584,7 +588,7 @@ var countRadio =
               text:
                 "Do you operate one or more Blogs?",
               input:
-                "<input type='checkbox' class='question-checkbox' label='Yes, I operate one or more blog' survey='specific' />"
+                booleanRadio.replace(/--name--/g, "Blogs-radio")
             }
           ]
         },
@@ -697,7 +701,7 @@ var countRadio =
               text:
                 "Do you have any email accounts for your <strong>Physical Self</strong>?",
               input:
-                "<input type='checkbox' class='question-checkbox' label='Yes, I operate one or more email accounts' survey='specific' />"
+                booleanRadio.replace(/--name--/g, "Emails-radio")
             }
           ]
         },
