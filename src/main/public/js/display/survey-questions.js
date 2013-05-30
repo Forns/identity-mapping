@@ -360,6 +360,50 @@ $(function() {
                   stageIIIMods.briefing.questions
                 );
                 
+                // We will use the current state of finalAnswers to populate the stage III questions
+                var currentArchdomain,
+                    currentSubdomain,
+                    domainIdiom,
+                    accountIdiom,
+                    verbIdiom,
+                    currentSingularAccount,
+                    crossoverCount = 0,
+                    crossoverQuestions = [];
+                    
+                for (var a in finalAnswers) {
+                  if (a !== "demo") {
+                    currentArchdomain = finalAnswers[a];
+                    for (var s in currentArchdomain) {
+                      currentSubdomain = currentArchdomain[s];
+                      domainIdiom = (currentSubdomain["definition"]) ? currentSubdomain["definition"] : s;
+                      accountIdiom = (currentSubdomain["definition"]) ? idiomMap[a].account : idiomMap[s].account;
+                      verbIdiom = (currentSubdomain["definition"]) ? idiomMap[a].verb : idiomMap[s].verb;
+                      currentSingularAccount = accountIdiom.substring(0, accountIdiom.length - 1);
+                      crossoverQuestions.push(
+                        {
+                          text:
+                            "You indicated that you " + verbIdiom + " one or more " + accountIdiom + " in " + domainIdiom + ". Have you ever " +
+                            "created " + correctIndefiniteArticle(accountIdiom) + " " + currentSingularAccount + " name in " + domainIdiom + " that is different " +
+                            "than your real world name?",
+                          input:
+                            booleanRadio.replace(/--name--/g, domainIdiom + "-radio-" + crossoverCount++),
+                          domain:
+                            s
+                        }
+                      );
+                    }
+                  }
+                }
+                
+                // Add the questions to stage III!
+                stageIII.addModule(
+                  stageIIIMods.crossover.id,
+                  stageIIIMods.crossover.title,
+                  crossoverQuestions
+                );
+                
+                // Now we'll tackle the event handlers for the radio buttons we just created
+                
                 stageIII.setSubmit(
                   "Submit!",
                   "container",
