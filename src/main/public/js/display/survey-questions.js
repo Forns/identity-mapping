@@ -160,7 +160,8 @@ $(function() {
             currentMatch,
             specifics = [],
             generals = [],
-            generalModifier;
+            generalModifier,
+            blogAddition;
             
         // We've named each input of interest as question-field or question-checkbox
         // so we can gather the user responses by question
@@ -206,12 +207,12 @@ $(function() {
                   if (typeof(finalAnswers[currentModule.title]) === "undefined") {
                     finalAnswers[currentModule.title] = {};
                   }
-                  finalAnswers[currentModule.title][currentDomain] = {};
+                  blogAddition = (currentDomain === "Blogs") ? "one or more " : "";
+                  finalAnswers[currentModule.title] = {};
                   specifics.push(
                     {
                       text:
-                        // JD: Indicate the number of instances per domain here.
-                        "You indicated that you " + idiomMap[currentDomain].verb + " " + currentDomain + ". " +
+                        "You indicated that you " + idiomMap[currentDomain].verb + " " + blogAddition + currentDomain + ". " +
                         idiomMap[currentDomain].countQuestion,
                         
                       domain: currentDomain
@@ -228,7 +229,7 @@ $(function() {
                   if (typeof(finalAnswers[currentModule.title]) === "undefined") {
                     finalAnswers[currentModule.title] = {};
                   }
-                  finalAnswers[currentModule.title][currentModule.title + "-" + i] = {};
+                  finalAnswers[currentModule.title] = {};
                   generals.push(
                     {
                       text: 
@@ -284,10 +285,69 @@ $(function() {
                 .parseByModule("[class^=question-]")
                 .deleteForm();
                 
+              // Prep the answers from stage II into the finalAnswers bin
+              var currentModule,
+                  currentQuestion,
+                  currentResponse,
+                  currentArchdomain,
+                  currentMatch,
+                  currentSpecificDomain,
+                  otherDomainCounter,
+                  frequencyCounter;
+                  
               console.log(finalAnswers);
-              for (var m in stageII.modules) {
-                console.log(stageII.modules[m].responses);
+                  
+              for (var m = 1; m < stageII.modules.length; m++) {
+                otherDomainCounter = 0;
+                frequencyCounter = 0;
+                currentModule = stageII.modules[m];
+                currentArchdomain = currentModule.title;
+                console.log(currentModule.questions);
+                console.log(currentModule);
+                for (var r in currentModule.responses) {
+                  // Really sloppy, survey-modules admittedly sucks :(
+                  currentQuestion = currentModule.getQuestionById(r.split("-")[0]);
+                  currentResponse = currentModule.responses[r];
+                  if (currentArchdomain === currentQuestion.domain && currentArchdomain !== "Blogs" && currentArchdomain !== "Emails") {
+                    currentSpecificDomain = currentArchdomain + " " + otherDomainCounter;
+                  } else {
+                    currentSpecificDomain = currentQuestion.domain;
+                  }
+                    
+                  // We'll sort our responses based on the type of question they answered
+                  currentMatch = r.match(/-frequency-|-definition$|-purpose$/g);
+                  // Meaning we've moved on to the next question set
+                  if (!currentMatch) {
+                    // Increment the "additional domain" counter when we've moved onto a new question set
+                    if (currentArchdomain === currentQuestion.domain) {
+                      otherDomainCounter++;
+                    }
+                    continue;
+                  }
+                  // Instantiate the answer "bin" if it needs to be
+                  if (typeof(finalAnswers[currentArchdomain][currentSpecificDomain]) === "undefined") {
+                    finalAnswers[currentArchdomain][currentSpecificDomain] = {};
+                    frequencyCounter = 0;
+                  }
+                  switch (currentMatch[0]) {
+                    case "-frequency-":
+                      finalAnswers[currentArchdomain][currentSpecificDomain]["frequency" + frequencyCounter++] = currentResponse;
+                      break;
+                    case "-purpose":
+                      finalAnswers[currentArchdomain][currentSpecificDomain]["purpose"] = currentResponse;
+                      break;
+                    case "-definition":
+                      finalAnswers[currentArchdomain][currentSpecificDomain]["definition"] = currentResponse;
+                      break;
+                  }
+                  console.log(currentQuestion);
+                  console.log(currentResponse);
+                  console.log(currentMatch);
+                  console.log(currentQuestion.domain);
+                }
               }
+              
+              console.log(finalAnswers);
                 
   /*
    * STAGE III
@@ -362,11 +422,13 @@ $(function() {
                           ? "You indicated that you " + currentIdioms.verb + " " + correctIndefiniteArticle(currentQuestion.domain) +
                           " " + currentQuestion.domain + " " + currentSingularTitle + ". What is your function or purpose in using this " +
                           currentSingularTitle + "?"
-                          : "You indicated that you " + currentIdioms.verb + " multiple " + " " + currentQuestion.domain + " " +
+                          : "You indicated that you " + currentIdioms.verb + " multiple " + currentQuestion.domain + " " +
                           currentIdioms.account + ". Please explain the reason that you " + currentIdioms.verb + " multiple " + currentIdioms.account +
                           " and then describe the different purpose or function of each " + currentSingularTitle + ".",
                       input:
-                        "<textarea name='" + currentId + "-purpose' class='question-field question-textarea' />"
+                        "<textarea name='" + currentId + "-purpose' class='question-field question-textarea' />",
+                      domain:
+                        currentQuestion.domain
                     }
                   );
                 }
@@ -382,13 +444,14 @@ $(function() {
                         "How often do you " + currentIdioms.verb + " the " + numToRank(i) + " " +
                         currentSingularTitle + "?",
                       input:
-                        frequencyRadio.replace(/--name--/g, currentId + "-frequency-" + i + "-radio")
+                        frequencyRadio.replace(/--name--/g, currentId + "-frequency-" + i + "-radio"),
+                      domain:
+                        currentQuestion.domain
                     }
                   );
                   
                   // Set up handlers and attributes of the new radio set
                   currentRadio = $("[name='" + currentId + "-frequency-" + i + "-radio']");
-                  console.log(currentRadio)
                   currentRadio.each(function () {
                     $(this)
                       .val($(this).parent().text())
@@ -413,7 +476,9 @@ $(function() {
                       text:
                         "Please provide the name of this additional " + currentSingularDomain + " below:",
                       input:
-                        "<input name='" + currentId + "-definition' type='text' class='question-field' />"
+                        "<input name='" + currentId + "-definition' type='text' class='question-field' />",
+                      domain:
+                        currentQuestion.domain
                     }
                   );
                 }
