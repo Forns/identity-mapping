@@ -405,7 +405,7 @@ $(function() {
                 stageIII.addModule(
                   stageIIIMods.crossover.id,
                   stageIIIMods.crossover.title,
-                  crossoverQuestions
+                  (crossoverQuestions.length > 0) ? crossoverQuestions : stageIIIMods.empty.questions
                 );
                 
                 stageIII.setSubmit(
