@@ -375,9 +375,6 @@ $(function() {
                     currentArchdomain = finalAnswers[a];
                     for (var s in currentArchdomain) {
                       currentSubdomain = currentArchdomain[s];
-                      console.log(s);
-                      console.log(currentArchdomain);
-                      console.log(currentSubdomain);
                       domainIdiom = (currentSubdomain["definition"])
                         ? currentSubdomain["definition"]
                         : ((idiomMap[s]) ? s : "the " + numToRank(s.split(" ")[parseInt(s.split(" ").length - 1)]) + " additional " + a.substring(0, a.length - 1));
@@ -395,7 +392,7 @@ $(function() {
                             "created " + correctIndefiniteArticle(accountIdiom) + " " + currentSingularAccount + " name in " + domainIdiom + " that is different " +
                             "than your real world name?",
                           input:
-                            booleanRadio.replace(/--name--/g, domainIdiom + "-radio-" + crossoverCount++),
+                            booleanRadio.replace(/--name--/g, s + "-radio-" + crossoverCount++),
                           domain:
                             s
                         }
@@ -410,12 +407,6 @@ $(function() {
                   stageIIIMods.crossover.title,
                   crossoverQuestions
                 );
-                
-                // Now we'll tackle the event handlers for the radio buttons we just created
-                $("[value='Yes']:radio").each(function () {
-                  
-                });
-                
                 
                 stageIII.setSubmit(
                   "Submit!",
@@ -443,13 +434,84 @@ $(function() {
                       "container",
                       function () {
                         // TODO This should eventually go to an identity map display.
-                        window.location = "/";
+                        window.location = "/../";
                       }
                     )
                     .render(formContainer); // Stage IV rendering
                   }
                 )
-                .render(formContainer); // Stage III rendering
+                .render(formContainer, function () {
+                  // Now we'll tackle the event handlers for the radio buttons we just created
+                  $("[value='Yes']:radio").each(function () {
+                    $(this)
+                      .click(function () {
+                        if ($(this).attr("clicked") === "true") {
+                          return;
+                        }
+                        var currentModule = stageIII.modules[1],
+                            currentQuestion = currentModule.getQuestionById($(this).parents().eq(2).attr("id")),
+                            selectId = currentQuestion.id + "-crossover-count",
+                            currentSelect,
+                            currentSelectValue,
+                            currentSelectFollowup = 0;
+                        
+                        currentModule.addQuestionAfter(
+                          currentQuestion.id,
+                          {
+                            id:
+                              selectId,
+                            text:
+                              "How many of these non-real world user names have you created for " + currentQuestion.domain,
+                            input:
+                              countSelect.replace(/--name--/g, selectId),
+                            domain:
+                              currentQuestion.domain
+                          }
+                        );
+                        $(this).attr("clicked", "true");
+                        
+                        // Set up the handler on the newly created select menu
+                        currentSelect = $("#" + selectId + " select");
+                        currentSelect
+                          .children()
+                            .each(function () {
+                              $(this).val($(this).text());
+                            });
+                        currentSelect.change(function () {
+                          currentSelectFollowup = 0;
+                          currentSelectValue = parseInt(currentSelect.val());
+                          currentModule.removeQuestionsById(currentQuestion.id + "-crossover-followup", false);
+                          for (var i = currentSelectValue; i >= 1; i--) {
+                            currentModule.addQuestionAfter(
+                              selectId,
+                              {
+                                id:
+                                  currentQuestion.id + "-crossover-followup" + currentSelectFollowup,
+                                text:
+                                  "Have you ever used the " + numToRank(i) + " new user name in any of your other areas of digital activity?",
+                                input:
+                                  booleanRadio.replace(/--name--/g, currentQuestion.id + "-crossover-followup" + currentSelectFollowup++),
+                                domain:
+                                  currentQuestion.domain
+                              }
+                            );
+                          }
+                        });
+                      });
+                  });
+                  
+                  $("[value='No']:radio").each(function () {
+                    $(this).click(function () {
+                      var currentModule = stageIII.modules[1],
+                          currentQuestion = currentModule.getQuestionById($(this).parents().eq(2).attr("id"));
+                      $("[name='" + $(this).attr("name") + "']:radio:nth(0)").attr("clicked", "false");
+                      
+                      currentModule
+                        .removeQuestionsById(currentQuestion.id + "-crossover-count", false)
+                        .removeQuestionsById(currentQuestion.id + "-crossover-followup", false);
+                    });
+                  });
+                }); // Stage III rendering
             }
           )
           // Need a callback to attach event listeners to the stage 2 "number of accounts"

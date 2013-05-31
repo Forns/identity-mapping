@@ -96,7 +96,7 @@ var countRadio =
       // Social Networks
       "Social Networks": {
         verb: "use",
-        account: "Social Networks",
+        account: "profiles",
         countQuestion: "How many profiles do you have in the",
         general: true // Flag to show that this requires a followup description
       },
