@@ -375,9 +375,18 @@ $(function() {
                     currentArchdomain = finalAnswers[a];
                     for (var s in currentArchdomain) {
                       currentSubdomain = currentArchdomain[s];
-                      domainIdiom = (currentSubdomain["definition"]) ? currentSubdomain["definition"] : s;
-                      accountIdiom = (currentSubdomain["definition"]) ? idiomMap[a].account : idiomMap[s].account;
-                      verbIdiom = (currentSubdomain["definition"]) ? idiomMap[a].verb : idiomMap[s].verb;
+                      console.log(s);
+                      console.log(currentArchdomain);
+                      console.log(currentSubdomain);
+                      domainIdiom = (currentSubdomain["definition"])
+                        ? currentSubdomain["definition"]
+                        : ((idiomMap[s]) ? s : "the " + numToRank(s.split(" ")[parseInt(s.split(" ").length - 1)]) + " additional " + a.substring(0, a.length - 1));
+                      accountIdiom = (currentSubdomain["definition"])
+                        ? idiomMap[a].account
+                        : ((idiomMap[s]) ? idiomMap[s].account : idiomMap[a].account);
+                      verbIdiom = (currentSubdomain["definition"])
+                        ? idiomMap[a].verb
+                        : ((idiomMap[s]) ? idiomMap[s].verb : idiomMap[a].verb);
                       currentSingularAccount = accountIdiom.substring(0, accountIdiom.length - 1);
                       crossoverQuestions.push(
                         {
@@ -403,16 +412,24 @@ $(function() {
                 );
                 
                 // Now we'll tackle the event handlers for the radio buttons we just created
+                $("[value='Yes']:radio").each(function () {
+                  
+                });
+                
                 
                 stageIII.setSubmit(
                   "Submit!",
                   "container",
                   function () {
-                    // Adjust the page scroll                                                                                                              
+                    // Adjust the page scroll
                     $(window).scrollTop("#header");
                     stageIII
                       .parseByModule("[class^=question-]")
                       .deleteForm();
+                      
+                    for (var m = 1; m < stageIII.modules.length; m++) {
+                      console.log(stageIII.modules[m]);
+                    }
 
                     surveyComplete = true;
                 
