@@ -348,8 +348,6 @@ $(function() {
                 }
               }
               
-              console.log(finalAnswers);
-                
   /*
    * STAGE III
    */
@@ -422,8 +420,6 @@ $(function() {
                       console.log(stageIII.modules[m]);
                     }
 
-                    surveyComplete = true;
-                
                     stageIV.addModule(
                       stageIVMods.id,
                       stageIVMods.title,
@@ -432,9 +428,19 @@ $(function() {
                     .setSubmit(
                       "Create My Identity Map",
                       "container",
-                      function () {
+                      function (event) {
+                        event.preventDefault();
+                        surveyComplete = true;
+                        
+                        window.location = "../identitymap";
                         // TODO This should eventually go to an identity map display.
-                        window.location = "/../";
+                        /*
+                        $.ajax({
+                          type: "POST",
+                          url: "/identitymap",
+                          data: { finalAnswer: finalAnswers }
+                        });
+                        */
                       }
                     )
                     .render(formContainer); // Stage IV rendering

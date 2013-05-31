@@ -31,4 +31,21 @@ module.exports = function (app) {
     res.render("survey", {layout: true});
   });
   
+  /*
+   * GET /identitymap
+   *   Render the identitymap report section
+   */
+  app.get("/identitymap", function (req, res) {
+    res.render("identitymap", {layout: true});
+  });
+  
+  
+  /*
+   * POST /identitymap
+   *   CURRENT PLACEHOLDER
+   */
+  app.post("/identitymap", function (req, res) {
+    res.redirect("/identitymap");
+  });
+  
 }

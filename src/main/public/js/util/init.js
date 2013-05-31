@@ -24,6 +24,11 @@ switch (loc) {
     includes.push("./js/util/survey-modules.js");
     includes.push("./js/display/about-display.js");
     break;
+  case "identitymap":
+    includes.push("./js/display/module-list.js");
+    includes.push("./js/util/survey-modules.js");
+    includes.push("./js/display/identitymap-display.js");
+    break
   default:
     includes.push("./js/display/index-display.js");
     break;
