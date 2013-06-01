@@ -366,7 +366,8 @@ $(function() {
                     verbIdiom,
                     currentSingularAccount,
                     crossoverCount = 0,
-                    crossoverQuestions = [];
+                    crossoverQuestions = [],
+                    questionText;
                     
                 for (var a in finalAnswers) {
                   if (a !== "Demo") {
@@ -385,12 +386,19 @@ $(function() {
                         ? idiomMap[a].verb
                         : ((idiomMap[s]) ? idiomMap[s].verb : idiomMap[a].verb);
                       currentSingularAccount = accountIdiom.substring(0, accountIdiom.length - 1);
+                      currentSingularDomain = domainIdiom.substring(0, domainIdiom.length - 1);
+                      // The question text has a different format for the Blogs and Emails case
+                      questionText = (a === "Blogs" || a === "Emails")
+                        ? "You indicated that you " + verbIdiom + " one or more " + currentSingularDomain + " " + currentSingularAccount + ". Have you ever " +
+                          "created " + correctIndefiniteArticle(domainIdiom) + " " + currentSingularDomain + " " + currentSingularAccount + " name that is different " +
+                          "than your real world name?"
+                        : "You indicated that you " + verbIdiom + " one or more " + accountIdiom + " in " + domainIdiom + ". Have you ever " +
+                          "created " + correctIndefiniteArticle(accountIdiom) + " " + currentSingularAccount + " name in " + domainIdiom + " that is different " +
+                          "than your real world name?"
                       crossoverQuestions.push(
                         {
                           text:
-                            "You indicated that you " + verbIdiom + " one or more " + accountIdiom + " in " + domainIdiom + ". Have you ever " +
-                            "created " + correctIndefiniteArticle(accountIdiom) + " " + currentSingularAccount + " name in " + domainIdiom + " that is different " +
-                            "than your real world name?",
+                            questionText,
                           input:
                             booleanRadio.replace(/--name--/g, s + "-radio-" + crossoverCount++),
                           domain:
@@ -579,7 +587,10 @@ $(function() {
                     currentIdioms = idiomMap[currentQuestion.domain],
                     currentSingularTitle = currentIdioms.account.substring(0, currentIdioms.account.length - 1),
                     currentSingularDomain = currentQuestion.domain.substring(0, currentQuestion.domain.length - 1),
-                    currentRadio;
+                    currentRadio,
+                    modifiedDomain = (currentQuestion.domain === "Blogs" || currentQuestion.domain === "Emails")
+                      ? currentQuestion.domain.substring(0, currentQuestion.domain.length - 1)
+                      : currentQuestion.domain;
                     
                 // Begin by removing questions from the calling module
                 currentModule
@@ -597,9 +608,9 @@ $(function() {
                       text:
                         (currentValue === 1)
                           ? "You indicated that you " + currentIdioms.verb + " " + correctIndefiniteArticle(currentQuestion.domain) +
-                          " " + currentQuestion.domain + " " + currentSingularTitle + ". What is your function or purpose in using this " +
+                          " " + modifiedDomain + " " + currentSingularTitle + ". What is your function or purpose in using this " +
                           currentSingularTitle + "?"
-                          : "You indicated that you " + currentIdioms.verb + " multiple " + currentQuestion.domain + " " +
+                          : "You indicated that you " + currentIdioms.verb + " multiple " + modifiedDomain + " " +
                           currentIdioms.account + ". Please explain the reason that you " + currentIdioms.verb + " multiple " + currentIdioms.account +
                           " and then describe the different purpose or function of each " + currentSingularTitle + ".",
                       input:

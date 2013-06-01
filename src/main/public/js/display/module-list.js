@@ -22,7 +22,7 @@ var countRadio =
       
     booleanRadio =
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='boolean' value='true' />Yes</label>" +
-      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='boolean' value='false' checked />No</label>",
+      "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='boolean' value='false' />No</label>",
       
     countSelect = 
        "<select class='question-field' survey='count' name='--name--'>" +
