@@ -151,11 +151,11 @@ $(function() {
         $(window).scrollTop("#header");
         
         // Collect the demographic data first
-        finalAnswers["demo"] = {};
-        finalAnswers["demo"]["birth-year"] = $("#demo-year-select").val();
-        finalAnswers["demo"]["sex"] = $("input:radio[name='sex']:checked").val();
-        finalAnswers["demo"]["country"] = $("#country-select").val();
-        finalAnswers["demo"]["education"] = $("input:radio[name='edu']:checked").val();
+        finalAnswers["Demo"] = {};
+        finalAnswers["Demo"]["birth-year"] = $("#demo-year-select").val();
+        finalAnswers["Demo"]["sex"] = $("input:radio[name='sex']:checked").val();
+        finalAnswers["Demo"]["country"] = $("#country-select").val();
+        finalAnswers["Demo"]["education"] = $("input:radio[name='edu']:checked").val();
         
         var currentModule,
             currentSingularTitle,
@@ -369,10 +369,12 @@ $(function() {
                     crossoverQuestions = [];
                     
                 for (var a in finalAnswers) {
-                  if (a !== "demo") {
+                  if (a !== "Demo") {
                     currentArchdomain = finalAnswers[a];
                     for (var s in currentArchdomain) {
                       currentSubdomain = currentArchdomain[s];
+                      // If the current subdomain has a "definition" field, then we know it must have been a write-in,
+                      // which requires special treatment
                       domainIdiom = (currentSubdomain["definition"])
                         ? currentSubdomain["definition"]
                         : ((idiomMap[s]) ? s : "the " + numToRank(s.split(" ")[parseInt(s.split(" ").length - 1)]) + " additional " + a.substring(0, a.length - 1));
@@ -392,7 +394,9 @@ $(function() {
                           input:
                             booleanRadio.replace(/--name--/g, s + "-radio-" + crossoverCount++),
                           domain:
-                            s
+                            s,
+                          definition:
+                            domainIdiom
                         }
                       );
                     }
@@ -415,10 +419,40 @@ $(function() {
                     stageIII
                       .parseByModule("[class^=question-]")
                       .deleteForm();
+                      
+                    var currentModule = stageIII.modules[1],
+                        currentMatch,
+                        currentQuestion;
                     
-                    for (var m = 1; m < stageIII.modules.length; m++) {
-                      console.log(stageIII.modules[m]);
+                    // Add the crossovers bucket to finalAnswers
+                    finalAnswers["Crossover"] = {};
+                    
+                    // Finally, we parse the stage III responses
+                    for (var r in currentModule.responses) {
+                      // We'll sort our responses based on the type of question they answered
+                      currentMatch = r.match(/-count$|-followup/g);
+                      if (!currentMatch) {
+                        continue;
+                      }
+                      currentQuestion = currentModule.getQuestionById(r);
+                      
+                      switch(currentMatch[0]) {
+                        case "-count":
+                          finalAnswers["Crossover"][currentQuestion.domain] = {};
+                          finalAnswers["Crossover"][currentQuestion.domain]["crossed"] = 0;
+                          finalAnswers["Crossover"][currentQuestion.domain]["total"] = parseInt(currentModule.responses[r]);
+                          break;
+                        case "-followup":
+                          if (currentModule.responses[r] === "true") {
+                            finalAnswers["Crossover"][currentQuestion.domain]["crossed"] += 1;
+                          }
+                          break;
+                        default:
+                          break;
+                      }
                     }
+                    
+                    console.log(finalAnswers);
 
                     stageIV.addModule(
                       stageIVMods.id,
@@ -467,7 +501,7 @@ $(function() {
                             id:
                               selectId,
                             text:
-                              "How many of these non-real world user names have you created for " + currentQuestion.domain,
+                              "How many of these non-real world user names have you created for " + currentQuestion.definition + "?",
                             input:
                               countSelect.replace(/--name--/g, selectId),
                             domain:

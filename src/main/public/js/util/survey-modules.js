@@ -399,6 +399,7 @@ $(function () {
       this.text = question.text;
       this.input = question.input;
       this.domain = question.domain;
+      this.definition = question.definition;
       this.rendered = false;
       return this;
     },
