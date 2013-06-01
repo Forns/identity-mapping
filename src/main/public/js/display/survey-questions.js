@@ -470,15 +470,21 @@ $(function() {
                         event.preventDefault();
                         surveyComplete = true;
                         
-                        window.location = "../identitymap";
-                        // TODO This should eventually go to an identity map display.
-                        /*
                         $.ajax({
                           type: "POST",
                           url: "/identitymap",
-                          data: { finalAnswer: finalAnswers }
+                          data: finalAnswers,
+                          success: function (data, textStatus, jqXHR) {
+                            if (jqXHR.status === 201) {
+                              // Created: grab the location and use it for the identity map.
+                              console.log("/identitymap" + jqXHR.getResponseHeader("location"));
+                            } else {
+                              alert("We got an unexpected response from the server.\n" +
+                                    "Please contact the IMP investigators.");
+                              window.location = "/";
+                            }
+                          }
                         });
-                        */
                       }
                     )
                     .render(formContainer); // Stage IV rendering
