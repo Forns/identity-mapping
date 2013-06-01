@@ -773,7 +773,7 @@ var countRadio =
       	  questions: [
       	    {
       	      text:
-                "You indicated that you do not participate in any digital domains, and therefore cannot have any crossover accounts. Please click submit to continue!"
+                "You indicated that you are not involved in enough (2 or more) digital domains to possess any crossover accounts. Please click submit below to continue!"
       	    }
           ]
       	}
