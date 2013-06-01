@@ -415,7 +415,7 @@ $(function() {
                     stageIII
                       .parseByModule("[class^=question-]")
                       .deleteForm();
-                      
+                    
                     for (var m = 1; m < stageIII.modules.length; m++) {
                       console.log(stageIII.modules[m]);
                     }
@@ -459,7 +459,7 @@ $(function() {
                             selectId = currentQuestion.id + "-crossover-count",
                             currentSelect,
                             currentSelectValue,
-                            currentSelectFollowup = 0;
+                            currentFollowupSelector;
                         
                         currentModule.addQuestionAfter(
                           currentQuestion.id,
@@ -475,6 +475,7 @@ $(function() {
                           }
                         );
                         $(this).attr("clicked", "true");
+                        $("#" + selectId).addClass("followup-1");
                         
                         // Set up the handler on the newly created select menu
                         currentSelect = $("#" + selectId + " select");
@@ -484,23 +485,35 @@ $(function() {
                               $(this).val($(this).text());
                             });
                         currentSelect.change(function () {
-                          currentSelectFollowup = 0;
                           currentSelectValue = parseInt(currentSelect.val());
                           currentModule.removeQuestionsById(currentQuestion.id + "-crossover-followup", false);
-                          for (var i = currentSelectValue; i >= 1; i--) {
+                          for (var i = currentSelectValue - 1; i >= 0; i--) {
                             currentModule.addQuestionAfter(
                               selectId,
                               {
                                 id:
-                                  currentQuestion.id + "-crossover-followup" + currentSelectFollowup,
+                                  currentQuestion.id + "-crossover-followup" + i,
                                 text:
-                                  "Have you ever used the " + numToRank(i) + " new user name in any of your other areas of digital activity?",
+                                  "Have you ever used the " + numToRank(i + 1) + " new user name in any of your other areas of digital activity?",
                                 input:
-                                  booleanRadio.replace(/--name--/g, currentQuestion.id + "-crossover-followup" + currentSelectFollowup++),
+                                  booleanRadio.replace(/--name--/g, currentQuestion.id + "-crossover-followup" + i),
                                 domain:
                                   currentQuestion.domain
                               }
                             );
+                            $("#" + currentQuestion.id + "-crossover-followup" + i).addClass("followup-2");
+                            
+                            currentFollowupSelector = $("#" + currentQuestion.id + "-crossover-followup" + i + " :radio");
+                            currentFollowupSelector
+                              .each(function () {
+                                $(this).click(function () {
+                                  $(this).parent().parent().val($(this).val());
+                                });
+                                
+                                $(this).parent().parent()
+                                  .attr("name", $(this).attr("name"))
+                                  .val("undefined");
+                              });
                           }
                         });
                       });
@@ -561,6 +574,7 @@ $(function() {
                         currentQuestion.domain
                     }
                   );
+                  $("#" + currentId + "-purpose").addClass("followup-1");
                 }
                   
                 // Now, for each of the number of accounts indicated, ask the frequency of use question
@@ -579,6 +593,7 @@ $(function() {
                         currentQuestion.domain
                     }
                   );
+                  $("#" + currentId + "-frequency-" + i).addClass("followup-1");
                   
                   // Set up handlers and attributes of the new radio set
                   currentRadio = $("[name='" + currentId + "-frequency-" + i + "-radio']");
@@ -611,6 +626,7 @@ $(function() {
                         currentQuestion.domain
                     }
                   );
+                  $("#" + currentId + "-definition").addClass("followup-1");
                 }
               });
           }); // Stage II render and callback
