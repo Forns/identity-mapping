@@ -56,6 +56,18 @@ module.exports = function (app) {
       });
     };
 
+  // Get a survey response by object id.
+  SurveyDao.prototype.findById = function (id, callback) {
+      this.getCollection(function (error, surveys) {
+        if (error) {
+          callback(error);
+        } else {
+          var ObjectID = require('mongodb').ObjectID;
+          surveys.findOne({ _id: new ObjectID(id) }, callback);
+        }
+      });
+    };
+
   // Save a response.
   SurveyDao.prototype.save = function (surveyResponse, callback) {
       this.getCollection(function (error, surveys) {
@@ -114,6 +126,24 @@ module.exports = function (app) {
    *
    */
 
+
+  /*
+   * GET /survey/:id
+   *   Return the survey result with the given id
+   */
+  app.get("/survey/:id", function (req, res) {
+    surveyDao.findById(req.params.id, function (error, surveyResponse) {
+      if (error) {
+        res.send(500, error);
+      } else {
+        if (surveyResponse) {
+          res.send(surveyResponse);
+        } else {
+          res.send(404, "survey.response.not.found");
+        }
+      }
+    });
+  });
 
   /*
    * POST /identitymap
