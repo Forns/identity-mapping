@@ -103,7 +103,7 @@ module.exports = function (app) {
    * GET /identitymap
    *   Render the identitymap report section
    */
-  app.get("/identitymap/:id", function (req, res) {
+  app.get("/identitymap/:id?", function (req, res) {
     res.render("identitymap", {layout: true});
   });
 

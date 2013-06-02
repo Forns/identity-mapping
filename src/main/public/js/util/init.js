@@ -5,37 +5,37 @@
  */
 
 // Setup include
-var loc = window.location.toString().split("/"),
+var loc = window.location.pathname.split("/"),
     includes = [];
     
-loc = loc[loc.length - 1];
+loc = loc[1];
 
 // Page specific inclusions
 switch (loc) {
   case "survey":
-    includes.push("./js/display/module-list.js");
-    includes.push("./js/lib/jquery.qtip.min.js");
-    includes.push("./js/lib/jquery.validate.min.js");
-    includes.push("./js/util/survey-modules.js");
-    includes.push("./js/display/survey-questions.js");
+    includes.push("/js/display/module-list.js");
+    includes.push("/js/lib/jquery.qtip.min.js");
+    includes.push("/js/lib/jquery.validate.min.js");
+    includes.push("/js/util/survey-modules.js");
+    includes.push("/js/display/survey-questions.js");
     break;
   case "about":
-    includes.push("./js/display/module-list.js");
-    includes.push("./js/util/survey-modules.js");
-    includes.push("./js/display/about-display.js");
+    includes.push("/js/display/module-list.js");
+    includes.push("/js/util/survey-modules.js");
+    includes.push("/js/display/about-display.js");
     break;
   case "identitymap":
-    includes.push("./js/display/module-list.js");
-    includes.push("./js/util/survey-modules.js");
-    includes.push("./js/display/identitymap-display.js");
+    includes.push("/js/display/module-list.js");
+    includes.push("/js/util/survey-modules.js");
+    includes.push("/js/display/identitymap-display.js");
     break
   default:
-    includes.push("./js/display/index-display.js");
+    includes.push("/js/display/index-display.js");
     break;
 }
 
 if (loc !== "survey") {
-  includes.push("./js/display/general-display.js");
+  includes.push("/js/display/general-display.js");
 }
 
 // Perform necessary inclusions
