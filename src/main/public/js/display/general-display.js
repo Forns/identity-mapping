@@ -11,28 +11,14 @@ $(function () {
    */
   // First, we'll set up our constants
   
-  var faceList = [
-        "adam1",
-        "facebook",
-        "brett1",
-        "freddy1",
-        "brett2",
-        "googlePlus",
-        "andrew1",
-        "adam2",
-        "bailey1",
-        "greg1",
-        "katie2",
-        "freddy2",
-        "twitter",
-        "joe1",
-        "rob1",
-        "andrew2",
-        "secondLife",
-        "jessica1",
-        "katie1",
-        "kelly2"
-      ],
+  var gridSize = 21,
+      faceList = (function () {
+        var result = [];
+        for (var i = 1; i <= gridSize; i++) {
+          result.push("gridTile" + i);
+        }
+        return result;
+      })(),
       faceCount = faceList.length,
       faceRepeat = 4,
       faceContainer = $("<div id='face-grid' class='face-margins-even'></div>"),
