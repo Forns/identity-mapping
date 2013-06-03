@@ -502,7 +502,10 @@ $(function() {
                             currentQuestion = currentModule.getQuestionById($(this).parents().eq(2).attr("id")),
                             followupCrossoverId = currentQuestion.id + "-crossovers",
                             effectiveDomainChecks = $('<div>').append($(domainInvolvementChecks).not("[label='" + currentQuestion.domain + "'], " +
-                              "[label='" + currentQuestion.definition + "']").clone()).html();
+                              "[label='" + currentQuestion.definition + "']").clone()).html(),
+                            effectiveReferent = (currentQuestion.domain === "Blogs" || currentQuestion.domain === "Emails")
+                              ? currentQuestion.domain.substring(0, currentQuestion.domain.length - 1)
+                              : currentQuestion.definition || currentQuestion.domain;
                             
                         currentModule.addQuestionAfter(
                           currentQuestion.id,
@@ -510,8 +513,9 @@ $(function() {
                             id:
                               followupCrossoverId,
                             text:
-                              "Have you ever used this new user name in any other area of your digital activity? Please mark each domain below in which you have used " +
-                              "this same user name:",
+                              "Did this username originate as " + correctIndefiniteArticle(effectiveReferent) + " " + effectiveReferent +
+                              " username and then <strong>later</strong> become a username in another digital domain? " +
+                              "Please mark each domain below in which you have <strong>later</strong> used this same username:",
                             input:
                               effectiveDomainChecks.replace(/--name--/g, followupCrossoverId),
                             domain:
@@ -592,7 +596,7 @@ $(function() {
                           currentIdioms.account + ". Please explain the reason that you " + currentIdioms.verb + " multiple " + currentIdioms.account +
                           " and then describe the different purpose or function of each " + currentSingularTitle + ".",
                       input:
-                        "<textarea name='" + currentId + "-purpose' class='question-field question-textarea' />",
+                        "<textarea name='" + currentId + "-purpose' maxlength='1000' class='question-field question-textarea' />",
                       domain:
                         currentQuestion.domain
                     }
@@ -644,7 +648,7 @@ $(function() {
                       text:
                         "Please provide the name of this additional " + currentSingularDomain + " below:",
                       input:
-                        "<input name='" + currentId + "-definition' type='text' class='question-field' />",
+                        "<input name='" + currentId + "-definition' type='text' maxlength='75' class='question-field' />",
                       domain:
                         currentQuestion.domain
                     }
