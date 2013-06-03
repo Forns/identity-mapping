@@ -663,5 +663,8 @@ $(function() {
       return "[!] WARNING: You have not yet completed the survey.";
     }
   });
+  
+  // Remove the loading div
+  $("#loading").remove();
     
 });
