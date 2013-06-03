@@ -395,7 +395,7 @@ $(function() {
                       currentSingularDomain = domainIdiom.substring(0, domainIdiom.length - 1);
                       // The question text has a different format for the Blogs and Emails case
                       questionText = (a === "Blogs" || a === "Emails")
-                        ? "You indicated that you " + verbIdiom + " one or more " + currentSingularDomain + " " + currentSingularAccount + ". Have you ever " +
+                        ? "You indicated that you " + verbIdiom + " one or more " + currentSingularDomain + " " + accountIdiom + ". Have you ever " +
                           "created " + correctIndefiniteArticle(domainIdiom) + " " + currentSingularDomain + " " + currentSingularAccount + " name that is different " +
                           "than your real world name?"
                         : "You indicated that you " + verbIdiom + " one or more " + accountIdiom + " in " + domainIdiom + ". Have you ever " +
@@ -510,8 +510,8 @@ $(function() {
                             id:
                               followupCrossoverId,
                             text:
-                              "Have you ever used these new user names in any other area of your digital activity? Please mark each domain below in which you have used " +
-                              "these same user names:",
+                              "Have you ever used this new user name in any other area of your digital activity? Please mark each domain below in which you have used " +
+                              "this same user name:",
                             input:
                               effectiveDomainChecks.replace(/--name--/g, followupCrossoverId),
                             domain:
