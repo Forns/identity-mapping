@@ -56,9 +56,12 @@ surveyDao = require("./src/main/conf/db-config.js")().surveyDao;
 lda = require("./src/main/conf/lda-config.js")().lda;
 $TM = require("./src/main/conf/topic-modeler-config.js")(surveyDao, lda).$TM;
 
-console.log(
-  $TM.getTopics(["Its subfields can be divided into a variety of theoretical and practical disciplines. Some fields, such as computational complexity theory (which explores the fundamental properties of computational problems), are highly abstract, whilst fields such as computer graphics emphasize real-world visual applications. Still other fields focus on the challenges in implementing computation. For example, programming language theory considers various approaches to the description of computation, whilst the study of computer programming itself investigates various aspects of the use of programming language and complex systems. Human-computer interaction considers the challenges in making computers and computations useful, usable, and universally accessible to humans."])
-);
+// We will perform our topic modeling once at the get-go, after the connection
+// to the database has had time to set up
+setTimeout(function () {
+  $TM.getDomainModels();
+}, 2000);
+
 
 /*
  * CONTROLLERS

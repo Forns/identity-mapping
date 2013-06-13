@@ -13,7 +13,8 @@ module.exports = function (db, lda) {
   $TM.getTopics = function (sentences) {
     var documents = new Array(),
         f = {},
-        vocab = new Array();
+        vocab = new Array(),
+        bannedWords = ["the", "of", "am", "is", "are", "was", "were", "use", "if", "in", "and", "but", "to", "as", "such", "on", "by", "for"];
     for (var i = 0; i < sentences.length; i++) {
       if (sentences[i] == "") {
         continue;
@@ -23,7 +24,7 @@ module.exports = function (db, lda) {
       if(!words) continue;
       for(var wc=0;wc<words.length;wc++) {
         var w=words[wc].toLowerCase().replace(/[^a-z\'A-Z0-9 ]+/g, '');
-        if (w=="" || w.length==1 || w.indexOf("http")==0) continue;
+        if (w=="" || w.length==1 || w.indexOf("http")==0 || bannedWords.indexOf(w) !== -1) continue;
         if (f[w]) { 
           f[w]=f[w]+1;      
         } 
@@ -37,7 +38,7 @@ module.exports = function (db, lda) {
       
     var V = vocab.length;
     var M = documents.length;
-    var K = 3; // Assume 3 topics, for now
+    var K = 2; // Assume 2 topics, for now
     var alpha = 0.1;  // per-document distributions over topics
     var beta = .01;  // per-topic distributions over words
   
@@ -70,7 +71,69 @@ module.exports = function (db, lda) {
     }
     
     return {topics: topicText, probabilities: topicProbs}
-  }
+  };
+  
+  /**
+   * End of Athar's code
+   */
+  
+  // TEMPORARY:
+  // Topic modeling demo that is performed once at the server start, and again
+  // every 24 hours
+  $TM.getDomainModels = function () {
+    console.log("[~] Topic modelling of digitial domain purposes initiated...");
+    var currentResponse,
+        currentArchdomain,
+        forbiddenArchdomains = ["_id", "Crossover", "Demo", "creationDate"],
+        currentDomain,
+        topicTree = {},
+        finalTopics;
+    
+    db.findAll(function (error, results) {
+      // results will contain every response--later we'll want to filter results
+      for (var r in results) {
+        currentResponse = results[r];
+        for (var archdomain in currentResponse) {
+          if (forbiddenArchdomains.indexOf(archdomain) !== -1) {
+            continue;
+          }
+          
+          // If our archdomain has yet to be created in the topic tree, make it now
+          if (typeof(topicTree[archdomain]) === "undefined") {
+            topicTree[archdomain] = {};
+          }
+          
+          currentArchdomain = currentResponse[archdomain];
+          for (var domain in currentArchdomain) {
+            currentDomain = currentArchdomain[domain];
+            if (currentDomain["purpose"]) {
+              if (typeof(topicTree[archdomain][domain]) === "undefined") {
+                topicTree[archdomain][domain] = [];
+              }
+              
+              // We'll analyze each "purpose" response as a new sentence
+              topicTree[archdomain][domain].push(currentDomain["purpose"]);
+            }
+          }
+        }
+      }
+      
+      // Now that we have our sentences, we'll run them through the topic model-er
+      for (var archdomain in topicTree) {
+        currentArchdomain = topicTree[archdomain];
+        for (var domain in currentArchdomain) {
+          // Run the topic modeler on the current responses
+          finalTopics = $TM.getTopics(topicTree[archdomain][domain]);
+          
+          // Replace the topic tree entry with the topics and probabilities
+          topicTree[archdomain][domain] = {topics: finalTopics.topics, probabilities: finalTopics.probabilities};
+        }
+      }
+      
+      $TM.currentModels = topicTree;
+      console.log("[!] Topic modelling complete!");
+    });
+  };
   
   this.$TM = $TM;
   
