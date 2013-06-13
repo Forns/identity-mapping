@@ -14,7 +14,8 @@ var express = require('express'),
     app = module.exports = express(),
     webAppPort = process.env.IMP_PORT || 4000,
     security = {},
-    database,
+    lda,
+    surveyDao,
     controllers;
     
 app.configure(function () {
@@ -51,7 +52,9 @@ app.configure('production', function () {
  * UTILITY CONFIG
  */
 
-// Nothing here... for now...
+surveyDao = require("./src/main/conf/db-config.js")().surveyDao;
+lda = require("./src/main/conf/lda-config.js")().lda;
+$TM = require("./src/main/conf/topic-modeler-config.js")(lda).$TM;
 
 /*
  * CONTROLLERS
@@ -62,7 +65,7 @@ controllers = [
 ];
     
 for (var c in controllers) {
-  require(controllers[c])(app);
+  require(controllers[c])(app, surveyDao);
 }
 
 

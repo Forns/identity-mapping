@@ -477,7 +477,7 @@ $(function() {
                           success: function (data, textStatus, jqXHR) {
                             if (jqXHR.status === 201) {
                               // Created: grab the location and use it for the identity map.
-                              window.location = "/identitymap" + jqXHR.getResponseHeader("location");
+                              window.location = "/identitymap/" + data.location;
                             } else {
                               alert("We got an unexpected response from the server.\n" +
                                     "Please contact the IMP investigators.");
