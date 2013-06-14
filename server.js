@@ -72,7 +72,7 @@ controllers = [
 ];
     
 for (var c in controllers) {
-  require(controllers[c])(app, surveyDao);
+  require(controllers[c])(app, surveyDao, $TM);
 }
 
 

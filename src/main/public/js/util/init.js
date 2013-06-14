@@ -28,13 +28,18 @@ switch (loc) {
     includes.push("/js/display/module-list.js");
     includes.push("/js/util/survey-modules.js");
     includes.push("/js/display/identitymap-display.js");
-    break
+    break;
+  case "topicmodels":
+    includes.push("/js/util/survey-modules.js");
+    includes.push("/js/lib/jquery.tagcanvas.min.js");
+    includes.push("/js/display/topic-models-display.js");
+    break;
   default:
     includes.push("/js/display/index-display.js");
     break;
 }
 
-if (loc !== "survey") {
+if (loc !== "survey" && loc !== "topicmodels") {
   includes.push("/js/display/general-display.js");
 }
 

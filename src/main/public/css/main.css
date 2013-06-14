@@ -108,3 +108,21 @@ button.big-button-and-cannot-lie {
 .loading-hidden {
   display: none;
 }
+
+.topic-button {
+  width: 200px;
+}
+
+.topic-divider {
+  margin-top: 20px;
+  margin-left: 40px;
+}
+
+#topics-intro {
+  margin-top: 40px;
+}
+
+.tag-canvas {
+  margin-left: 50px;
+  border: 1px solid black;
+}

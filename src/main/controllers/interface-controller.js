@@ -4,7 +4,7 @@
  * Controller for UI-related routes.
  */
 
-module.exports = function (app, surveyDao) {
+module.exports = function (app, surveyDao, $TM) {
 
   /*
    * GET /
@@ -39,6 +39,14 @@ module.exports = function (app, surveyDao) {
     res.render("identitymap", {layout: true});
   });
 
+  /*
+   * GET /topicmodels
+   *   Render the topic modelling report section
+   */
+  app.get("/topicmodels", function (req, res) {
+    res.render("topicmodels", {layout: true});
+  });
+  
 
   /*
    *
@@ -63,6 +71,14 @@ module.exports = function (app, surveyDao) {
         }
       }
     });
+  });
+  
+  /*
+   * GET /topictree
+   *   Returns the current topic models tree
+   */
+  app.get("/topictree", function (req, res) {
+    res.send(201, $TM.currentModels);
   });
 
   /*
