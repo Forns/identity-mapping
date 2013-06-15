@@ -16,7 +16,15 @@ $(function () {
               "<strong>Topic Models</strong> of digital domain-use purposes can be used to get an \"at a glance\" look " +
               "at the functions of peoples' different accounts, avatars, blogs, etc."
           }
-        ];
+        ],
+      
+      // Helper method to map button clicks to respective window redirects  
+      buttonToHREF = function (buttonId, redirectTo) {
+          $("#" + buttonId).click(function (event) {
+            event.preventDefault();
+            window.location = redirectTo;
+          });
+      };
         
   // Provide a button for every domain; we'll need to get the topic tree first
   $.ajax({
@@ -45,13 +53,15 @@ $(function () {
         topicOptions += "</div>"
         
         topicOptionsQuestion.push({
+          id:
+            "topic-button-list",
           text:
             "<strong>Click</strong> on a domain below to see what people have been saying!",
           input:
             topicOptions
         });
         
-        // Then, render the module
+        // Then, render the module after adding navigation buttons
         topicModule
           .addModule(
             "topic-models",
@@ -138,6 +148,26 @@ $(function () {
         );
         window.location = "/";
       }
+      
+      // Add some navigation buttons for ease at the end
+      topicModule
+        .getModuleById("topic-models")
+        .addQuestionAfter(
+          "topic-button-list",
+          {
+            text:
+              "</hr>",
+            input:
+              "<button id='survey-button' class='btn btn-info pull-right'>Map My Identity</button>" +
+              "<button id='about-button' class='btn btn-info pull-right'>About</button>" +
+              "<button id='home-button' class='btn btn-info pull-right'>Home</button>" +
+              "<br/>"
+          }
+        );
+        
+      buttonToHREF("survey-button", "/survey");
+      buttonToHREF("about-button", "/about");
+      buttonToHREF("home-button", "/");
     }
   });
   

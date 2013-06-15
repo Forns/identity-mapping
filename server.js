@@ -62,6 +62,11 @@ setTimeout(function () {
   $TM.getDomainModels();
 }, 2000);
 
+// Furthermore, we will perform it again once every 24 hours
+setInterval(function () {
+  $TM.getDomainModels();
+}, 86400000);
+
 
 /*
  * CONTROLLERS
