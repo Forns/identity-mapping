@@ -8,11 +8,15 @@ expressions of identity across various digital platforms, sites, and immersive e
 
 Participants in the study will follow a basic flow through the application:
 
-1. **Survey Part I:** Participants will fill out basic information about their activity in a variety of today's largest digital venues like Facebook, Twitter, SecondLife, and others.
+1. **Survey Part I:** Participants will fill out the following sets of information:
+  * Basic information about the Physical Self (such as age, sex, education, and country of residence)
+  * A broad overview of participants' presence in each of six digital domains: Blogs, On-Line Forums, Social Networks, Digital Gaming Platforms, 3D Virtual Worlds, and Emails.
 
-2. **Survey Part II:** Participants will elaborate on their usages indicated in the first portion of the survey and describe their digital identity management.
+2. **Survey Part II:** Participants will provide more detailed information about their involvement in each digital domain where they currently have a presence.
 
-3. **Identity Map:** Participants will be shown a graphical representation of their digital identity and how they compare to others around the world. 
+3. **Survey Part III:** This portion will explain the concept of “Crossover Accounts” and find out if participants have any crossover accounts in their digital identities.
+
+4. **Identity Map:** Participants will be shown a graphical representation of their digital identity and how they compare to others around the world. 
 
 ## Collaborators
 
