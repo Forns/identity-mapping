@@ -25,7 +25,18 @@ module.exports = function () {
           console.error(error);
         } else {
           console.log("[!] IMP database is " + host + ":" + port);
+          
+          // Performs a simple query every 3 hours to keep the db connection alive
+          // (wait a few seconds at server start to give db time to connect)
+          setTimeout(function () {
+              surveyDao.preserveConnection();
+            setInterval(function () {
+              surveyDao.preserveConnection();
+              console.log("[~] DB Connection stayin\' alive, stayin\' alive...");
+            }, 10800000);
+          }, 5000);
         }
+        
       });
     };
 
@@ -56,6 +67,17 @@ module.exports = function () {
       }
     });
   };
+  
+  // Keep DB connection open with a single query
+  SurveyDao.prototype.preserveConnection = function (callback) {
+    this.getCollection(function (error, surveys) {
+      if (error) {
+        callback(error);
+      } else {
+        surveys.find().limit(1);
+      }
+    });
+  };
 
   // Get a survey response by object id.
   SurveyDao.prototype.findById = function (id, callback) {
@@ -83,9 +105,9 @@ module.exports = function () {
       }
     });
   };
-
+  
   // TODO Defaults; parameterize, ideally.
   var surveyDao = this.surveyDao = new SurveyDao("localhost", 27017);
-  
+
   return this;
 };
