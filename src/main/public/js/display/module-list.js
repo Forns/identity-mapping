@@ -46,13 +46,26 @@ var countRadio =
       })() +
       "</select>",
       
+    educationSelect =
+      "<select id='edu-year-select' class='question-field'>" +
+      "<option>Please select...</option>" +
+      (function() {
+        var result = "";
+        for (var i = 0; i < 20; i++) {
+          result += "<option>" + i + "</option>"
+        }
+        result += "<option>20+</option>"
+        return result;
+      })() +
+      "</select>",
+      
     // Map that consists of the proper verb / account combinations of various digital mediums
     idiomMap = {
-      // Blogs
+      // Blogs / Personal Websites
       "Blogs": {
-        verb: "operate",
+        verb: "use",
         account: "accounts",
-        countQuestion: "How many blog accounts do you operate?"
+        countQuestion: "How many blog accounts / personal websites do you have?"
       },
       
       // Online Forums
@@ -129,6 +142,44 @@ var countRadio =
         verb: "use",
         account: "handles",
         countQuestion: "How many handles do you have on Twitter?"
+      },
+      
+      // Online Dating Sites
+      "Online Dating Sites": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have in the",
+        general: true
+      },
+      
+      "eHarmony": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have on eHarmony?"
+      },
+      
+      "JDate": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have on JDate?"
+      },
+      
+      "Match": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have on Match?"
+      },
+      
+      "OKCupid": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have on OKCupid?"
+      },
+      
+      "PlentyOfFish": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have on PlentyOfFish?"
       },
       
       // Digital Gaming Platforms
@@ -569,24 +620,20 @@ var countRadio =
     
             {
               text:
-                "How many years of formal education have you completed?",
+                "How many years of formal education have you completed (starting with first grade or equivalent)?",
               input:
-                "<label class='radio'><input type='radio' name='edu'/>Less than 12 years</label>" +
-                "<label class='radio'><input type='radio' name='edu'/>12 years</label>" +
-                "<label class='radio'><input type='radio' name='edu'/>13-15 years</label>" +
-                "<label class='radio'><input type='radio' name='edu'/>16 years</label>" +
-                "<label class='radio'><input type='radio' name='edu'/>More than 16 years</label>"
+                educationSelect
             },
           ]
         },
         
         blogs: {
           id: "mod-stageI-blogs",
-          title: "Blogs",
+          title: "Blogs / Personal Websites",
           questions: [
             {
               text:
-                "Do you operate one or more Blogs?",
+                "Do you have one or more Blogs / Personal Websites?",
               input:
                 booleanRadio.replace(/--name--/g, "Blogs-radio")
             }
@@ -628,7 +675,6 @@ var countRadio =
                 "<input type='checkbox' class='question-checkbox' label='Facebook' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Google Plus' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Linked In' survey='specific' />" +
-                "<input type='checkbox' class='question-checkbox' label='Online Dating Sites' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Twitter' survey='specific' />"
             },
             
@@ -637,6 +683,30 @@ var countRadio =
                 "How many other social networks do you participate in?",
               input:
                 countSelect.replace(/--name--/g, "social-net-radio")
+            }
+          ]
+        },
+        
+        onlineDatingSites: {
+          id: "mod-stageI-online-dating-sites",
+          title: "Online Dating Sites",
+          questions: [
+            {
+              text:
+                "Do you belong to any of the following Online Dating Sites? Check all that apply:",
+              input:
+                "<input type='checkbox' class='question-checkbox' label='eHarmony' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='JDate' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='Match' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='OKCupid' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='PlentyOfFish' survey='specific' />"
+            },
+            
+            {
+              text:
+                "How many other dating sites do you use?",
+              input:
+                countSelect.replace(/--name--/g, "online-dating-radio")
             }
           ]
         },

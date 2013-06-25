@@ -118,19 +118,29 @@ $(function() {
       stageIMods.demo.questions
     )
     .addModule(
+      stageIMods.email.id,
+      stageIMods.email.title,
+      stageIMods.email.questions
+    )
+    .addModule(
       stageIMods.blogs.id,
       stageIMods.blogs.title,
       stageIMods.blogs.questions
     )
     .addModule(
-      stageIMods.forums.id,
-      stageIMods.forums.title,
-      stageIMods.forums.questions
-    )
-    .addModule(
       stageIMods.socialNetworks.id,
       stageIMods.socialNetworks.title,
       stageIMods.socialNetworks.questions
+    )
+    .addModule(
+      stageIMods.onlineDatingSites.id,
+      stageIMods.onlineDatingSites.title,
+      stageIMods.onlineDatingSites.questions
+    )
+    .addModule(
+      stageIMods.forums.id,
+      stageIMods.forums.title,
+      stageIMods.forums.questions
     )
     .addModule(
       stageIMods.gaming.id,
@@ -141,11 +151,6 @@ $(function() {
       stageIMods.virtualEnvironments.id,
       stageIMods.virtualEnvironments.title,
       stageIMods.virtualEnvironments.questions
-    )
-    .addModule(
-      stageIMods.email.id,
-      stageIMods.email.title,
-      stageIMods.email.questions
     )
     // Submit function for Stage I -> Stage II
     .setSubmit(
@@ -171,7 +176,8 @@ $(function() {
             specifics = [],
             generals = [],
             generalModifier,
-            blogAddition;
+            blogAddition,
+            websiteAddition;
             
         // We've named each input of interest as question-field or question-checkbox
         // so we can gather the user responses by question
@@ -219,11 +225,12 @@ $(function() {
                     finalAnswers[currentModule.title] = {};
                   }
                   blogAddition = (currentDomain === "Blogs") ? "one or more " : "";
+                  websiteAddition = (currentDomain === "Blogs") ? " / Personal Websites" : "";
                   finalAnswers[currentModule.title] = {};
                   specifics.push(
                     {
                       text:
-                        "You indicated that you " + idiomMap[currentDomain].verb + " " + blogAddition + currentDomain + ". " +
+                        "You indicated that you " + idiomMap[currentDomain].verb + " " + blogAddition + currentDomain + websiteAddition + ". " +
                         idiomMap[currentDomain].countQuestion,
                         
                       domain: currentDomain
@@ -373,7 +380,8 @@ $(function() {
                     crossoverCount = 0,
                     crossoverQuestions = [],
                     questionText,
-                    domainInvolvementChecks = "";
+                    domainInvolvementChecks = "",
+                    blogAddition;
                     
                 for (var a in finalAnswers) {
                   if (a !== "Demo") {
@@ -393,10 +401,11 @@ $(function() {
                         : ((idiomMap[s]) ? idiomMap[s].verb : idiomMap[a].verb);
                       currentSingularAccount = accountIdiom.substring(0, accountIdiom.length - 1);
                       currentSingularDomain = domainIdiom.substring(0, domainIdiom.length - 1);
+                      blogAddition = (a === "Blogs / Personal Websites") ? " / Personal Website" : "";
                       // The question text has a different format for the Blogs and Emails case
-                      questionText = (a === "Blogs" || a === "Emails")
-                        ? "You indicated that you " + verbIdiom + " one or more " + currentSingularDomain + " " + accountIdiom + ". Have you ever " +
-                          "created " + correctIndefiniteArticle(domainIdiom) + " " + currentSingularDomain + " " + currentSingularAccount + " name that is different " +
+                      questionText = (a === "Blogs / Personal Websites" || a === "Emails")
+                        ? "You indicated that you " + verbIdiom + " one or more " + currentSingularDomain + blogAddition + " " + accountIdiom + ". Have you ever " +
+                          "created " + correctIndefiniteArticle(domainIdiom) + " " + currentSingularDomain + blogAddition + " " + currentSingularAccount + " name that is different " +
                           "than your real world name?"
                         : "You indicated that you " + verbIdiom + " one or more " + accountIdiom + " in " + domainIdiom + ". Have you ever " +
                           "created " + correctIndefiniteArticle(accountIdiom) + " " + currentSingularAccount + " name in " + domainIdiom + " that is different " +
@@ -414,7 +423,7 @@ $(function() {
                         }
                       );
                       domainInvolvementChecks += "<input type='checkbox' name='--name--' class='question-checkbox' label='" + 
-                        ((currentSubdomain["definition"]) ? currentSubdomain["definition"] : s) + "' survey='crossover' />";
+                        ((currentSubdomain["definition"]) ? currentSubdomain["definition"] : ((s === "Blogs") ? "Blogs / Personal Websites" : s)) + "' survey='crossover' />";
                     }
                   }
                 }
@@ -501,11 +510,16 @@ $(function() {
                         var currentModule = stageIII.modules[1],
                             currentQuestion = currentModule.getQuestionById($(this).parents().eq(2).attr("id")),
                             followupCrossoverId = currentQuestion.id + "-crossovers",
-                            effectiveDomainChecks = $('<div>').append($(domainInvolvementChecks).not("[label='" + currentQuestion.domain + "'], " +
+                            currentDomainCheck = (currentQuestion.domain === "Blogs") ? "Blogs / Personal Websites" : currentQuestion.domain,
+                            effectiveDomainChecks = $('<div>').append($(domainInvolvementChecks).not("[label='" + currentDomainCheck + "'], " +
                               "[label='" + currentQuestion.definition + "']").clone()).html(),
                             effectiveReferent = (currentQuestion.domain === "Blogs" || currentQuestion.domain === "Emails")
                               ? currentQuestion.domain.substring(0, currentQuestion.domain.length - 1)
                               : currentQuestion.definition || currentQuestion.domain;
+                              
+                        if (currentQuestion.domain === "Blogs") {
+                          effectiveReferent += " / Personal Website";
+                        }
                             
                         currentModule.addQuestionAfter(
                           currentQuestion.id,
@@ -573,6 +587,10 @@ $(function() {
                     modifiedDomain = (currentQuestion.domain === "Blogs" || currentQuestion.domain === "Emails")
                       ? currentQuestion.domain.substring(0, currentQuestion.domain.length - 1)
                       : currentQuestion.domain;
+                      
+                if (currentQuestion.domain === "Blogs") {
+                  modifiedDomain += " / Personal Website";
+                }
                     
                 // Begin by removing questions from the calling module
                 currentModule
