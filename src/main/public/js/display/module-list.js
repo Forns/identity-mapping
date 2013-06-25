@@ -857,18 +857,7 @@ var countRadio =
         questions: [
           {
             text:
-              "<strong>Thank you</strong> for participating in the Identity Mapping Project! Your responses have been recorded."
-          },
-  
-          {
-            text:
-              "<strong>Please tell others</strong> about this website and have them come map their identity! " +
-              "Our goal is to generate thousands or millions of identity maps from around the globe and chart the nature of identity in today&rsquo;s digital world."
-          },
-
-          {
-            text:
-              "<strong>To create your identity map</strong>, please click on the button below."
+              "<strong>Thank you</strong> for participating in the Identity Mapping Project! To submit your answers and see your personalized map, please continue below."
           }
         ]
       }

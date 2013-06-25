@@ -187,12 +187,11 @@ $(function() {
   /*
    * STAGE II
    */
-        
         // Give stage II a nice description for the users
         stageII.addModule(
           stageIIMods.briefing.id,
           stageIIMods.briefing.title,
-          (stageI.modules.length > 1) ? stageIIMods.briefing.questions : stageIIMods.empty.questions
+          (Object.keys(finalAnswers).length > 1) ? stageIIMods.briefing.questions : stageIIMods.empty.questions
         );
         
         // Now, we need to construct part II of the survey from the responses in part I
@@ -367,7 +366,7 @@ $(function() {
                 stageIII.addModule(
                   stageIIIMods.briefing.id,
                   stageIIIMods.briefing.title,
-                  stageIIIMods.briefing.questions
+                  (Object.keys(finalAnswers) > 1) ? stageIIIMods.briefing.questions : stageIIIMods.empty.questions
                 );
                 
                 // We will use the current state of finalAnswers to populate the stage III questions
@@ -429,14 +428,16 @@ $(function() {
                 }
                 
                 // Add the questions to stage III!
-                stageIII.addModule(
-                  stageIIIMods.crossover.id,
-                  stageIIIMods.crossover.title,
-                  (crossoverQuestions.length > 1) ? crossoverQuestions : stageIIIMods.empty.questions
-                );
+                if (crossoverQuestions.length > 1) {
+                  stageIII.addModule(
+                    stageIIIMods.crossover.id,
+                    stageIIIMods.crossover.title,
+                    crossoverQuestions
+                  );
+                }
                 
                 stageIII.setSubmit(
-                  "Submit!",
+                  "Continue",
                   "container",
                   function () {
                     // Adjust the page scroll
@@ -454,17 +455,18 @@ $(function() {
                     // Add the crossovers bucket to finalAnswers
                     finalAnswers["Crossover"] = {};
                     
-                    // Finally, we parse the stage III responses
-                    for (var r in currentModule.responses) {
-                      currentQuestion = currentModule.getQuestionById(r.split("-")[0]);
-                      crossoverCategory = (currentQuestion.definition) ? currentQuestion.definition : currentQuestion.domain;
-                      
-                      if (typeof(finalAnswers["Crossover"][crossoverCategory]) === "undefined") {
-                        finalAnswers["Crossover"][crossoverCategory] = [];
+                    if (currentModule) {
+                      // Finally, we parse the stage III responses
+                      for (var r in currentModule.responses) {
+                        currentQuestion = currentModule.getQuestionById(r.split("-")[0]);
+                        crossoverCategory = (currentQuestion.definition) ? currentQuestion.definition : currentQuestion.domain;
+                        
+                        if (typeof(finalAnswers["Crossover"][crossoverCategory]) === "undefined") {
+                          finalAnswers["Crossover"][crossoverCategory] = [];
+                        }
+                        finalAnswers["Crossover"][crossoverCategory].push(currentModule.responses[r]);
                       }
-                      finalAnswers["Crossover"][crossoverCategory].push(currentModule.responses[r]);
                     }
-                    
                     console.log(finalAnswers);
 
                     stageIV.addModule(
@@ -473,7 +475,7 @@ $(function() {
                       stageIVMods.questions
                     )
                     .setSubmit(
-                      "Create My Identity Map",
+                      "Create My Map",
                       "container",
                       function (event) {
                         event.preventDefault();
@@ -614,7 +616,7 @@ $(function() {
                           currentIdioms.account + ". Please explain the reason that you " + currentIdioms.verb + " multiple " + currentIdioms.account +
                           " and then describe the different purpose or function of each " + currentSingularTitle + ".",
                       input:
-                        "<textarea name='" + currentId + "-purpose' maxlength='1000' class='question-field question-textarea' />",
+                        "<textarea name='" + currentId + "-purpose' maxlength='4000' class='question-field question-textarea' />",
                       domain:
                         currentQuestion.domain
                     }
