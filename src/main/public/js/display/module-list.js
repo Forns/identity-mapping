@@ -24,6 +24,13 @@ var countRadio =
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='boolean' value='true' />Yes</label>" +
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='boolean' value='false' />No</label>",
       
+    otherDomainFields =
+      "<input type='text' class='question-field' name='--name--' >"
+      "<input type='text' class='question-field' name='--name--' >"
+      "<input type='text' class='question-field' name='--name--' >"
+      "<input type='text' class='question-field' name='--name--' >"
+      "<input type='text' class='question-field' name='--name--' >",
+      
     countSelect = 
        "<select class='question-field' survey='count' name='--name--'>" +
        "<option>0</option>" +
@@ -183,35 +190,23 @@ var countRadio =
       },
       
       // Digital Gaming Platforms
-      "Digital Gaming Platforms": {
+      "Digital Games": {
         verb: "use",
         account: "games",
         countQuestion: "During the last 6 months, in how many games have you been an active player within the",
         general: true // Flag to show that this requires a followup description
       },
       
-      "Playstation": {
-        verb: "use",
-        account: "games",
-        countQuestion: "During the last 6 months, how many games have you actively played on the Playstation?"
+      "Mass Effect": {
+        verb: "play",
+        account: "characters",
+        countQuestion: "How many characters have you created in Mass Effect?"
       },
       
-      "Steam": {
-        verb: "use",
-        account: "games",
-        countQuestion: "During the last 6 months, how many games have you actively played on Steam?"
-      },
-      
-      "Wii": {
-        verb: "use",
-        account: "games",
-        countQuestion: "During the last 6 months, how many games have you actively played on the Wii?"
-      },
-      
-      "Xbox 360": {
-        verb: "use",
-        account: "games",
-        countQuestion: "During the last 6 months, how many games have you actively played on the Xbox 360?"
+      "Skyrim": {
+        verb: "play",
+        account: "characters",
+        countQuestion: "How many characters have you created in Skyrim?"
       },
       
       // 3D Virtual Worlds
@@ -305,7 +300,7 @@ var countRadio =
               text: 
                 "<strong>Part I of the Survey</strong> will ask you to provide the following:<br/>" +
                 "(1) Basic information about your Physical Self (such as your age, sex, education, and country of residence)<br/>" +
-                "(2) A broad overview of your presence in each of six digital domains: Blogs, On-Line Forums, Social Networks, Digital Gaming Platforms, 3D Virtual Worlds, and Emails."
+                "(2) A broad overview of your presence in each of seven digital domains: Emails, Blogs / Personal Websites, Socian Networks, Online Dating Sites, Online Forums, Digital Games, and 3D Virtual Worlds."
             },
             
             {
@@ -674,8 +669,10 @@ var countRadio =
               input:
                 "<input type='checkbox' class='question-checkbox' label='Facebook' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Google Plus' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='Instagram' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Linked In' survey='specific' />" +
-                "<input type='checkbox' class='question-checkbox' label='Twitter' survey='specific' />"
+                "<input type='checkbox' class='question-checkbox' label='Twitter' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='Weibo' survey='specific' />"
             },
             
             {
@@ -713,23 +710,21 @@ var countRadio =
         
         gaming: {
           id: "mod-stageI-gaming",
-          title: "Digital Gaming Platforms",
+          title: "Digital Games",
           questions: [
             {
               text:
                 "Do you use any of the following digital gaming platforms? Check all that apply:",
               input:
-                "<input type='checkbox' class='question-checkbox' label='Playstation' survey='specific' />" +
-                "<input type='checkbox' class='question-checkbox' label='Steam' survey='specific' />" +
-                "<input type='checkbox' class='question-checkbox' label='Wii' survey='specific' />" +
-                "<input type='checkbox' class='question-checkbox' label='Xbox 360' survey='specific' />"
+                "<input type='checkbox' class='question-checkbox' label='Mass Effect' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='Skyrim' survey='specific' />"
             },
             
             {
               text:
                 "How many other digital gaming platforms do you use?",
               input:
-                countSelect.replace(/--name--/g, "gaming-platform-radio")
+                countSelect.replace(/--name--/g, "gaming-radio")
             }
           ]
         },

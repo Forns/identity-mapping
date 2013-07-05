@@ -177,6 +177,7 @@ $(function() {
             generals = [],
             generalModifier,
             blogAddition,
+            domainIdiom,
             websiteAddition;
             
         // We've named each input of interest as question-field or question-checkbox
@@ -226,10 +227,11 @@ $(function() {
                   blogAddition = (currentDomain === "Blogs") ? "one or more " : "";
                   websiteAddition = (currentDomain === "Blogs") ? " / Personal Websites" : "";
                   finalAnswers[currentModule.title] = {};
+                  domainIdiom = (currentDomain === "Emails") ? "Email" : currentDomain;
                   specifics.push(
                     {
                       text:
-                        "You indicated that you " + idiomMap[currentDomain].verb + " " + blogAddition + currentDomain + websiteAddition + ". " +
+                        "You indicated that you " + idiomMap[currentDomain].verb + " " + blogAddition + domainIdiom + websiteAddition + ". " +
                         idiomMap[currentDomain].countQuestion,
                         
                       domain: currentDomain
