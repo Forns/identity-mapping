@@ -28,7 +28,13 @@ $(function () {
         }
       ]
     )
-    .render(mapContainer);
+    .render(mapContainer, function() {
+      $("#" + mapContainer)
+        .after(moduleList.stageIV.modal);
+        
+      $("#stageIVModal")
+        .modal()
+    });
     
     $("#home-button").click(function (event) {
       event.preventDefault();

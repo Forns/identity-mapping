@@ -878,6 +878,20 @@ var countRadio =
             text:
               "<strong>Thank you</strong> for participating in the Identity Mapping Project! To submit your answers and see your personalized map, please continue below."
           }
-        ]
+        ],
+        modal:
+          "<div id='stageIVModal' class='modal hide fade' tabindex='-1' role='dialog' aria-labelledby='modalTitle' aria-hidden='true'>" +
+            "<div class='modal-header'>" +
+              "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>x</button>" +
+              "<h3 id='modalTitle'>Thank You!</h3>" +
+            "</div>" +
+            "<div class='modal-body'>" +
+              "<p>Thank you once more for participating! Please tell others about this website and have them map their own identities!</p>" +
+              "<p>Our goal is to generate thousands or millions of identity maps from around the globe and chart the nature of identity in today's digital world.</p>" +
+            "</div>" +
+            "<div class='modal-footer'>" +
+              "<button class='btn' data-dismiss='modal' aria-hidden='true'>OK</button>" +
+            "</div>" +
+          "</div>"
       }
     };

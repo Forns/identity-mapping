@@ -216,7 +216,6 @@ $(function() {
           currentModule = stageI.modules[m];
           currentSingularTitle = currentModule.title.substring(0, currentModule.title.length - 1);
           
-          console.log(currentModule.responses)
           // First, we'll take a look at all of the responses in the current module...
           for (var r in currentModule.responses) {
             currentResponse = currentModule.responses[r];
@@ -411,14 +410,11 @@ $(function() {
                     domainInvolvementChecks = "",
                     blogAddition;
                 
-                console.log(finalAnswers);    
                 for (var a in finalAnswers) {
                   if (a !== "Demo") {
                     currentArchdomain = finalAnswers[a];
                     for (var s in currentArchdomain) {
                       currentSubdomain = currentArchdomain[s];
-                      console.log(a);
-                      console.log(s);
                       // If the current subdomain has a "definition" field, then we know it must have been a write-in,
                       // which requires special treatment
                       domainIdiom = s;
