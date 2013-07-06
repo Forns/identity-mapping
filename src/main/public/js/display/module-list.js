@@ -25,11 +25,11 @@ var countRadio =
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='boolean' value='false' />No</label>",
       
     otherDomainFields =
-      "<input type='text' class='question-field' name='--name--1' />" +
-      "<input type='text' class='question-field' name='--name--2' />" +
-      "<input type='text' class='question-field' name='--name--3' />" +
-      "<input type='text' class='question-field' name='--name--4' />" +
-      "<input type='text' class='question-field' name='--name--5' />",
+      "<input type='text' class='question-field' name='--name--1' maxlength='75' />" +
+      "<input type='text' class='question-field' name='--name--2' maxlength='75' />" +
+      "<input type='text' class='question-field' name='--name--3' maxlength='75' />" +
+      "<input type='text' class='question-field' name='--name--4' maxlength='75' />" +
+      "<input type='text' class='question-field' name='--name--5' maxlength='75' />",
       
     countSelect = 
        "<select class='question-field' survey='count' name='--name--'>" +
@@ -726,7 +726,19 @@ var countRadio =
           questions: [
             {
               text:
-                "Do you use any of the following digital gaming platforms? Check all that apply:",
+                "In this survey, we define a distinction between Digital Games and 3D Virtual Environments: " +
+                "<ul>" +
+                  "<li><strong>3D Virtual Worlds</strong> possess a 3D graphical interface, support massive, multi-user remote interactivity, " +
+                  "are persistent (exist even if a user is not logged-in or online), are immersive (users possess an avatar by which they interact " +
+                  "with the 3D world), and emphasize <emph>user-generated activities and goals.</emph></li>" +
+                  "<li><strong>Digital Games</strong>, by contrast, possess goals that are built into the program and are not defined by " +
+                  "individual users. These goals might include amassing points, completing objectives, or reaching destinations.</li>" +
+                "</ul>"
+            },
+            
+            {
+              text:
+                "Do you use any of the following digital games? Check all that apply:",
               input:
                 "<input type='checkbox' class='question-checkbox' label='Mass Effect' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Skyrim' survey='specific' />"
