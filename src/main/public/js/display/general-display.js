@@ -14,7 +14,7 @@ $(function () {
   var gridSize = 21,
       faceList = (function () {
         var result = [];
-        for (var i = 1; i <= gridSize; i++) {
+        for (var i = 0; i <= gridSize; i++) {
           result.push("gridTile" + i);
         }
         return result;
