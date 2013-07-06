@@ -37,6 +37,35 @@ $(function() {
         return false;
       },
       
+      // Finds whether or not there are valid responses to stage I
+      stageIAnswered = function () {
+        console.log(stageI);
+        for (var a = 2; a < stageI.modules.length; a++) {
+          for (var r in stageI.modules[a].responses) {
+            if (stageI.modules[a].responses[r] !== "undefined" && stageI.modules[a].responses[r] !== "false") {
+              return true;
+            }
+          }
+        }
+        return false;
+      },
+      
+      // Finds whether or not there are valid responses to stage II
+      stageIIAnswered = function () {
+        var responses = 0;
+        for (var a in finalAnswers) {
+          if (a !== "Demo") {
+            for (var r in finalAnswers[a]) {
+              responses++;
+              if (responses >= 2) {
+                return true;
+              }
+            }
+          }
+        }
+        return false;
+      },
+      
       // Converts a number to its English ranking representation
       numToRank = function (num) {
         var addon;
@@ -186,6 +215,7 @@ $(function() {
             currentFollowup,
             currentMatch,
             definedDomain,
+            responseFound,
             specifics = [],
             generals = [],
             generalModifier,
@@ -201,11 +231,12 @@ $(function() {
   /*
    * STAGE II
    */
+        
         // Give stage II a nice description for the users
         stageII.addModule(
           stageIIMods.briefing.id,
           stageIIMods.briefing.title,
-          (Object.keys(finalAnswers).length > 1) ? stageIIMods.briefing.questions : stageIIMods.empty.questions
+          (stageIAnswered()) ? stageIIMods.briefing.questions : stageIIMods.empty.questions
         );
         
         // Now, we need to construct part II of the survey from the responses in part I
@@ -390,11 +421,12 @@ $(function() {
   /*
    * STAGE III
    */
-
+                
+                console.log(finalAnswers);
                 stageIII.addModule(
                   stageIIIMods.briefing.id,
                   stageIIIMods.briefing.title,
-                  (Object.keys(finalAnswers) > 1) ? stageIIIMods.briefing.questions : stageIIIMods.empty.questions
+                  (stageIIAnswered()) ? stageIIIMods.briefing.questions : stageIIIMods.empty.questions
                 );
                 
                 // We will use the current state of finalAnswers to populate the stage III questions
