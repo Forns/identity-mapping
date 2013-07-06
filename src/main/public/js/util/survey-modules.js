@@ -115,6 +115,8 @@ $(function () {
       container = $("#" + container);
       var rendering = "<form id='" + this.id + "-form'>",
           lastModule = this.modules[this.modules.length - 1],
+          questionNameMap = {},
+          currentQuestionName,
           currentSubmit;
       
       // First, we'll iterate through each module
@@ -144,7 +146,15 @@ $(function () {
       
       // Next, we want to make sure the inputs are properly named for serialization
       $(".question-field").each(function () {
-        $(this).attr("name", $(this).parent().attr("id") + "-field");
+        currentQuestionName = $(this).parent().attr("id") + "-field";
+        // If we have multiple inputs in a question, number them for differentiation
+        if (typeof(questionNameMap[currentQuestionName]) === "undefined") {
+          questionNameMap[currentQuestionName] = 0;
+        } else {
+          questionNameMap[currentQuestionName]++;
+          currentQuestionName += "-" + questionNameMap[currentQuestionName];
+        }
+        $(this).attr("name", currentQuestionName);
       });
       
       // Checkboxes should be labeled and named for serialization

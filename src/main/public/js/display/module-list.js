@@ -25,11 +25,11 @@ var countRadio =
       "<label class='radio'><input name='--name--' type='radio' label='--name--' survey='boolean' value='false' />No</label>",
       
     otherDomainFields =
-      "<input type='text' class='question-field' name='--name--' >"
-      "<input type='text' class='question-field' name='--name--' >"
-      "<input type='text' class='question-field' name='--name--' >"
-      "<input type='text' class='question-field' name='--name--' >"
-      "<input type='text' class='question-field' name='--name--' >",
+      "<input type='text' class='question-field' name='--name--1' />" +
+      "<input type='text' class='question-field' name='--name--2' />" +
+      "<input type='text' class='question-field' name='--name--3' />" +
+      "<input type='text' class='question-field' name='--name--4' />" +
+      "<input type='text' class='question-field' name='--name--5' />",
       
     countSelect = 
        "<select class='question-field' survey='count' name='--name--'>" +
@@ -77,9 +77,9 @@ var countRadio =
       
       // Online Forums
       "Online Forums": {
-        verb: "operate",
+        verb: "use",
         account: "accounts",
-        countQuestion: "How many forum accounts do you operate in the",
+        countQuestion: "How many forum accounts do you use in",
         general: true // Flag to show that this requires a followup description
       },
       
@@ -117,7 +117,7 @@ var countRadio =
       "Social Networks": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have in the",
+        countQuestion: "How many profiles do you have in ",
         general: true // Flag to show that this requires a followup description
       },
       
@@ -131,6 +131,12 @@ var countRadio =
         verb: "use",
         account: "profiles",
         countQuestion: "How many profiles do you have on Google Plus?"
+      },
+      
+      "Instagram": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have on Instagram?"
       },
       
       "Linked In": {
@@ -151,11 +157,17 @@ var countRadio =
         countQuestion: "How many handles do you have on Twitter?"
       },
       
+      "Weibo": {
+        verb: "use",
+        account: "accounts",
+        countQuestion: "How many accounts do you have on Weibo?"
+      },
+      
       // Online Dating Sites
       "Online Dating Sites": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have in the",
+        countQuestion: "How many profiles do you have in",
         general: true
       },
       
@@ -193,27 +205,27 @@ var countRadio =
       "Digital Games": {
         verb: "use",
         account: "games",
-        countQuestion: "During the last 6 months, in how many games have you been an active player within the",
+        countQuestion: "How many characters have you played in",
         general: true // Flag to show that this requires a followup description
       },
       
       "Mass Effect": {
         verb: "play",
         account: "characters",
-        countQuestion: "How many characters have you created in Mass Effect?"
+        countQuestion: "How many characters have you played in Mass Effect?"
       },
       
       "Skyrim": {
         verb: "play",
         account: "characters",
-        countQuestion: "How many characters have you created in Skyrim?"
+        countQuestion: "How many characters have you played in Skyrim?"
       },
       
       // 3D Virtual Worlds
       "3D Virtual Worlds": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in the",
+        countQuestion: "How many avatars do you currently have in",
         general: true // Flag to show that this requires a followup description
       },
       
@@ -652,9 +664,9 @@ var countRadio =
             
             {
               text:
-                "How many other online forums do you participate in?",
+                "If you use any other Online Forums, please enter their names below.",
               input:
-                countSelect.replace(/--name--/g, "forums-radio")
+                otherDomainFields.replace(/--name--/g, "forums-other-")
             }
           ]
         },
@@ -677,9 +689,9 @@ var countRadio =
             
             {
               text:
-                "How many other social networks do you participate in?",
+                "If you use any other Social Networks, please enter their names below.",
               input:
-                countSelect.replace(/--name--/g, "social-net-radio")
+                otherDomainFields.replace(/--name--/g, "social-net-other-")
             }
           ]
         },
@@ -701,9 +713,9 @@ var countRadio =
             
             {
               text:
-                "How many other dating sites do you use?",
+                "If you use any other Online Dating Sites, please enter their names below.",
               input:
-                countSelect.replace(/--name--/g, "online-dating-radio")
+                otherDomainFields.replace(/--name--/g, "online-dating-other-")
             }
           ]
         },
@@ -722,9 +734,9 @@ var countRadio =
             
             {
               text:
-                "How many other digital gaming platforms do you use?",
+                "If you play any other Digital Games, please enter their names below.",
               input:
-                countSelect.replace(/--name--/g, "gaming-radio")
+                otherDomainFields.replace(/--name--/g, "gaming-other-")
             }
           ]
         },
@@ -751,9 +763,9 @@ var countRadio =
             
             {
               text:
-                "How many other 3D virtual worlds do you use?",
+                "If you use any other 3D Virtual Worlds, please enter their names below.",
               input:
-                countSelect.replace(/--name--/g, "virtual-world-radio")
+                otherDomainFields.replace(/--name--/g, "virtual-world-other-")
             }
           ]
         },

@@ -25,6 +25,18 @@ $(function() {
       // Flags
       surveyComplete = false,
       
+      // Determines whether or not a user's custom domain is actually one that already exists
+      usedDomains = {},
+      isDefinedDomain = function (userInput) {
+        userInput = userInput.toLowerCase()
+        for (var d in idiomMap) {
+          if (d.toLowerCase() === userInput) {
+            return d;
+          }
+        }
+        return false;
+      },
+      
       // Converts a number to its English ranking representation
       numToRank = function (num) {
         var addon;
@@ -173,6 +185,7 @@ $(function() {
             currentResponse,
             currentFollowup,
             currentMatch,
+            definedDomain,
             specifics = [],
             generals = [],
             generalModifier,
@@ -203,16 +216,17 @@ $(function() {
           currentModule = stageI.modules[m];
           currentSingularTitle = currentModule.title.substring(0, currentModule.title.length - 1);
           
+          console.log(currentModule.responses)
           // First, we'll take a look at all of the responses in the current module...
           for (var r in currentModule.responses) {
             currentResponse = currentModule.responses[r];
-            currentMatch = r.match(/-cb$|-radio$|-field$/g);
+            currentMatch = r.match(/-cb$|-radio$|-field/g);
             
             // If the input requests no response, just move on
             if (currentMatch === null) {
               continue;
             }
-
+            
             switch(currentMatch[0]) {
               // Some answers will ask specifics about the user's online persona, we'll handle these first
               case "-radio":
@@ -220,13 +234,19 @@ $(function() {
                 // Only continue if the user actually selected this digital medium
                 if (currentResponse === "true") { // Relax, it's the string "true", not the Boolean
                   currentDomain = r.replace("-cb", "").replace("-radio", "").replace(/-/g, " ");
+                  // Make sure that the user hasn't already specified this domain (e.g., in the "other" section)
+                  if (typeof(usedDomains[currentDomain]) === "undefined") {
+                    usedDomains[currentDomain] = true;
+                  } else {
+                    delete currentModule.responses[r];
+                    continue;
+                  }
                   // Add the domain to the answers list if it doesn't already exist
                   if (typeof(finalAnswers[currentModule.title]) === "undefined") {
                     finalAnswers[currentModule.title] = {};
                   }
                   blogAddition = (currentDomain === "Blogs") ? "one or more " : "";
                   websiteAddition = (currentDomain === "Blogs") ? " / Personal Websites" : "";
-                  finalAnswers[currentModule.title] = {};
                   domainIdiom = (currentDomain === "Emails") ? "Email" : currentDomain;
                   specifics.push(
                     {
@@ -239,27 +259,34 @@ $(function() {
                   );
                 }
                 break;
-              // Some answers will simply be, "how many other instances of this platform do you use?"
+              // Some answers will be to the question: "What other domains in this archdomain do you use?"
               case "-field":
-                currentResponse = parseInt(currentResponse);
-                generalModifier = (currentModule.title === "Emails" || currentModule.title === "Blogs") ? "" : "additional";
-                for (var i = 1; i <= currentResponse; i++) {
-                  // Add the domain to the answers list if it doesn't already exist
-                  if (typeof(finalAnswers[currentModule.title]) === "undefined") {
-                    finalAnswers[currentModule.title] = {};
-                  }
+                // Add the domain to the answers list if it doesn't already exist
+                if (typeof(finalAnswers[currentModule.title]) === "undefined") {
                   finalAnswers[currentModule.title] = {};
-                  generals.push(
-                    {
-                      text: 
-                        "You indicated that you " + idiomMap[currentModule.title].verb + " one or more " + generalModifier + " " +
-                        idiomMap[currentModule.title].account + ". " + idiomMap[currentModule.title].countQuestion + " " +
-                        numToRank(i) + " " + generalModifier + " " + currentSingularTitle + "?",
-                        
-                      domain: currentModule.title
-                    }
-                  );
                 }
+                currentDomain = currentResponse;
+                definedDomain = isDefinedDomain(currentDomain);
+                if (definedDomain) {
+                  currentDomain = definedDomain;
+                  // Make sure that the user hasn't already specified this domain (e.g., in the "other" section)
+                  if (typeof(usedDomains[currentDomain]) === "undefined") {
+                    usedDomains[currentDomain] = true;
+                  } else {
+                    delete currentModule.responses[r];
+                    continue;
+                  }
+                }
+                generals.push(
+                  {
+                    text:
+                      "You indicated that you " + idiomMap[currentModule.title].verb + " " + currentDomain + ". " +
+                      idiomMap[currentModule.title].countQuestion + " " + currentDomain + "?",
+                      
+                    definition: currentDomain,
+                    domain: currentModule.title
+                  }
+                );
                 break;
               default:
                 continue;
@@ -327,7 +354,7 @@ $(function() {
                   currentQuestion = currentModule.getQuestionById(r.split("-")[0]);
                   currentResponse = currentModule.responses[r];
                   if (currentArchdomain === currentQuestion.domain && currentArchdomain !== "Blogs" && currentArchdomain !== "Emails") {
-                    currentSpecificDomain = currentArchdomain + " " + otherDomainCounter;
+                    currentSpecificDomain = (currentQuestion.definition) ? currentQuestion.definition : currentArchdomain + " " + otherDomainCounter;
                   } else {
                     currentSpecificDomain = currentQuestion.domain;
                   }
@@ -383,23 +410,24 @@ $(function() {
                     questionText,
                     domainInvolvementChecks = "",
                     blogAddition;
-                    
+                
+                console.log(finalAnswers);    
                 for (var a in finalAnswers) {
                   if (a !== "Demo") {
                     currentArchdomain = finalAnswers[a];
                     for (var s in currentArchdomain) {
                       currentSubdomain = currentArchdomain[s];
+                      console.log(a);
+                      console.log(s);
                       // If the current subdomain has a "definition" field, then we know it must have been a write-in,
                       // which requires special treatment
-                      domainIdiom = (currentSubdomain["definition"])
-                        ? currentSubdomain["definition"]
-                        : ((idiomMap[s]) ? s : "the " + numToRank(s.split(" ")[parseInt(s.split(" ").length - 1)]) + " additional " + a.substring(0, a.length - 1));
-                      accountIdiom = (currentSubdomain["definition"])
-                        ? idiomMap[a].account
-                        : ((idiomMap[s]) ? idiomMap[s].account : idiomMap[a].account);
-                      verbIdiom = (currentSubdomain["definition"])
-                        ? idiomMap[a].verb
-                        : ((idiomMap[s]) ? idiomMap[s].verb : idiomMap[a].verb);
+                      domainIdiom = s;
+                      accountIdiom = (idiomMap[s])
+                        ? idiomMap[s].account
+                        : idiomMap[a].account;
+                      verbIdiom = (idiomMap[s])
+                        ? idiomMap[s].verb
+                        : idiomMap[a].verb;
                       currentSingularAccount = accountIdiom.substring(0, accountIdiom.length - 1);
                       currentSingularDomain = domainIdiom.substring(0, domainIdiom.length - 1);
                       blogAddition = (a === "Blogs / Personal Websites") ? " / Personal Website" : "";
@@ -590,7 +618,7 @@ $(function() {
                     currentRadio,
                     modifiedDomain = (currentQuestion.domain === "Blogs" || currentQuestion.domain === "Emails")
                       ? currentQuestion.domain.substring(0, currentQuestion.domain.length - 1)
-                      : currentQuestion.domain;
+                      : (currentQuestion.definition) ? currentQuestion.definition : currentQuestion.domain;
                       
                 if (currentQuestion.domain === "Blogs") {
                   modifiedDomain += " / Personal Website";
@@ -657,25 +685,6 @@ $(function() {
                       .attr("name", $(this).attr("label"))
                       .val("undefined");
                   });
-                }
-                
-                // Add the followup question for the general domains asking what the name of the "other"
-                // domain is
-                if (currentIdioms.general && currentValue !== 0) {
-                  currentModule.addQuestionAfter(
-                    currentId,
-                    {
-                      id:
-                        currentId + "-definition",
-                      text:
-                        "Please provide the name of this additional " + currentSingularDomain + " below:",
-                      input:
-                        "<input name='" + currentId + "-definition' type='text' maxlength='75' class='question-field' />",
-                      domain:
-                        currentQuestion.domain
-                    }
-                  );
-                  $("#" + currentId + "-definition").addClass("followup-1");
                 }
               });
           }); // Stage II render and callback
