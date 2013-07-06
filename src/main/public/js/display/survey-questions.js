@@ -39,7 +39,6 @@ $(function() {
       
       // Finds whether or not there are valid responses to stage I
       stageIAnswered = function () {
-        console.log(stageI);
         for (var a = 2; a < stageI.modules.length; a++) {
           for (var r in stageI.modules[a].responses) {
             if (stageI.modules[a].responses[r] !== "undefined" && stageI.modules[a].responses[r] !== "false") {
@@ -422,7 +421,6 @@ $(function() {
    * STAGE III
    */
                 
-                console.log(finalAnswers);
                 stageIII.addModule(
                   stageIIIMods.briefing.id,
                   stageIIIMods.briefing.title,
@@ -525,7 +523,6 @@ $(function() {
                         finalAnswers["Crossover"][crossoverCategory].push(currentModule.responses[r]);
                       }
                     }
-                    console.log(finalAnswers);
 
                     stageIV.addModule(
                       stageIVMods.id,

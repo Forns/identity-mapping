@@ -312,7 +312,7 @@ var countRadio =
               text: 
                 "<strong>Part I of the Survey</strong> will ask you to provide the following:<br/>" +
                 "(1) Basic information about your Physical Self (such as your age, sex, education, and country of residence)<br/>" +
-                "(2) A broad overview of your presence in each of seven digital domains: Emails, Blogs / Personal Websites, Socian Networks, Online Dating Sites, Online Forums, Digital Games, and 3D Virtual Worlds."
+                "(2) A broad overview of your presence in each of seven digital domains: Emails, Blogs / Personal Websites, Social Networks, Online Dating Sites, Online Forums, Digital Games, and 3D Virtual Worlds."
             },
             
             {
@@ -862,7 +862,7 @@ var countRadio =
       	  questions: [
       	    {
       	      text:
-                "You indicated that you are not involved in enough (2 or more) digital domains to possess any crossover accounts. Please click submit below to continue!"
+                "You indicated that you are not involved in enough (2 or more) digital domains to possess any crossover accounts. Please click the button below to continue!"
       	    }
           ]
       	}
@@ -876,7 +876,7 @@ var countRadio =
         questions: [
           {
             text:
-              "<strong>Thank you</strong> for participating in the Identity Mapping Project! To submit your answers and see your personalized map, please continue below."
+              "<strong>Thank you</strong> for participating in the Identity Mapping Project! To submit your answers and see your personalized identity map, please continue below."
           }
         ],
         modal:
@@ -886,7 +886,7 @@ var countRadio =
               "<h3 id='modalTitle'>Thank You!</h3>" +
             "</div>" +
             "<div class='modal-body'>" +
-              "<p>Thank you once more for participating! Please tell others about this website and have them map their own identities!</p>" +
+              "<p>Thanks again for participating! Please tell others about this website and have them map their own identities!</p>" +
               "<p>Our goal is to generate thousands or millions of identity maps from around the globe and chart the nature of identity in today's digital world.</p>" +
             "</div>" +
             "<div class='modal-footer'>" +
