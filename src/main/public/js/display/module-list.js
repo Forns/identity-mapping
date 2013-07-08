@@ -209,16 +209,40 @@ var countRadio =
         general: true // Flag to show that this requires a followup description
       },
       
+      "Dragon Age": {
+        verb: "play",
+        account: "characters",
+        countQuestion: "How many characters have you played in a game in the Dragon Age series?"
+      },
+      
+      "Fallout": {
+        verb: "play",
+        account: "characters",
+        countQuestion: "How many characters have you played in a game in the Fallout series?"
+      },
+      
+      "Guild Wars": {
+        verb: "play",
+        account: "characters",
+        countQuestion: "How many avatars do you currently have in World of Warcraft?"
+      },
+      
       "Mass Effect": {
         verb: "play",
         account: "characters",
-        countQuestion: "How many characters have you played in Mass Effect?"
+        countQuestion: "How many characters have you played in a game in the Mass Effect series?"
       },
       
       "Skyrim": {
         verb: "play",
         account: "characters",
         countQuestion: "How many characters have you played in Skyrim?"
+      },
+      
+      "World of Warcraft": {
+        verb: "use",
+        account: "avatars",
+        countQuestion: "How many avatars do you currently have in World of Warcraft?"
       },
       
       // 3D Virtual Worlds
@@ -281,12 +305,6 @@ var countRadio =
         verb: "use",
         account: "avatars",
         countQuestion: "How many avatars do you currently have in Utherverse?"
-      },
-      
-      "World of Warcraft": {
-        verb: "use",
-        account: "avatars",
-        countQuestion: "How many avatars do you currently have in World of Warcraft?"
       },
       
       // Emails
@@ -726,27 +744,31 @@ var countRadio =
           questions: [
             {
               text:
-                "In this survey, we define a distinction between Digital Games and 3D Virtual Environments: " +
-                "<ul>" +
-                  "<li><strong>3D Virtual Worlds</strong> possess a 3D graphical interface, support massive, multi-user remote interactivity, " +
-                  "are persistent (exist even if a user is not logged-in or online), are immersive (users possess an avatar by which they interact " +
-                  "with the 3D world), and emphasize <emph>user-generated activities and goals.</emph></li>" +
-                  "<li><strong>Digital Games</strong>, by contrast, possess goals that are built into the program and are not defined by " +
-                  "individual users. These goals might include amassing points, completing objectives, or reaching destinations.</li>" +
-                "</ul>"
+                "Please read the following before you complete this section on Digital Gaming and the next section on 3D Virtual Worlds." +
+                "<ol>" +
+                  "<li>We are only interested in Digital Games where you play through a <strong>character or avatar</strong>.</li>" +
+                  "<li>Character-based Digital Games are different than 3D Virtual Worlds. Digital Games have goals built into the " +
+                  "program such as amassing points, completing objectives, or reaching destinations. 3D Virtual Worlds also involve " +
+                  "avatars but they are more open-ended environments where users select their own activities such as socializing, work, " +
+                  "learning, or play and define their own goals and objectives.</li>" +
+                "</ol>"
             },
             
             {
               text:
-                "Do you use any of the following digital games? Check all that apply:",
+                "Do you play any of the following character or avatar-based digital games? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox' label='Dragon Age' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='Fallout' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='Guild Wars' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Mass Effect' survey='specific' />" +
-                "<input type='checkbox' class='question-checkbox' label='Skyrim' survey='specific' />"
+                "<input type='checkbox' class='question-checkbox' label='Skyrim' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='World of Warcraft' survey='specific' />"
             },
             
             {
               text:
-                "If you play any other Digital Games, please enter their names below.",
+                "If you play any other character or avatar-based digital games, please enter their names below.",
               input:
                 otherDomainFields.replace(/--name--/g, "gaming-other-")
             }
@@ -769,8 +791,7 @@ var countRadio =
                 "<input type='checkbox' class='question-checkbox' label='Second Life' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='SIMS' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='There' survey='specific' />" +
-                "<input type='checkbox' class='question-checkbox' label='Utherverse' survey='specific' />" +
-                "<input type='checkbox' class='question-checkbox' label='World of Warcraft' survey='specific' />"
+                "<input type='checkbox' class='question-checkbox' label='Utherverse' survey='specific' />"
             },
             
             {
