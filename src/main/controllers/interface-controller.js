@@ -100,4 +100,27 @@ module.exports = function (app, surveyDao, $TM) {
     });
   });
 
+  /*
+   * POST /verify
+   *   Submit Recaptcha response and relay to Google.
+   */
+  app.post("/verify", function (req, res) {
+    // TODO Need to figure out how to send a POST from within Node/Express.
+    //      jQuery equivalent would be:
+/*
+      $.ajax({
+          type: "POST",
+          url: "http://www.google.com/recaptcha/api/verify",
+          data: {
+              privatekey: process.env.IMP_PRIVATE, // reCAPTCHA private key
+              remoteip: req.params.remoteip,
+              challenge: req.params.challenge,
+              response: req.params.response
+          },
+          success: function (data, textStatus, jqXHR) {
+              // Do the appropriate res.send.
+          }
+      });
+*/
+  });
 }

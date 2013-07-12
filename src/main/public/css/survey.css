@@ -87,3 +87,11 @@
 .text-right {
   text-align: right;
 }
+
+/*
+ * CAPTCHA
+ */
+#recaptcha_div {
+  margin-top: 1.25em;
+  margin-bottom: -5em;
+}

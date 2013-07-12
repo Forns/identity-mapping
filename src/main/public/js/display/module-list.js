@@ -224,7 +224,7 @@ var countRadio =
       "Guild Wars": {
         verb: "play",
         account: "characters",
-        countQuestion: "How many avatars do you currently have in World of Warcraft?"
+        countQuestion: "How many avatars do you currently have in Guild Wars?"
       },
       
       "Mass Effect": {
@@ -897,7 +897,9 @@ var countRadio =
         questions: [
           {
             text:
-              "<strong>Thank you</strong> for participating in the Identity Mapping Project! To submit your answers and see your personalized identity map, please continue below."
+              "<strong>Thank you</strong> for participating in the Identity Mapping Project! To submit your answers and see your personalized identity map, please continue below." +
+              "<div id='recaptcha_div'></div>" +
+              "<script>Recaptcha.create('6Lf2WuQSAAAAAL7cWlCKEmYM9VdtyOecTNpbBZXc', 'recaptcha_div', { theme: 'clean', callback: Recaptcha.focus_response_field });</script>"
           }
         ],
         modal:

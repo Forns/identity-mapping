@@ -535,7 +535,21 @@ $(function() {
                       function (event) {
                         event.preventDefault();
                         surveyComplete = true;
-                        
+                        /* TODO work in progress
+                        $.ajax({
+                            type: "POST",
+                            url: "/verify",
+                            data: {
+                                remoteip: window.__userIp, // Captured earlier via JSONP to jsonip.appspot.com.
+                                challenge: Recaptcha.get_challenge(),
+                                response: Recaptcha.get_response()
+                            },
+                            success: function (data, textStatus, jqXHR) {
+                                // TODO final POST (below) goes here only if verification was successful.
+                            }
+                        });
+                        */
+
                         $.ajax({
                           type: "POST",
                           url: "/identitymap",
