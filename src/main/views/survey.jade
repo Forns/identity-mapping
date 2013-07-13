@@ -8,9 +8,3 @@ block content
       p Loading, please wait...
       img(src="../assets/ajax-loader.gif")
   script(src='http://www.google.com/recaptcha/api/js/recaptcha_ajax.js')
-  script.
-    window.__userIp = function (json) {
-      // Wipe out the callback upon, well, callback.
-      window.__userIp = json.ip;
-    };
-  script(src='http://jsonip.appspot.com/?callback=__userIp')

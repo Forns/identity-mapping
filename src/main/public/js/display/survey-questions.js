@@ -535,25 +535,15 @@ $(function() {
                       function (event) {
                         event.preventDefault();
                         surveyComplete = true;
-                        /* TODO work in progress
-                        $.ajax({
-                            type: "POST",
-                            url: "/verify",
-                            data: {
-                                remoteip: window.__userIp, // Captured earlier via JSONP to jsonip.appspot.com.
-                                challenge: Recaptcha.get_challenge(),
-                                response: Recaptcha.get_response()
-                            },
-                            success: function (data, textStatus, jqXHR) {
-                                // TODO final POST (below) goes here only if verification was successful.
-                            }
-                        });
-                        */
 
                         $.ajax({
                           type: "POST",
                           url: "/identitymap",
-                          data: finalAnswers,
+                          data: {
+                            challenge: Recaptcha.get_challenge(),
+                            response: Recaptcha.get_response(),
+                            survey: finalAnswers
+                          },
                           success: function (data, textStatus, jqXHR) {
                             if (jqXHR.status === 201) {
                               // Created: grab the location and use it for the identity map.
@@ -563,6 +553,20 @@ $(function() {
                                     "Please contact the IMP investigators.");
                               window.location = "/";
                             }
+                          },
+                          error: function (jqXHR, textStatus, errorThrown) {
+                            // 403 FORBIDDEN is what we return on a reCAPTCHA fail.
+                            // For everything else, we go generic.
+                            alert(jqXHR.status === 403 ?
+                              "Sorry, but word answer verification did not succeed.\n" +
+                                "Please try again.\n\n" +
+                                "You can click the button above the speaker icon\n" +
+                                "to get a new pair of word images if the one you see\n" +
+                                "looks too difficult." :
+                              "We got an unexpected response from the server.\n" +                                                                                                       
+                                "Please contact the IMP investigators."
+                            );
+                            Recaptcha.reload();
                           }
                         });
                       }

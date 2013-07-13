@@ -83,44 +83,45 @@ module.exports = function (app, surveyDao, $TM) {
 
   /*
    * POST /identitymap
-   *   Submit survey answers and proceed to the identity map
+   *   Submit survey answers alongside a reCAPTCHA response and
+   *   proceed to the identity map
    */
+  var request = require("request");
   app.post("/identitymap", function (req, res) {
     // TODO Validate the answers---we can't take just any body!
 
-    // Write the response to the database.
-    surveyDao.save(req.body, function (error, surveyResponse) {
-      if (error) {
-        res.send(500, error);
-      } else {
-        console.log(new Date() + ": Survey response saved:");
-        console.log(surveyResponse);
-        res.send(201, {location: surveyResponse._id.toString()});
+    // First, reCAPTCHA.
+    request.post(
+      {
+        url: "http://www.google.com/recaptcha/api/verify",
+        form: {
+          privatekey: process.env.IMP_PRIVATE, // reCAPTCHA private key
+          remoteip: req.ip,
+          challenge: req.body.challenge,
+          response: req.body.response
+        }
+      },
+      function (error, response, body) {
+        var result = body.split("\n");
+        if (result[0] === "true") {
+          // If the reCAPTCHA checks out, write the response to the database.
+          surveyDao.save(req.body.survey, function (error, surveyResponse) {
+            if (error) {
+              res.send(500, error);
+            } else {
+              console.log(new Date() + ": Survey response saved:");
+              console.log(surveyResponse);
+              res.send(201, { location: surveyResponse._id.toString() });
+            }
+          });
+        } else {
+          // We choose to use 403 FORBIDDEN because, well, FORBIDDEN!
+          // (if you fail the reCAPTCHA)
+          res.send(403, result[1]);
+        }
       }
-    });
+    );
+
   });
 
-  /*
-   * POST /verify
-   *   Submit Recaptcha response and relay to Google.
-   */
-  app.post("/verify", function (req, res) {
-    // TODO Need to figure out how to send a POST from within Node/Express.
-    //      jQuery equivalent would be:
-/*
-      $.ajax({
-          type: "POST",
-          url: "http://www.google.com/recaptcha/api/verify",
-          data: {
-              privatekey: process.env.IMP_PRIVATE, // reCAPTCHA private key
-              remoteip: req.params.remoteip,
-              challenge: req.params.challenge,
-              response: req.params.response
-          },
-          success: function (data, textStatus, jqXHR) {
-              // Do the appropriate res.send.
-          }
-      });
-*/
-  });
 }

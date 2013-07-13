@@ -17,6 +17,9 @@ var express = require('express'),
     lda,
     surveyDao,
     controllers;
+
+app.enable('trust proxy'); // For remote IP access, needed by reCAPTCHA:
+// http://stackoverflow.com/questions/10849687/how-to-get-remote-client-address
     
 app.configure(function () {
   app.set('views', __dirname + '/src/main/views');
