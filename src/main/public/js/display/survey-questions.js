@@ -729,7 +729,7 @@ $(function() {
                       .val("undefined");
                   });
                 }
-              });
+              }).change();
           }); // Stage II render and callback
           
       }); // Stage I setSubmit

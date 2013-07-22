@@ -33,7 +33,6 @@ var countRadio =
       
     countSelect = 
        "<select class='question-field' survey='count' name='--name--'>" +
-       "<option>0</option>" +
        "<option>1</option>" +
        "<option>2</option>" +
        "<option>3</option>" +
@@ -386,7 +385,7 @@ var countRadio =
             
             {
               text:
-                "What is your sex?",
+                "What is your gender?",
               input:
                 "<label class='radio'><input name='sex' type='radio'/>Male</label>" +
                 "<label class='radio'><input name='sex' type='radio'/>Female</label>" +
@@ -897,7 +896,7 @@ var countRadio =
         questions: [
           {
             text:
-              "<strong>Thank you</strong> for participating in the Identity Mapping Project! To submit your answers and see your personalized identity map, please continue below." +
+              "<strong>Thank you</strong> for participating in the Identity Mapping Project! To submit your answers and see your personalized identity map, please type the word images into the text box below and then click on the <i>Create My Identity</i> button." +
               "<div id='recaptcha_div'></div>" +
               "<script>Recaptcha.create('6Lf2WuQSAAAAAL7cWlCKEmYM9VdtyOecTNpbBZXc', 'recaptcha_div', { theme: 'clean', callback: Recaptcha.focus_response_field });</script>"
           }
@@ -910,7 +909,7 @@ var countRadio =
             "</div>" +
             "<div class='modal-body'>" +
               "<p>Thanks again for participating! Please tell others about this website and have them map their own identities!</p>" +
-              "<p>Our goal is to generate thousands or millions of identity maps from around the globe and chart the nature of identity in today's digital world.</p>" +
+              "<p>Our goal is to generate thousands (if not millions) of identity maps from around the globe and chart the nature of identity in today's digital world.</p>" +
             "</div>" +
             "<div class='modal-footer'>" +
               "<button class='btn' data-dismiss='modal' aria-hidden='true'>OK</button>" +
