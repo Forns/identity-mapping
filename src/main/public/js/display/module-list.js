@@ -40,7 +40,7 @@ var countRadio =
        "<option>5 or more</option></select>",
        
     yearSelect =
-      "<select id='demo-year-select' class='question-field'>" +
+      "<select id='demo-year-select' class='question-field must-select'>" +
       "<option>Please select...</option>" +
       (function() {
         var result = "",
@@ -53,7 +53,7 @@ var countRadio =
       "</select>",
       
     educationSelect =
-      "<select id='edu-year-select' class='question-field'>" +
+      "<select id='edu-year-select' class='question-field must-select'>" +
       "<option>Please select...</option>" +
       (function() {
         var result = "";
@@ -396,7 +396,7 @@ var countRadio =
               text:
                 "What country do you live in?",
               input:
-                "<select id='country-select' class='question-field'>" + 
+                "<select id='country-select' class='question-field must-select'>" + 
                 "<option value=''>Please select...</option>" + 
                 "<option value='United States'>United States</option>" + 
                 "<option value='United Kingdom'>United Kingdom</option>" + 

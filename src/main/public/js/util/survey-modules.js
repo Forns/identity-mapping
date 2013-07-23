@@ -113,7 +113,8 @@ $(function () {
     // Pushes the current form to the page inside the given container element
     render: function (container, callback) {
       container = $("#" + container);
-      var rendering = "<form id='" + this.id + "-form'>",
+      var formId = this.id + "-form",
+          rendering = "<form id='" + formId + "'>",
           lastModule = this.modules[this.modules.length - 1],
           questionNameMap = {},
           currentQuestionName,
@@ -141,7 +142,18 @@ $(function () {
 
         $("#" + currentSubmit.id)
           .button()
-          .click(currentSubmit.behavior);
+          .click(function (event) {
+            if (jQuery.validator) {
+              event.preventDefault();
+              // We'll attempt to validate the form if the proper validation suite is loaded
+              var validObject = validationConfig(formId);
+              if ($("#" + formId).valid()) {
+                currentSubmit.behavior(event);
+              }
+            } else {
+              currentSubmit.behavior(event);
+            }
+          });
       }
       
       // Next, we want to make sure the inputs are properly named for serialization

@@ -10,50 +10,67 @@ var validationConfig = function (formId, submitCallback) {
   formId = $("#" + formId);
  
   var validObject = formId.validate({
-    errorClass: "errormessage",
-    onkeyup: false,
-    errorClass: 'ui-tooltip-red',
-    validClass: 'valid',
-    rules: {
-      require: {required: true}
-    },
-    errorPlacement: function (error, element) {
-      // Set positioning based on the elements position in the form
-      var elem = $(element);
- 
-      // Check we have a valid error message
-      if(!error.is(':empty')) {
-        // Apply the tooltip only if it isn't valid
-        elem
-          .filter(':not(.valid)').qtip({
-            overwrite: false,
-            content: error,
-            position: {
-              my: "bottom left",
-              at: "top right",
-              viewport: $(window)
-            },
-            show: {
-              event: "click mouseenter focus"
-            },
-            hide: {
-              event: "blur mouseleave"
-            },
-            style: {
-              classes: 'ui-tooltip-red ui-tooltip-shadow' // Make it red... the classic error colour!
-            }
-          })
- 
-          // If we have a tooltip on this element already, just update its content
-          .qtip('option', 'content.text', error);
-        }
- 
-        // If the error is empty, remove the qTip
-      else { elem.qtip('destroy'); }
-    },
-    success: $.noop, // Odd workaround for errorPlacement not firing!
-    submitHandler: submitCallback
-  });
+        onkeyup: false,
+        errorClass: 'error',
+        validClass: 'success',
+        showErrors: function(errorMap, errorList) {
+          $.each(this.successList, function(index, value) {
+            return $(value).popover("hide");
+          });
+          if (errorList.length) {
+            var firstError = $(errorList[0].element);
+            $(window).scrollTop(firstError.position().top - 50);
+            $("select").change(function () {
+              $(this).valid();
+            });
+          }
+          return $.each(errorList, function(index, value) {
+            var _popover;
+            _popover = $(value.element).popover({
+              trigger: "manual",
+              placement: "right",
+              content: value.message,
+              template: "<div class='popover alert-error'><div class='arrow'></div><div class='popover-inner'><div class='popover-content'><p></p></div></div></div>"
+            });
+            _popover.data("popover").options.content = value.message;
+            return $(value.element).popover("show");
+          });
+        },
+        success: $.noop, // Odd workaround for errorPlacement not firing!
+        submitHandler: submitCallback
+      });
   
   return validObject;
 };
+
+if (jQuery.validator) {
+  jQuery.validator.addMethod(
+    "must-select",
+    
+    function(value, element) {
+      return !/^Please select...|^\s$/.test(value);
+    },
+    
+    "Please select a menu option"
+  );
+  
+  jQuery.validator.addMethod(
+    "radio",
+    
+    function(value, element) {
+      return $("input[name='" + $(element).attr("name") + "']:checked").length > 0;
+    },
+    
+    "Please select an option"
+  );
+  
+  jQuery.validator.addMethod(
+    "question-textarea",
+    
+    function(value, element) {
+      return Boolean(value);
+    },
+    
+    "Please enter a description"
+  );
+}

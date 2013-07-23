@@ -196,7 +196,8 @@ $(function() {
     .setSubmit(
       "Go to Part II",
       "container",
-      function () {
+      function (event) {
+        event.preventDefault();
         // Adjust the page scroll
         $(window).scrollTop("#header");
         
