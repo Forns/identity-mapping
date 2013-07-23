@@ -5402,6 +5402,10 @@ input[type="submit"].btn.btn-mini {
   margin-top: -10px;
 }
 
+label .popover.right {
+  margin-left: 100px;
+}
+
 .popover.right {
   margin-left: 10px;
 }
