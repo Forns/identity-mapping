@@ -19,7 +19,11 @@ var validationConfig = function (formId, submitCallback) {
           });
           if (errorList.length) {
             var firstError = $(errorList[0].element);
-            $(window).scrollTop(firstError.position().top - 50);
+            $("html, body")
+              .stop()
+              .animate({
+                scrollTop: firstError.position().top - 50
+              }, 500);
             $("select").change(function () {
               $(this).valid();
             });

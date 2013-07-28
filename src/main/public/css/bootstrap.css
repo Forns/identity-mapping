@@ -5403,7 +5403,8 @@ input[type="submit"].btn.btn-mini {
 }
 
 label .popover.right {
-  margin-left: 100px;
+  margin-left: 250px;
+  margin-top: 15px;
 }
 
 .popover.right {
