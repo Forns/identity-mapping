@@ -156,6 +156,12 @@ var countRadio =
         countQuestion: "How many handles do you have on Twitter?"
       },
       
+      "WeChat": {
+        verb: "use",
+        account: "profiles",
+        countQuestion: "How many profiles do you have on WeChat?"
+      },
+      
       "Weibo": {
         verb: "use",
         account: "accounts",
@@ -701,6 +707,7 @@ var countRadio =
                 "<input type='checkbox' class='question-checkbox' label='Instagram' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Linked In' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Twitter' survey='specific' />" +
+                "<input type='checkbox' class='question-checkbox' label='WeChat' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Weibo' survey='specific' />"
             },
             
