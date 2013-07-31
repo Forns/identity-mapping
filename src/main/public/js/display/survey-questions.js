@@ -439,6 +439,7 @@ $(function() {
                     crossoverQuestions = [],
                     questionText,
                     domainInvolvementChecks = "",
+                    domainSanitized,
                     blogAddition;
                 
                 for (var a in finalAnswers) {
@@ -478,8 +479,8 @@ $(function() {
                             currentSubdomain["definition"]
                         }
                       );
-                      domainInvolvementChecks += "<input type='checkbox' name='--name--' class='question-checkbox' label='" + 
-                        ((currentSubdomain["definition"]) ? currentSubdomain["definition"] : ((s === "Blogs") ? "Blogs / Personal Websites" : s)) + "' survey='crossover' />";
+                      domainSanitized = ((currentSubdomain["definition"]) ? currentSubdomain["definition"] : ((s === "Blogs") ? "Blogs / Personal Websites" : s)).replace(/[^a-zA-Z0-9\s\/]/g, "")
+                      domainInvolvementChecks += "<input type='checkbox' name='--name--' class='question-checkbox' label='" + domainSanitized + "' survey='crossover' />";
                     }
                   }
                 }
