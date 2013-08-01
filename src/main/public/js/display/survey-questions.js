@@ -604,7 +604,7 @@ $(function() {
                             id:
                               followupCrossoverId,
                             text:
-                              "Did this username originate as " + correctIndefiniteArticle(effectiveReferent) + " " + effectiveReferent +
+                              "Did this username <strong>originate</strong> as " + correctIndefiniteArticle(effectiveReferent) + " " + effectiveReferent +
                               " username and then <strong>later</strong> become a username in another digital domain? " +
                               "Please mark each domain below in which you have <strong>later</strong> used this same username:",
                             input:
