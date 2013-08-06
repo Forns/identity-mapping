@@ -77,4 +77,15 @@ if (jQuery.validator) {
     
     "Please enter a description"
   );
+  
+  jQuery.validator.addMethod(
+    "birthyear-education",
+    
+    function(value, element) {
+      var yearsAlive = new Date().getYear() + 1900 - parseInt($("#demo-year-select").val());
+      return yearsAlive >= parseInt(value);
+    },
+    
+    "Your years of education exceed your age"
+  );
 }

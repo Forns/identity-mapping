@@ -53,7 +53,7 @@ var countRadio =
       "</select>",
       
     educationSelect =
-      "<select id='edu-year-select' class='question-field must-select'>" +
+      "<select id='edu-year-select' class='question-field must-select birthyear-education'>" +
       "<option>Please select...</option>" +
       (function() {
         var result = "";
