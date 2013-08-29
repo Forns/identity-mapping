@@ -24,6 +24,7 @@ switch (loc) {
     includes.push("/js/display/about-display.js");
     break;
   case "identitymap":
+    includes.push("/js/lib/d3.v3.min.js");
     includes.push("/js/display/identitymap-display.js");
     break;
   case "topicmodels":
