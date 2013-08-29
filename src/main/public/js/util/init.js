@@ -5,10 +5,8 @@
  */
 
 // Setup include
-var loc = window.location.pathname.split("/"),
+var loc = window.location.pathname.split("/")[1],
     includes = [];
-    
-loc = loc[1];
 
 // Page specific inclusions
 switch (loc) {
@@ -26,8 +24,6 @@ switch (loc) {
     includes.push("/js/display/about-display.js");
     break;
   case "identitymap":
-    includes.push("/js/display/module-list.js");
-    includes.push("/js/util/survey-modules.js");
     includes.push("/js/display/identitymap-display.js");
     break;
   case "topicmodels":
@@ -40,7 +36,7 @@ switch (loc) {
     break;
 }
 
-if (loc !== "survey" && loc !== "topicmodels") {
+if ([ "survey", "topicmodels", "identitymap" ].indexOf(loc) === -1) {
   includes.push("/js/display/general-display.js");
 }
 
