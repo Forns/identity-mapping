@@ -206,7 +206,7 @@ $(function() {
         finalAnswers["Demo"]["birth-year"] = $("#demo-year-select").val();
         finalAnswers["Demo"]["sex"] = $("input:radio[name='sex']:checked").val();
         finalAnswers["Demo"]["country"] = $("#country-select").val();
-        finalAnswers["Demo"]["education"] = $("input:radio[name='edu']:checked").val();
+        finalAnswers["Demo"]["education"] = $("#edu-year-select").val();
         
         var currentModule,
             currentSingularTitle,
