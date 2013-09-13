@@ -311,7 +311,7 @@ $(function() {
                   {
                     text:
                       "You indicated that you " + idiomMap[currentModule.title].verb + " " + currentDomain + ". " +
-                      idiomMap[currentModule.title].countQuestion + " " + currentDomain + "?",
+                      idiomMap[currentModule.title].countQuestion + " " + currentDomain + " that you've used within the past year?",
                       
                     definition: currentDomain,
                     domain: currentModule.title
