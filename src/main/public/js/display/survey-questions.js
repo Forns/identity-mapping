@@ -587,6 +587,7 @@ $(function() {
                         var currentModule = stageIII.modules[1],
                             currentQuestion = currentModule.getQuestionById($(this).parents().eq(2).attr("id")),
                             followupCrossoverId = currentQuestion.id + "-crossovers",
+                            followupCrossoverBooleanId = followupCrossoverId + "-boolean",
                             currentDomainCheck = (currentQuestion.domain === "Blogs") ? "Blogs / Personal Websites" : currentQuestion.domain,
                             effectiveDomainChecks = $('<div>').append($(domainInvolvementChecks).not("[label='" + currentDomainCheck + "'], " +
                               "[label='" + currentQuestion.definition + "']").clone()).html(),
@@ -597,18 +598,17 @@ $(function() {
                         if (currentQuestion.domain === "Blogs") {
                           effectiveReferent += " / Personal Website";
                         }
-                            
+                        
                         currentModule.addQuestionAfter(
                           currentQuestion.id,
                           {
                             id:
-                              followupCrossoverId,
+                              followupCrossoverBooleanId,
                             text:
                               "Did this username <strong>originate</strong> as " + correctIndefiniteArticle(effectiveReferent) + " " + effectiveReferent +
-                              " username and then <strong>later</strong> become a username in another digital domain? " +
-                              "Please mark each domain below in which you have <strong>later</strong> used this same username:",
+                              " username and then <strong>later</strong> become a username in another digital domain?",
                             input:
-                              effectiveDomainChecks.replace(/--name--/g, followupCrossoverId),
+                              booleanRadio.replace(/--name--/g, followupCrossoverBooleanId),
                             domain:
                               currentQuestion.domain,
                             definition:
@@ -616,22 +616,60 @@ $(function() {
                           }
                         );
                         
-                        // Set up handlers for the newly created checkboxes
-                        $("#" + followupCrossoverId + " :checkbox")
+                        $("#" + followupCrossoverBooleanId + " [value='true']:radio")
                           .each(function () {
-                            var currentBox = $(this).attr("label"),
-                                currentId = (followupCrossoverId + "-" + currentBox + "-cb").replace(/ /g, "-");
-                            
-                            $(this)
-                              .attr("id", currentId)
-                              .attr("name", currentId)
-                              .val(currentBox)
-                              .addClass("checkbox")
-                              .replaceWith("<label class='checkbox'>" + $(this)[0].outerHTML + currentBox + "</label>");
+                            $(this).click(function () {
+                              if ($(this).attr("clicked") === "true") {
+                                return;
+                              }
+                              currentModule.addQuestionAfter(
+                                followupCrossoverBooleanId,
+                                {
+                                  id:
+                                    followupCrossoverId,
+                                  text:
+                                    "Please mark each domain below in which you have <strong>later</strong> used this same username:",
+                                  input:
+                                    effectiveDomainChecks.replace(/--name--/g, followupCrossoverId),
+                                  domain:
+                                    currentQuestion.domain,
+                                  definition:
+                                    currentQuestion.definition
+                                }
+                              );
+                              
+                              // Set up handlers for the newly created checkboxes
+                              $("#" + followupCrossoverId + " :checkbox")
+                                .each(function () {
+                                  var currentBox = $(this).attr("label"),
+                                      currentId = (followupCrossoverId + "-" + currentBox + "-cb").replace(/ /g, "-");
+                                  
+                                  $(this)
+                                    .attr("id", currentId)
+                                    .attr("name", currentId)
+                                    .val(currentBox)
+                                    .addClass("checkbox")
+                                    .replaceWith("<label class='checkbox'>" + $(this)[0].outerHTML + currentBox + "</label>");
+                                });
+                                
+                              $(this).attr("clicked", "true");
+                              $("#" + followupCrossoverId).addClass("followup-2");
+                              
+                              $("#" + followupCrossoverBooleanId + " [value='false']:radio").each(function () {
+                                $(this).click(function () {
+                                  var currentModule = stageIII.modules[1],
+                                      currentQuestion = currentModule.getQuestionById($(this).parents().eq(2).attr("id"));
+                                  $("[name='" + $(this).attr("name") + "']:radio:nth(0)").attr("clicked", "false");
+                                  
+                                  currentModule
+                                    .removeQuestionsById(followupCrossoverId, true);
+                                });
+                              });
+                            });
                           });
                         
                         $(this).attr("clicked", "true");
-                        $("#" + followupCrossoverId).addClass("followup-1");
+                        $("#" + followupCrossoverBooleanId).addClass("followup-1");
                       });
                   });
                   
