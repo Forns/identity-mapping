@@ -678,6 +678,7 @@ var countRadio =
               text:
                 "Have you participated in any of the following online forums within the past year? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox noAnswer' label='Not Applicable' id='noAnswer-OF' survey='noAnswer' /><br/>" +
                 "<input type='checkbox' class='question-checkbox' label='4chan' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Digg' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Foursquare' survey='specific' />" +
@@ -702,6 +703,7 @@ var countRadio =
               text:
                 "Do you have an account in any of the following social networks that you've used within the past year? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox noAnswer' label='Not Applicable' id='noAnswer-SN' survey='noAnswer' /><br/>" +
                 "<input type='checkbox' class='question-checkbox' label='Facebook' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Google Plus' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Instagram' survey='specific' />" +
@@ -728,6 +730,7 @@ var countRadio =
               text:
                 "Do you have an account in any of the following Online Dating Sites that you've used within the past year? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox noAnswer' label='Not Applicable' id='noAnswer-OD' survey='noAnswer' /><br/>" +
                 "<input type='checkbox' class='question-checkbox' label='eHarmony' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='JDate' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Match' survey='specific' />" +
@@ -764,6 +767,7 @@ var countRadio =
               text:
                 "Have you played any of the following character or avatar-based digital games within the past year? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox noAnswer' label='Not Applicable' id='noAnswer-DG' survey='noAnswer' /><br/>" +
                 "<input type='checkbox' class='question-checkbox' label='Dragon Age' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Fallout' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Guild Wars' survey='specific' />" +
@@ -789,6 +793,7 @@ var countRadio =
               text:
                 "Do you have an account or avatar in any of the following 3D virtual worlds that you've used within the past year? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox noAnswer' label='Not Applicable' id='noAnswer-3D' survey='noAnswer' /><br/>" +
                 "<input type='checkbox' class='question-checkbox' label='Blue Mars' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Cloudparty' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Hipihi' survey='specific' />" +

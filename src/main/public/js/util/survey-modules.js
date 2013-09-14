@@ -173,7 +173,7 @@ $(function () {
       $(":checkbox")
         .each(function () {
           var currentBox = $(this).attr("label"),
-              currentId = (currentBox + "-cb").replace(/ /g, "-");
+              currentId = ($(this).attr("id")) ? $(this).attr("id") : (currentBox + "-cb").replace(/ /g, "-");
           
           $(this)
             .attr("id", currentId)

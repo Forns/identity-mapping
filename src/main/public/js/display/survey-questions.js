@@ -139,6 +139,38 @@ $(function() {
                 .val("undefined");
             });
         });
+        
+        $("input[type='text']")
+          .each(function () {
+            $(this).change(function () {
+              var noAnswer = $(this).parents().eq(2).find(":checkbox[survey='noAnswer']");
+              if ($(this).val() !== "") {
+                noAnswer.removeAttr("checked").val("false");
+              }
+            });
+          });
+        
+        $(":checkbox[survey='specific']")
+          .each(function () {
+            $(this).click(function () {
+              var noAnswer = $(this).parents().eq(2).find(":checkbox[survey='noAnswer']");
+              if ($(this).val() === "true") {
+                noAnswer.removeAttr("checked").val("false");
+              }
+            });
+          });
+        
+        $(":checkbox[survey='noAnswer']")
+          .each(function () {
+            $(this).attr("name", $(this).attr("name") + "-" + $(this).parents().eq(3).find(".mod-title").text().replace(/\s/g, "-"))
+            $(this).click(function () {
+              if ($(this).val() === "true") {
+                $(this).parent().siblings().find(":checkbox").removeAttr("checked").val("false");
+                $(this).parents().eq(3).find("input[type='text']").val("");
+              }
+            });
+          });
+        
       }
     )
     .render(formContainer);
@@ -200,6 +232,11 @@ $(function() {
         event.preventDefault();
         // Adjust the page scroll
         $(window).scrollTop("#header");
+        
+        $(":checkbox[survey='noAnswer']")
+          .each(function () {
+            $(this).val("false");
+          });
         
         // Collect the demographic data first
         finalAnswers["Demo"] = {};
@@ -537,6 +574,8 @@ $(function() {
                       function (event) {
                         event.preventDefault();
                         surveyComplete = true;
+                        
+                        console.log(finalAnswers);
 
                         $.ajax({
                           type: "POST",
