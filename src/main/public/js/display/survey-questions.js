@@ -575,8 +575,6 @@ $(function() {
                         event.preventDefault();
                         surveyComplete = true;
                         
-                        console.log(finalAnswers);
-
                         $.ajax({
                           type: "POST",
                           url: "/identitymap",
