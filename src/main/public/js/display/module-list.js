@@ -767,7 +767,7 @@ var countRadio =
               text:
                 "Have you played any of the following character or avatar-based digital games within the past year? Check all that apply:",
               input:
-                "<input type='checkbox' class='question-checkbox noAnswer' label='I have not played a digital game in the past year' id='noAnswer-DG' survey='noAnswer' /><br/>" +
+                "<input type='checkbox' class='question-checkbox noAnswer' label='I have not played a character or avatar-based digital game in the past year' id='noAnswer-DG' survey='noAnswer' /><br/>" +
                 "<input type='checkbox' class='question-checkbox' label='Dragon Age' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Fallout' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Guild Wars' survey='specific' />" +

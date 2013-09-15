@@ -170,7 +170,6 @@ $(function() {
               }
             });
           });
-        
       }
     )
     .render(formContainer);
@@ -230,6 +229,58 @@ $(function() {
       "container",
       function (event) {
         event.preventDefault();
+        
+        var missed = [],
+            firstMissed;
+        
+        // Check for all answered sections
+        for (var m = 4; m < stageI.modules.length; m++) {
+          var module = $("#" + stageI.modules[m].id),
+              checkboxes = false,
+              text = false;
+          
+          module
+            .find("input[type=checkbox]")
+            .each(function () {
+              if ($(this).prop("checked")) {
+                checkboxes = true;
+              }
+            });
+         
+          if (!checkboxes) {
+            module
+              .find("input[type=text]")
+              .each(function () {
+                if ($(this).val()) {
+                  text = true;
+                }
+              });
+              
+              if (!text) {
+                missed.push(stageI.modules[m].title);
+                if (!firstMissed) {
+                  firstMissed = module;
+                }
+              }
+          }
+        }
+        
+        // Prompt user to review their choices if they haven't selected something
+        if (missed.length) {
+          missed = missed.join(", ");
+          if (!confirm(
+            "[!] You have not selected any options for the following digital domains: " + missed + ".\n\n Click OK if you have not participated in any of these domains within the past year, " +
+            "or Cancel to return to add answers."
+          )) {
+            $("html, body")
+              .stop()
+              .animate({
+                scrollTop: firstMissed.position().top
+              }, 500);
+            return;
+          }
+        }
+        
         // Adjust the page scroll
         $(window).scrollTop("#header");
         
