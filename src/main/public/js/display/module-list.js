@@ -71,7 +71,7 @@ var countRadio =
       "Blogs": {
         verb: "use",
         account: "accounts",
-        countQuestion: "How many blog accounts / personal websites do you have?"
+        countQuestion: "How many blog accounts / personal websites do you have that you've used within the past year?"
       },
       
       // Online Forums
@@ -85,31 +85,31 @@ var countRadio =
       "4chan": {
         verb: "use",
         account: "accounts",
-        countQuestion: "How many accounts / tripcodes do you operate on 4chan?"
+        countQuestion: "How many accounts / tripcodes do you operate on 4chan that you've used within the past year?"
       },
       
       "Digg": {
         verb: "use",
         account: "accounts",
-        countQuestion: "How many accounts do you operate on Digg?"
+        countQuestion: "How many accounts do you operate on Digg that you've used within the past year?"
       },
       
       "Foursquare": {
         verb: "use",
         account: "accounts",
-        countQuestion: "How many accounts do you operate on Foursquare?"
+        countQuestion: "How many accounts do you operate on Foursquare that you've used within the past year?"
       },
       
       "Pinterest": {
         verb: "use",
         account: "accounts",
-        countQuestion: "How many accounts do you operate on Pinterest?"
+        countQuestion: "How many accounts do you operate on Pinterest that you've used within the past year?"
       },
       
       "Reddit": {
         verb: "use",
         account: "accounts",
-        countQuestion: "How many accounts do you operate on Reddit?"
+        countQuestion: "How many accounts do you operate on Reddit that you've used within the past year?"
       },
       
       // Social Networks
@@ -123,49 +123,49 @@ var countRadio =
       "Facebook": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have on Facebook?"
+        countQuestion: "How many profiles do you have on Facebook that you've used within the past year?"
       },
       
       "Google Plus": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have on Google Plus?"
+        countQuestion: "How many profiles do you have on Google Plus that you've used within the past year?"
       },
       
       "Instagram": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have on Instagram?"
+        countQuestion: "How many profiles do you have on Instagram that you've used within the past year?"
       },
       
       "Linked In": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have on Linked In?"
+        countQuestion: "How many profiles do you have on Linked In that you've used within the past year?"
       },
       
       "Online Dating Sites": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have across Online Dating Sites?"
+        countQuestion: "How many profiles do you have across Online Dating Sites that you've used within the past year?"
       },
       
       "Twitter": {
         verb: "use",
         account: "handles",
-        countQuestion: "How many handles do you have on Twitter?"
+        countQuestion: "How many handles do you have on Twitter that you've used within the past year?"
       },
       
       "WeChat": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have on WeChat?"
+        countQuestion: "How many profiles do you have on WeChat that you've used within the past year?"
       },
       
       "Weibo": {
         verb: "use",
         account: "accounts",
-        countQuestion: "How many accounts do you have on Weibo?"
+        countQuestion: "How many accounts do you have on Weibo that you've used within the past year?"
       },
       
       // Online Dating Sites
@@ -179,31 +179,31 @@ var countRadio =
       "eHarmony": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have on eHarmony?"
+        countQuestion: "How many profiles do you have on eHarmony that you've used within the past year?"
       },
       
       "JDate": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have on JDate?"
+        countQuestion: "How many profiles do you have on JDate that you've used within the past year?"
       },
       
       "Match": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have on Match?"
+        countQuestion: "How many profiles do you have on Match that you've used within the past year?"
       },
       
       "OKCupid": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have on OKCupid?"
+        countQuestion: "How many profiles do you have on OKCupid that you've used within the past year?"
       },
       
       "PlentyOfFish": {
         verb: "use",
         account: "profiles",
-        countQuestion: "How many profiles do you have on PlentyOfFish?"
+        countQuestion: "How many profiles do you have on PlentyOfFish that you've used within the past year?"
       },
       
       // Digital Gaming Platforms
@@ -217,106 +217,106 @@ var countRadio =
       "Dragon Age": {
         verb: "play",
         account: "characters",
-        countQuestion: "How many characters have you played in a game in the Dragon Age series?"
+        countQuestion: "How many characters have you played in a game in the Dragon Age series within the past year?"
       },
       
       "Fallout": {
         verb: "play",
         account: "characters",
-        countQuestion: "How many characters have you played in a game in the Fallout series?"
+        countQuestion: "How many characters have you played in a game in the Fallout series within the past?"
       },
       
       "Guild Wars": {
         verb: "play",
         account: "characters",
-        countQuestion: "How many avatars do you currently have in Guild Wars?"
+        countQuestion: "How many avatars do you have in Guild Wars that you've used within the past year?"
       },
       
       "Mass Effect": {
         verb: "play",
         account: "characters",
-        countQuestion: "How many characters have you played in a game in the Mass Effect series?"
+        countQuestion: "How many characters have you played in a game in the Mass Effect series within the past year?"
       },
       
       "Skyrim": {
         verb: "play",
         account: "characters",
-        countQuestion: "How many characters have you played in Skyrim?"
+        countQuestion: "How many characters have you played in Skyrim that you've played within the past year?"
       },
       
       "World of Warcraft": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in World of Warcraft?"
+        countQuestion: "How many avatars do you have in World of Warcraft that you've used within the past year?"
       },
       
       // 3D Virtual Worlds
       "3D Virtual Worlds": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in",
+        countQuestion: "How many avatars do you have in",
         general: true // Flag to show that this requires a followup description
       },
       
       "Blue Mars": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in Blue Mars?"
+        countQuestion: "How many avatars do you have in Blue Mars that you've used within the past year?"
       },
       
       "Cloudparty": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in Cloudparty?"
+        countQuestion: "How many avatars do you have in Cloudparty that you've used within the past year?"
       },
       
       "Hipihi": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in Hipihi?"
+        countQuestion: "How many avatars do you have in Hipihi that you've used within the past year?"
       },
       
       "Kaneva": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in Kaneva?"
+        countQuestion: "How many avatars do you have in Kaneva that you've used within the past year?"
       },
       
       "IMVU": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in IMVU?"
+        countQuestion: "How many avatars do you have in IMVU that you've used within the past year?"
       },
       
       "Second Life": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in Second Life?"
+        countQuestion: "How many avatars do you have in Second Life that you've used within the past year?"
       },
       
       "SIMS": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in SIMS?"
+        countQuestion: "How many avatars do you have in SIMS that you've used within the past year?"
       },
       
       "There": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in There?"
+        countQuestion: "How many avatars do you have in There that you've used within the past year?"
       },
       
       "Utherverse": {
         verb: "use",
         account: "avatars",
-        countQuestion: "How many avatars do you currently have in Utherverse?"
+        countQuestion: "How many avatars do you have in Utherverse that you've used within the past year?"
       },
       
       // Emails
       "Emails": {
         verb: "use",
         account: "accounts",
-        countQuestion: "How many email accounts do you have?"
+        countQuestion: "How many email accounts have you used for any purpose (personal, business, etc.) within the past year?"
       }
     }
 
@@ -350,7 +350,7 @@ var countRadio =
             
             {
               text:
-                "<strong>After you complete the survey</strong>, you&rsquo;ll be able to download a free color-coded map of your current identity."
+                "<strong>After you complete the survey</strong>, you&rsquo;ll be able to see, share, and download a free color-coded map of your current identity."
             },
             
             {
@@ -663,7 +663,7 @@ var countRadio =
           questions: [
             {
               text:
-                "Do you have one or more Blogs / Personal Websites?",
+                "Do you have one or more Blogs / Personal Websites that you've used within the past year?",
               input:
                 booleanRadio.replace(/--name--/g, "Blogs-radio")
             }
@@ -676,8 +676,9 @@ var countRadio =
           questions: [
             {
               text:
-                "Do you participate in any of the following online forums? Check all that apply:",
+                "Have you participated in any of the following online forums within the past year? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox noAnswer' label='I have not used an online forum in the past year' id='noAnswer-OF' survey='noAnswer' /><br/>" +
                 "<input type='checkbox' class='question-checkbox' label='4chan' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Digg' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Foursquare' survey='specific' />" +
@@ -687,7 +688,7 @@ var countRadio =
             
             {
               text:
-                "If you use any other Online Forums, please enter their names below.",
+                "If you have participated in any other Online Forums within the past year, please enter their names below.",
               input:
                 otherDomainFields.replace(/--name--/g, "forums-other-")
             }
@@ -700,8 +701,9 @@ var countRadio =
           questions: [
             {
               text:
-                "Do you belong to any of the following social networks? Check all that apply:",
+                "Do you have an account in any of the following social networks that you've used within the past year? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox noAnswer' label='I have not used a social network in the past year' id='noAnswer-SN' survey='noAnswer' /><br/>" +
                 "<input type='checkbox' class='question-checkbox' label='Facebook' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Google Plus' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Instagram' survey='specific' />" +
@@ -713,7 +715,7 @@ var countRadio =
             
             {
               text:
-                "If you use any other Social Networks, please enter their names below.",
+                "If you have used any other Social Networks within the past year, please enter their names below.",
               input:
                 otherDomainFields.replace(/--name--/g, "social-net-other-")
             }
@@ -726,8 +728,9 @@ var countRadio =
           questions: [
             {
               text:
-                "Do you belong to any of the following Online Dating Sites? Check all that apply:",
+                "Do you have an account in any of the following Online Dating Sites that you've used within the past year? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox noAnswer' label='I have not used an online dating site in the past year' id='noAnswer-OD' survey='noAnswer' /><br/>" +
                 "<input type='checkbox' class='question-checkbox' label='eHarmony' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='JDate' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Match' survey='specific' />" +
@@ -737,7 +740,7 @@ var countRadio =
             
             {
               text:
-                "If you use any other Online Dating Sites, please enter their names below.",
+                "If you have used any other Online Dating Sites in the past year, please enter their names below.",
               input:
                 otherDomainFields.replace(/--name--/g, "online-dating-other-")
             }
@@ -762,8 +765,9 @@ var countRadio =
             
             {
               text:
-                "Do you play any of the following character or avatar-based digital games? Check all that apply:",
+                "Have you played any of the following character or avatar-based digital games within the past year? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox noAnswer' label='I have not played a character or avatar-based digital game in the past year' id='noAnswer-DG' survey='noAnswer' /><br/>" +
                 "<input type='checkbox' class='question-checkbox' label='Dragon Age' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Fallout' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Guild Wars' survey='specific' />" +
@@ -774,7 +778,7 @@ var countRadio =
             
             {
               text:
-                "If you play any other character or avatar-based digital games, please enter their names below.",
+                "If you have played any other character or avatar-based digital games within the past year, please enter their names below.",
               input:
                 otherDomainFields.replace(/--name--/g, "gaming-other-")
             }
@@ -787,8 +791,9 @@ var countRadio =
           questions: [
             {
               text:
-                "Indicate whether you have an account or avatar in any of the following 3D virtual worlds:",
+                "Do you have an account or avatar in any of the following 3D virtual worlds that you've used within the past year? Check all that apply:",
               input:
+                "<input type='checkbox' class='question-checkbox noAnswer' label='I have not used a 3D virtual world in the past year' id='noAnswer-3D' survey='noAnswer' /><br/>" +
                 "<input type='checkbox' class='question-checkbox' label='Blue Mars' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Cloudparty' survey='specific' />" +
                 "<input type='checkbox' class='question-checkbox' label='Hipihi' survey='specific' />" +
@@ -802,7 +807,7 @@ var countRadio =
             
             {
               text:
-                "If you use any other 3D Virtual Worlds, please enter their names below.",
+                "If you have used any other 3D Virtual Worlds within the past year, please enter their names below.",
               input:
                 otherDomainFields.replace(/--name--/g, "virtual-world-other-")
             }
@@ -815,7 +820,7 @@ var countRadio =
           questions: [
             {
               text:
-                "Do you have any email accounts?",
+                "Do you have any email accounts that you've used within the past year?",
               input:
                 booleanRadio.replace(/--name--/g, "Emails-radio")
             }

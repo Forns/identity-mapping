@@ -139,6 +139,37 @@ $(function() {
                 .val("undefined");
             });
         });
+        
+        $("input[type='text']")
+          .each(function () {
+            $(this).change(function () {
+              var noAnswer = $(this).parents().eq(2).find(":checkbox[survey='noAnswer']");
+              if ($(this).val() !== "") {
+                noAnswer.removeAttr("checked").val("false");
+              }
+            });
+          });
+        
+        $(":checkbox[survey='specific']")
+          .each(function () {
+            $(this).click(function () {
+              var noAnswer = $(this).parents().eq(2).find(":checkbox[survey='noAnswer']");
+              if ($(this).val() === "true") {
+                noAnswer.removeAttr("checked").val("false");
+              }
+            });
+          });
+        
+        $(":checkbox[survey='noAnswer']")
+          .each(function () {
+            $(this).attr("name", $(this).attr("name") + "-" + $(this).parents().eq(3).find(".mod-title").text().replace(/\s/g, "-"))
+            $(this).click(function () {
+              if ($(this).val() === "true") {
+                $(this).parent().siblings().find(":checkbox").removeAttr("checked").val("false");
+                $(this).parents().eq(3).find("input[type='text']").val("");
+              }
+            });
+          });
       }
     )
     .render(formContainer);
@@ -198,15 +229,72 @@ $(function() {
       "container",
       function (event) {
         event.preventDefault();
+        
+        var missed = [],
+            firstMissed;
+        
+        // Check for all answered sections
+        for (var m = 4; m < stageI.modules.length; m++) {
+          var module = $("#" + stageI.modules[m].id),
+              checkboxes = false,
+              text = false;
+          
+          module
+            .find("input[type=checkbox]")
+            .each(function () {
+              if ($(this).prop("checked")) {
+                checkboxes = true;
+              }
+            });
+         
+          if (!checkboxes) {
+            module
+              .find("input[type=text]")
+              .each(function () {
+                if ($(this).val()) {
+                  text = true;
+                }
+              });
+              
+              if (!text) {
+                missed.push(stageI.modules[m].title);
+                if (!firstMissed) {
+                  firstMissed = module;
+                }
+              }
+          }
+        }
+        
+        // Prompt user to review their choices if they haven't selected something
+        if (missed.length) {
+          missed = missed.join(", ");
+          if (!confirm(
+            "[!] You have not selected any options for the following digital domains: " + missed + ".\n\n Click OK if you have not participated in any of these domains within the past year, " +
+            "or Cancel to return to add answers."
+          )) {
+            $("html, body")
+              .stop()
+              .animate({
+                scrollTop: firstMissed.position().top
+              }, 500);
+            return;
+          }
+        }
+        
         // Adjust the page scroll
         $(window).scrollTop("#header");
+        
+        $(":checkbox[survey='noAnswer']")
+          .each(function () {
+            $(this).val("false");
+          });
         
         // Collect the demographic data first
         finalAnswers["Demo"] = {};
         finalAnswers["Demo"]["birth-year"] = $("#demo-year-select").val();
         finalAnswers["Demo"]["sex"] = $("input:radio[name='sex']:checked").val();
         finalAnswers["Demo"]["country"] = $("#country-select").val();
-        finalAnswers["Demo"]["education"] = $("input:radio[name='edu']:checked").val();
+        finalAnswers["Demo"]["education"] = $("#edu-year-select").val();
         
         var currentModule,
             currentSingularTitle,
@@ -311,7 +399,7 @@ $(function() {
                   {
                     text:
                       "You indicated that you " + idiomMap[currentModule.title].verb + " " + currentDomain + ". " +
-                      idiomMap[currentModule.title].countQuestion + " " + currentDomain + "?",
+                      idiomMap[currentModule.title].countQuestion + " " + currentDomain + " that you've used within the past year?",
                       
                     definition: currentDomain,
                     domain: currentModule.title
@@ -537,7 +625,7 @@ $(function() {
                       function (event) {
                         event.preventDefault();
                         surveyComplete = true;
-
+                        
                         $.ajax({
                           type: "POST",
                           url: "/identitymap",
@@ -587,6 +675,7 @@ $(function() {
                         var currentModule = stageIII.modules[1],
                             currentQuestion = currentModule.getQuestionById($(this).parents().eq(2).attr("id")),
                             followupCrossoverId = currentQuestion.id + "-crossovers",
+                            followupCrossoverBooleanId = followupCrossoverId + "-boolean",
                             currentDomainCheck = (currentQuestion.domain === "Blogs") ? "Blogs / Personal Websites" : currentQuestion.domain,
                             effectiveDomainChecks = $('<div>').append($(domainInvolvementChecks).not("[label='" + currentDomainCheck + "'], " +
                               "[label='" + currentQuestion.definition + "']").clone()).html(),
@@ -597,18 +686,17 @@ $(function() {
                         if (currentQuestion.domain === "Blogs") {
                           effectiveReferent += " / Personal Website";
                         }
-                            
+                        
                         currentModule.addQuestionAfter(
                           currentQuestion.id,
                           {
                             id:
-                              followupCrossoverId,
+                              followupCrossoverBooleanId,
                             text:
                               "Did this username <strong>originate</strong> as " + correctIndefiniteArticle(effectiveReferent) + " " + effectiveReferent +
-                              " username and then <strong>later</strong> become a username in another digital domain? " +
-                              "Please mark each domain below in which you have <strong>later</strong> used this same username:",
+                              " username and then <strong>later</strong> become a username in another digital domain?",
                             input:
-                              effectiveDomainChecks.replace(/--name--/g, followupCrossoverId),
+                              booleanRadio.replace(/--name--/g, followupCrossoverBooleanId),
                             domain:
                               currentQuestion.domain,
                             definition:
@@ -616,22 +704,60 @@ $(function() {
                           }
                         );
                         
-                        // Set up handlers for the newly created checkboxes
-                        $("#" + followupCrossoverId + " :checkbox")
+                        $("#" + followupCrossoverBooleanId + " [value='true']:radio")
                           .each(function () {
-                            var currentBox = $(this).attr("label"),
-                                currentId = (followupCrossoverId + "-" + currentBox + "-cb").replace(/ /g, "-");
-                            
-                            $(this)
-                              .attr("id", currentId)
-                              .attr("name", currentId)
-                              .val(currentBox)
-                              .addClass("checkbox")
-                              .replaceWith("<label class='checkbox'>" + $(this)[0].outerHTML + currentBox + "</label>");
+                            $(this).click(function () {
+                              if ($(this).attr("clicked") === "true") {
+                                return;
+                              }
+                              currentModule.addQuestionAfter(
+                                followupCrossoverBooleanId,
+                                {
+                                  id:
+                                    followupCrossoverId,
+                                  text:
+                                    "Please mark each domain below in which you have <strong>later</strong> used this same username:",
+                                  input:
+                                    effectiveDomainChecks.replace(/--name--/g, followupCrossoverId),
+                                  domain:
+                                    currentQuestion.domain,
+                                  definition:
+                                    currentQuestion.definition
+                                }
+                              );
+                              
+                              // Set up handlers for the newly created checkboxes
+                              $("#" + followupCrossoverId + " :checkbox")
+                                .each(function () {
+                                  var currentBox = $(this).attr("label"),
+                                      currentId = (followupCrossoverId + "-" + currentBox + "-cb").replace(/ /g, "-");
+                                  
+                                  $(this)
+                                    .attr("id", currentId)
+                                    .attr("name", currentId)
+                                    .val(currentBox)
+                                    .addClass("checkbox")
+                                    .replaceWith("<label class='checkbox'>" + $(this)[0].outerHTML + currentBox + "</label>");
+                                });
+                                
+                              $(this).attr("clicked", "true");
+                              $("#" + followupCrossoverId).addClass("followup-2");
+                              
+                              $("#" + followupCrossoverBooleanId + " [value='false']:radio").each(function () {
+                                $(this).click(function () {
+                                  var currentModule = stageIII.modules[1],
+                                      currentQuestion = currentModule.getQuestionById($(this).parents().eq(2).attr("id"));
+                                  $("[name='" + $(this).attr("name") + "']:radio:nth(0)").attr("clicked", "false");
+                                  
+                                  currentModule
+                                    .removeQuestionsById(followupCrossoverId, true);
+                                });
+                              });
+                            });
                           });
                         
                         $(this).attr("clicked", "true");
-                        $("#" + followupCrossoverId).addClass("followup-1");
+                        $("#" + followupCrossoverBooleanId).addClass("followup-1");
                       });
                   });
                   
