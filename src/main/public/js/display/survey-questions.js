@@ -466,7 +466,6 @@ $(function() {
                 frequencyCounter = 0;
                 currentModule = stageII.modules[m];
                 currentArchdomain = currentModule.title;
-                console.log(currentModule.responses);
                 for (var r in currentModule.responses) {
                   // Really sloppy, survey-modules admittedly sucks :(
                   currentQuestion = currentModule.getQuestionById(r.split("-")[0]);
@@ -515,8 +514,6 @@ $(function() {
                       break;
                   }
                 }
-                
-                console.log(finalAnswers);
               }
               
               stageII.deleteForm();
@@ -837,12 +834,34 @@ $(function() {
                             "<br/>" +
                             "<p>Other (please describe):</p>" +
                             "<textarea name='" + currentId + "-checkboxes' maxlength='4000' class='question-field question-textarea-optional' />"
-                          : "<textarea name='" + currentId + "-purpose' maxlength='4000' class='question-field question-textarea' />",
+                          : "<p>Answer Quality: <span id='" + currentId + "-answer-quality'>Please tell us more!</span></p>" +
+                            "<div class='progress progress-textarea'><div id='" + currentId + "-bar' class='bar'></div></div>" +
+                            "<textarea name='" + currentId + "-purpose' maxlength='4000' class='question-field question-textarea' />",
                       domain:
                         currentQuestion.domain
                     }
                   );
+                  // Add indent to the purpose sections
                   $("#" + currentId + "-purpose, #" + currentId + "-checkboxes").addClass("followup-1");
+                  
+                  // Set up handler for the purpose bars
+                  $("[name='" + currentId + "-purpose']")
+                    .keypress(function () {
+                      var wordCount = $(this).val().split(" ").length,
+                          barWidth = Math.min(wordCount * 1.1, 100),
+                          description = 
+                            ((barWidth > 30)
+                            ? ((barWidth > 50)
+                              ? ((barWidth > 70)
+                                ? "Excellent!" : "Great!")
+                              : "Good"
+                              )
+                            : "Please tell us more!"
+                            )
+                      
+                      $("#" + currentId + "-answer-quality").text(description);
+                      $("#" + currentId + "-bar").css("width", barWidth + "%");
+                    });
                 }
                 
                 // Configure the display and values for the checkbox responses
