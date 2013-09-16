@@ -53,6 +53,9 @@ $(function () {
                     'Less than once a month': 93 // i.e., around once every three months
                 },
 
+                PLANET_RADIUS = 10,
+                ORBIT_STEP = 0.1,
+
                 FREQUENCY_REGEX = /^frequency/,
                 FREQUENCY_INDEX_REGEX = /\d+$/,
 
@@ -84,8 +87,8 @@ $(function () {
                             id: systems.length,
                             period: PERIODICITIES[systemSource[frequencyKey]],
                             planet_name: systemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
-                            planet_radius: 10,
-                            semimajor_axis: (index + 1) / 10,
+                            planet_radius: PLANET_RADIUS,
+                            semimajor_axis: (index + 1) * ORBIT_STEP,
                         };
                     })
                 });
@@ -106,7 +109,7 @@ $(function () {
 
                     systems.push({
                         key: systems.length,
-                        planet_name: systemName + ": " + subsystemName, // TODO Temp while flat.
+                        planet_name: systemName + ": " + (subsystemSource.definition || subsystemName), // TODO Temp while flat.
                         purpose: subsystemSource.purpose,
                         values: Object.keys(subsystemSource).filter(function (key) {
                             return key.match(FREQUENCY_REGEX);
@@ -115,8 +118,8 @@ $(function () {
                                 id: systems.length,
                                 period: PERIODICITIES[subsystemSource[frequencyKey]],
                                 planet_name: subsystemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
-                                planet_radius: 10,
-                                semimajor_axis: (index + 1) / 10,
+                                planet_radius: PLANET_RADIUS,
+                                semimajor_axis: (index + 1) * ORBIT_STEP,
                             };
                         })
                     });
