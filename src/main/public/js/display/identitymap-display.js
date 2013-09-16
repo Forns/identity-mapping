@@ -70,6 +70,7 @@ $(function () {
                 systems.push({
                     key: systems.length,
                     planet_name: systemName,
+                    purpose: systemSource.purpose,
                     values: Object.keys(systemSource).filter(function (key) {
                         return key.match(FREQUENCY_REGEX);
                     }).map(function (frequencyKey, index) {
@@ -96,6 +97,7 @@ $(function () {
                     systems.push({
                         key: systems.length,
                         planet_name: systemName + ": " + subsystemName, // TODO Temp while flat.
+                        purpose: subsystemSource.purpose,
                         values: Object.keys(subsystemSource).filter(function (key) {
                             return key.match(FREQUENCY_REGEX);
                         }).map(function (frequencyKey, index) {
@@ -140,6 +142,7 @@ $(function () {
             .data(systems)
             .enter().append("div")
             .attr('class', "system")
+            .attr('title', function (d) { return d.purpose || "(purpose not stated)"; })
             .style("width", function (d) { return d.radius * 2 + "px"; })
             .style("height", function (d) { return d.radius * 2 + "px"; });
 
