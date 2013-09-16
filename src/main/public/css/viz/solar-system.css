@@ -10,6 +10,12 @@ body {
   vertical-align: middle;
 }
 
+.system > .label {
+  background-color: inherit;
+  position: absolute;
+  white-space: normal;
+}
+
 .orbit {
   fill: none;
   stroke: #ccc;

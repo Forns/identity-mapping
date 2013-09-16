@@ -136,17 +136,23 @@ $(function () {
             return a.radius - b.radius;
         });
 
-        var system = d3.select("body").selectAll(".system")
+        var system = d3.select("#main-content").selectAll(".system")
             .data(systems)
             .enter().append("div")
-            .attr("class", "system")
+            .attr('class', "system")
             .style("width", function (d) { return d.radius * 2 + "px"; })
             .style("height", function (d) { return d.radius * 2 + "px"; });
 
+        system.append("div")
+            .attr('class', "label")
+            .style('width', function (d) { return (d.radius * 2 - 10) + "px"; })
+            .style('top', function (d) { return d.radius + "px"; })
+            .text(function (d) { return d.planet_name; });
+
         system.append("svg")
-            .attr("class", "orbit")
-            .attr("width", function (d) { return d.radius * 2; })
-            .attr("height", function (d) { return d.radius * 2; })
+            .attr('class', "orbit")
+            .attr('width', function (d) { return d.radius * 2; })
+            .attr('height', function (d) { return d.radius * 2; })
             .append("g")
             .attr("transform", function (d) { return "translate(" + d.radius + "," + d.radius + ")"; })
             .selectAll("circle")
