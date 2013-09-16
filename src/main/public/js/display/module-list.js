@@ -74,8 +74,8 @@ var countRadio =
         countQuestion: "How many blog accounts / personal websites do you have that you've used within the past year?",
         uses: "<input type='checkbox' class='question-checkbox' label='Expressing opinions and viewpoints' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Developing a reputation or recognition as an expert' survey='specific' />" +
-              "<input type='checkbox' class='question-checkbox' label='Journaling - writing about one&ldquo;s personal experience' survey='specific' />" +
-              "<input type='checkbox' class='question-checkbox' label='Posting one&ldquo;s resume, credentials, or achievements' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Journaling - writing about one&lsquo;s personal experience' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Posting one&lsquo;s resume, credentials, or achievements' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Promoting a business' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Making money via niche blogs (e.g. Adsense)' survey='specific' />"
       },
@@ -134,7 +134,7 @@ var countRadio =
               "<input type='checkbox' class='question-checkbox' label='Re-connecting with lost contacts (friends or relatives from your past)' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Making new contacts, gaining new friends, or joining a group' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Forming a group or online community' survey='specific' />" +
-              "<input type='checkbox' class='question-checkbox' label='Following people you don't know, but are interested in' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Following people you don&lsquo;t know, but are interested in' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Battling boredom or loneliness' survey='specific' />" +
               "<br/>" +
               "<input type='checkbox' class='question-checkbox' label='Keeping up with news and current events' survey='specific' />" +
