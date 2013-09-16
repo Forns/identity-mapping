@@ -446,8 +446,7 @@ $(function() {
               // Adjust the page scroll
               $(window).scrollTop("#header");
               stageII
-                .parseByModule("[class^=question-]")
-                .deleteForm();
+                .parseByModule("[class^=question-]");
                 
               // Prep the answers from stage II into the finalAnswers bin
               var currentModule,
@@ -467,6 +466,7 @@ $(function() {
                 frequencyCounter = 0;
                 currentModule = stageII.modules[m];
                 currentArchdomain = currentModule.title;
+                console.log(currentModule.responses);
                 for (var r in currentModule.responses) {
                   // Really sloppy, survey-modules admittedly sucks :(
                   currentQuestion = currentModule.getQuestionById(r.split("-")[0]);
@@ -478,7 +478,7 @@ $(function() {
                   }
                     
                   // We'll sort our responses based on the type of question they answered
-                  currentMatch = r.match(/-frequency-|-definition$|-purpose$/g);
+                  currentMatch = r.match(/-frequency-|-definition$|-purpose$|-checkboxes$/g);
                   // Meaning we've moved on to the next question set
                   if (!currentMatch) {
                     // Increment the "additional domain" counter when we've moved onto a new question set
@@ -499,13 +499,27 @@ $(function() {
                     case "-purpose":
                       finalAnswers[currentArchdomain][currentSpecificDomain]["purpose"] = currentResponse;
                       break;
+                    case "-checkboxes":
+                      // Set up the purpose string if it doesn't exist yet
+                      if (!finalAnswers[currentArchdomain][currentSpecificDomain]["purpose"]) {
+                        finalAnswers[currentArchdomain][currentSpecificDomain]["purpose"] = "";
+                      }
+                      var currentItem = $("[name='" + r + "']");
+                      // If the current checkboxes input is a checkbox, we'll add its value to the final response string
+                      if ((currentItem.is(":checkbox") && currentItem.prop("checked")) || currentItem.is("textarea")) {
+                        finalAnswers[currentArchdomain][currentSpecificDomain]["purpose"] += currentResponse + ". ";
+                      }
+                      break;
                     case "-definition":
                       finalAnswers[currentArchdomain][currentSpecificDomain]["definition"] = sanitizeString(currentResponse);
                       break;
                   }
                 }
+                
+                console.log(finalAnswers);
               }
               
+              stageII.deleteForm();
   /*
    * STAGE III
    */
@@ -799,6 +813,7 @@ $(function() {
                 currentModule
                   .removeQuestionsById(currentId + "-frequency-", false)
                   .removeQuestionsById(currentId + "-definition", false)
+                  .removeQuestionsById(currentId + "-checkboxes", false)
                   .removeQuestionsById(currentId + "-purpose", false);
                   
                 // Add the description question as long as the input wasn't 0
@@ -807,23 +822,45 @@ $(function() {
                     currentId,
                     {
                       id:
-                        currentId + "-purpose",
+                        (currentValue === 1)
+                          ? currentId + "-checkboxes"
+                          : currentId + "-purpose",
                       text:
                         (currentValue === 1)
-                          ? "You indicated that you " + currentIdioms.verb + " " + correctIndefiniteArticle(currentQuestion.domain) +
-                          " " + modifiedDomain + " " + currentSingularTitle + ". What is your function or purpose in using this " +
-                          currentSingularTitle + "?"
+                          ? "Below is a list of reasons people may use " + modifiedDomain + " " + currentIdioms.account + ". Check all that apply to you:"
                           : "You indicated that you " + currentIdioms.verb + " multiple " + modifiedDomain + " " +
                           currentIdioms.account + ". Please explain the reason that you " + currentIdioms.verb + " multiple " + currentIdioms.account +
                           " and then describe the different purpose or function of each " + currentSingularTitle + ".",
                       input:
-                        "<textarea name='" + currentId + "-purpose' maxlength='4000' class='question-field question-textarea' />",
+                        (currentValue === 1)
+                          ? ((idiomMap[currentQuestion.domain].uses) ? idiomMap[currentQuestion.domain].uses : idiomMap[currentModule.title].uses) +
+                            "<br/>" +
+                            "<p>Other (please describe):</p>" +
+                            "<textarea name='" + currentId + "-checkboxes' maxlength='4000' class='question-field question-textarea-optional' />"
+                          : "<textarea name='" + currentId + "-purpose' maxlength='4000' class='question-field question-textarea' />",
                       domain:
                         currentQuestion.domain
                     }
                   );
-                  $("#" + currentId + "-purpose").addClass("followup-1");
+                  $("#" + currentId + "-purpose, #" + currentId + "-checkboxes").addClass("followup-1");
                 }
+                
+                // Configure the display and values for the checkbox responses
+                $("#" + currentModule.id)
+                  .find(":checkbox")
+                  .each(function () {
+                    if (!$(this).parent().is("label")) {
+                      var currentBox = $(this).attr("label"),
+                          currentBoxId = (currentModule.id + "-" + currentBox.replace(/\(|\)/g, "-") + "-checkboxes").replace(/ /g, "-");
+                      
+                      $(this)
+                        .attr("id", currentId + "-" + currentBoxId)
+                        .attr("name", currentId + "-" + currentBoxId)
+                        .val(currentBox)
+                        .addClass("checkbox")
+                        .replaceWith("<label class='checkbox'>" + $(this)[0].outerHTML + currentBox + "</label>");
+                    }
+                  });
                   
                 // Now, for each of the number of accounts indicated, ask the frequency of use question
                 for (var i = currentValue; i >= 1; i--) {

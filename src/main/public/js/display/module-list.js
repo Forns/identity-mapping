@@ -71,7 +71,13 @@ var countRadio =
       "Blogs": {
         verb: "use",
         account: "accounts",
-        countQuestion: "How many blog accounts / personal websites do you have that you've used within the past year?"
+        countQuestion: "How many blog accounts / personal websites do you have that you've used within the past year?",
+        uses: "<input type='checkbox' class='question-checkbox' label='Expressing opinions and viewpoints' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Developing a reputation or recognition as an expert' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Journaling - writing about one&ldquo;s personal experience' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Posting one&ldquo;s resume, credentials, or achievements' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Promoting a business' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Making money via niche blogs (e.g. Adsense)' survey='specific' />"
       },
       
       // Online Forums
@@ -79,7 +85,13 @@ var countRadio =
         verb: "use",
         account: "accounts",
         countQuestion: "How many forum accounts do you use in",
-        general: true // Flag to show that this requires a followup description
+        general: true, // Flag to show that this requires a followup description
+        uses: "<input type='checkbox' class='question-checkbox' label='Get help with a problem, assignment, or project' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Propose a theory or idea to gain feedback from a community' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Vent frustrations and seek support from others' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Capitalize on an achievement or display work' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Read through submissions to a particular forum to gain exposure' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Amusement or viewing images for entertainment' survey='specific' />"
       },
       
       "4chan": {
@@ -117,7 +129,24 @@ var countRadio =
         verb: "use",
         account: "profiles",
         countQuestion: "How many profiles do you have in ",
-        general: true // Flag to show that this requires a followup description
+        general: true, // Flag to show that this requires a followup description
+        uses: "<input type='checkbox' class='question-checkbox' label='Staying in touch with current friends (exchanging messages, viewing status updates, etc.)' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Re-connecting with lost contacts (friends or relatives from your past)' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Making new contacts, gaining new friends, or joining a group' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Forming a group or online community' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Following people you don't know, but are interested in' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Battling boredom or loneliness' survey='specific' />" +
+              "<br/>" +
+              "<input type='checkbox' class='question-checkbox' label='Keeping up with news and current events' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Posting viewpoints and opinions' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Posting or sharing photos' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Sharing information and recommendations about art and activities' survey='specific' />" +
+              "<br/>" +
+              "<input type='checkbox' class='question-checkbox' label='Learning about potential employers' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Learning about potential employees' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Marketing a business' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Networking for business' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Communicating with customers' survey='specific' />"
       },
       
       "Facebook": {
@@ -173,7 +202,11 @@ var countRadio =
         verb: "use",
         account: "profiles",
         countQuestion: "How many profiles do you have in",
-        general: true
+        general: true,
+        uses: "<input type='checkbox' class='question-checkbox' label='Finding a date' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Finding a partner or relationship' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Making new friends' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Making new business contacts' survey='specific' />"
       },
       
       "eHarmony": {
@@ -211,7 +244,15 @@ var countRadio =
         verb: "use",
         account: "games",
         countQuestion: "How many characters have you played in",
-        general: true // Flag to show that this requires a followup description
+        general: true, // Flag to show that this requires a followup description
+        uses: "<input type='checkbox' class='question-checkbox' label='Having fun or relaxing' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Competing with others' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Becoming more skillful or mastering a game' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Making friends or connecting with friends' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Belonging to a community' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Battling loneliness' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Escaping from real life through fantasy' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Role playing - being someone or something different than my daily life' survey='specific' />"
       },
       
       "Dragon Age": {
@@ -255,7 +296,18 @@ var countRadio =
         verb: "use",
         account: "avatars",
         countQuestion: "How many avatars do you have in",
-        general: true // Flag to show that this requires a followup description
+        general: true, // Flag to show that this requires a followup description
+        uses: "<input type='checkbox' class='question-checkbox' label='Battling loneliness' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Building or scripting virtual objects and structures' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Exploring a virtual world' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Finding or enhancing a relationship' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Having fun or relaxing' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Learning or education' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Role playing or fantasy - being someone or something different than my daily life' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Sex or sexual experiences' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Shopping' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Socializing' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Work or employment' survey='specific' />"
       },
       
       "Blue Mars": {
@@ -316,9 +368,12 @@ var countRadio =
       "Emails": {
         verb: "use",
         account: "accounts",
-        countQuestion: "How many email accounts have you used for any purpose (personal, business, etc.) within the past year?"
+        countQuestion: "How many email accounts have you used for any purpose (personal, business, etc.) within the past year?",
+        uses: "<input type='checkbox' class='question-checkbox' label='Communicating or sharing information with friends' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Communicating or sharing information with employers, coworkers, or customers' survey='specific' />" +
+              "<input type='checkbox' class='question-checkbox' label='Networking (building social or work contracts)' survey='specific' />"
       }
-    }
+    },
 
     // List of modules
     moduleList = {
@@ -928,4 +983,7 @@ var countRadio =
             "</div>" +
           "</div>"
       }
-    };
+    },
+    
+    idiomArchdomain;
+    
