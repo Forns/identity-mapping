@@ -36,7 +36,7 @@ $(function () {
             var ONE_LEVEL_SYSTEMS = [ "Blogs", "Emails" ],
 
                 TWO_LEVEL_SYSTEMS = [
-                    "Online Forms",
+                    "Online Forums",
                     "Social Networks",
                     "Digital Gaming Platforms",
                     "3D Virtual Worlds",
@@ -70,18 +70,44 @@ $(function () {
                 systems.push({
                     key: systems.length,
                     planet_name: systemName,
-                    values:
-                        Object.keys(systemSource).filter(function (key) {
+                    values: Object.keys(systemSource).filter(function (key) {
+                        return key.match(FREQUENCY_REGEX);
+                    }).map(function (frequencyKey, index) {
+                        return {
+                            id: systems.length,
+                            period: PERIODICITIES[systemSource[frequencyKey]],
+                            planet_name: systemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
+                            planet_radius: 10,
+                            semimajor_axis: (index + 1) / 10,
+                        };
+                    })
+                });
+            });
+
+            // TODO Two-level systems should show satellites with satellites.  However, the
+            //      visualization code does not handle this yet, so for now we "flatten" the
+            //      two layers of satellites.
+            TWO_LEVEL_SYSTEMS.forEach(function (systemName) {
+                var systemSource = survey[systemName];
+                Object.keys(systemSource).forEach(function (subsystemName) {
+                    // TODO This is a near-identical copy of the code above.  Yes, we need to fix this.
+                    var subsystemSource = systemSource[subsystemName];
+
+                    systems.push({
+                        key: systems.length,
+                        planet_name: systemName + ": " + subsystemName, // TODO Temp while flat.
+                        values: Object.keys(subsystemSource).filter(function (key) {
                             return key.match(FREQUENCY_REGEX);
                         }).map(function (frequencyKey, index) {
                             return {
                                 id: systems.length,
-                                period: PERIODICITIES[systemSource[frequencyKey]],
-                                planet_name: systemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
+                                period: PERIODICITIES[subsystemSource[frequencyKey]],
+                                planet_name: subsystemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
                                 planet_radius: 10,
                                 semimajor_axis: (index + 1) / 10,
                             };
                         })
+                    });
                 });
             });
 
