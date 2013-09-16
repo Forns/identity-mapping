@@ -833,7 +833,7 @@ $(function() {
                           ? ((idiomMap[currentQuestion.domain].uses) ? idiomMap[currentQuestion.domain].uses : idiomMap[currentModule.title].uses) +
                             "<br/>" +
                             "<p>Other (please describe):</p>" +
-                            "<textarea name='" + currentId + "-checkboxes' maxlength='4000' class='question-field question-textarea-optional' />"
+                            "<textarea name='" + currentId + "-checkboxes' maxlength='4000' class='question-field question-textarea-optional' validatees='" + currentId + "' />"
                           : "<p>Answer Quality: <span id='" + currentId + "-answer-quality'>Please tell us more!</span></p>" +
                             "<div class='progress progress-textarea'><div id='" + currentId + "-bar' class='bar'></div></div>" +
                             "<textarea name='" + currentId + "-purpose' maxlength='4000' class='question-field question-textarea' />",
@@ -878,6 +878,11 @@ $(function() {
                         .val(currentBox)
                         .addClass("checkbox")
                         .replaceWith("<label class='checkbox'>" + $(this)[0].outerHTML + currentBox + "</label>");
+                        
+                      $("#" + currentId + "-" + currentBoxId)
+                        .click(function () {
+                          $(this).parent().siblings(".popover").hide();
+                        });
                     }
                   });
                   

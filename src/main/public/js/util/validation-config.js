@@ -88,4 +88,21 @@ if (jQuery.validator) {
     
     "Your years of education exceed your age"
   );
+  
+  jQuery.validator.addMethod(
+    "question-textarea-optional",
+    
+    function(value, element) {
+      var currentId = $(element).attr("validatees"),
+          checkboxes = Boolean($("#" + currentId + "-checkboxes :checkbox:checked").length),
+          textarea = Boolean($("#" + currentId + "-checkboxes textarea").val());
+      
+      console.log(checkboxes);
+      console.log(textarea);
+      console.log(currentId);
+      return checkboxes || textarea;
+    },
+    
+    "Please indicate at least one purpose or define your own"
+  );
 }
