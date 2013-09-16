@@ -1,0 +1,51 @@
+body {
+  background: #222;
+  position: relative;
+  text-align: center;
+}
+
+.system {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+
+.orbit {
+  fill: none;
+  stroke: #ccc;
+  stroke-dasharray: 2,3;
+}
+
+.planet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  -moz-animation-name: rotate;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+  -webkit-animation-name: rotate;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  animation-name: rotate;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.planet circle {
+  fill: url(#planet-gradient);
+}
+
+@-moz-keyframes rotate {
+  from { -moz-transform: rotateZ(0deg); }
+  to { -moz-transform: rotateZ(-360deg); }
+}
+
+@-webkit-keyframes rotate {
+  from { -webkit-transform: rotateZ(0deg); }
+  to { -webkit-transform: rotateZ(-360deg); }
+}
+
+@keyframes rotate {
+  from { transform: rotateZ(0deg); }
+  to { transform: rotateZ(-360deg); }
+}

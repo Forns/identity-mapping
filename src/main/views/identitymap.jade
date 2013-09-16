@@ -1,7 +1,20 @@
-extends layout
+!!! 5
+html
+  head
+    title Identity Mapping Project
+    link(rel='stylesheet', href='/css/bootstrap.css')
+    link(rel='stylesheet', href='/css/bootstrap-responsive.css')
+    link(rel='stylesheet', href='/css/viz/solar-system.css')
+  body
+    #container
+      #main-content
+        svg(style='position:absolute;width:0;height:0;')
+          defs
+            radialGradient(id='planet-gradient', gradientUnits='objectBoundingBox', cx='50%', cy='50%', r='50%')
+              stop(offset='0%', stop-color='#aaa', stop-opacity='1')
+              stop(offset='100%', stop-color='#777', stop-opacity='1')
 
-block content
-  #header
-    h1 Identity Mapping Project
-  #container
-    #main-content
+    script(src='../js/lib/jquery-1.9.0.min.js')
+    script(src='../js/lib/bootstrap.min.js')
+    script(src='../js/lib/d3.v3.min.js')
+    script(src='../js/display/identitymap-display.js')
