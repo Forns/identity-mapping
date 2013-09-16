@@ -40,6 +40,7 @@ $(function () {
                     "Social Networks",
                     "Digital Gaming Platforms",
                     "3D Virtual Worlds",
+                    "Online Dating Sites"
                     // TODO Fill this out based on survey modules; heck, maybe even centralize this
                     //      so that *both* the visualization and the survey are reading the same
                     //      data.
@@ -65,8 +66,13 @@ $(function () {
             // The number of domains naturally "enlarges" a system because it increases
             // the number of satellites therein.
             ONE_LEVEL_SYSTEMS.forEach(function (systemName) {
-                var systemSource = survey[systemName][systemName];
+                var systemSource = survey[systemName];
+                if (!systemSource) {
+                    return;
+                }
 
+                // If that archdomain is present, then we go down another level.
+                systemSource = systemSource[systemName];
                 systems.push({
                     key: systems.length,
                     planet_name: systemName,
@@ -90,6 +96,10 @@ $(function () {
             //      two layers of satellites.
             TWO_LEVEL_SYSTEMS.forEach(function (systemName) {
                 var systemSource = survey[systemName];
+                if (!systemSource) {
+                    return;
+                }
+
                 Object.keys(systemSource).forEach(function (subsystemName) {
                     // TODO This is a near-identical copy of the code above.  Yes, we need to fix this.
                     var subsystemSource = systemSource[subsystemName];
