@@ -834,9 +834,9 @@ $(function() {
                             "<br/>" +
                             "<p>Other (please describe):</p>" +
                             "<textarea name='" + currentId + "-checkboxes' maxlength='4000' class='question-field question-textarea-optional' validatees='" + currentId + "' />"
-                          : "<p>Answer Quality: <span id='" + currentId + "-answer-quality'>Please tell us more!</span></p>" +
+                          : "<textarea name='" + currentId + "-purpose' maxlength='4000' class='question-field question-textarea' />" +
                             "<div class='progress progress-textarea'><div id='" + currentId + "-bar' class='bar'></div></div>" +
-                            "<textarea name='" + currentId + "-purpose' maxlength='4000' class='question-field question-textarea' />",
+                            "<p>Answer Quality: <span id='" + currentId + "-answer-quality'>Please tell us more!</span></p>",
                       domain:
                         currentQuestion.domain
                     }
