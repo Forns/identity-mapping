@@ -133,13 +133,10 @@ var countRadio =
         uses: "<input type='checkbox' class='question-checkbox' label='Staying in touch with current friends (exchanging messages, viewing status updates, etc.)' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Re-connecting with lost contacts (friends or relatives from your past)' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Making new contacts, gaining new friends, and participating in a group' survey='specific' />" +
-              "<input type='checkbox' class='question-checkbox' label='Forming a group or online community' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Following people you don&lsquo;t know, but are interested in' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Battling boredom or loneliness' survey='specific' />" +
-              "<br/>" +
               "<input type='checkbox' class='question-checkbox' label='Posting or sharing viewpoints, opinions, and recommendations' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Posting or sharing photos' survey='specific' />" +
-              "<br/>" +
               "<input type='checkbox' class='question-checkbox' label='Learning about potential employers' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Learning about potential employees' survey='specific' />" +
               "<input type='checkbox' class='question-checkbox' label='Promote a Business by marketing, networking, or communication with customers' survey='specific' />"
