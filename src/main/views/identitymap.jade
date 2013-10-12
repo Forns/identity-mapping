@@ -10,7 +10,10 @@ html
       #main-content
         svg(style='position:absolute;width:0;height:0;')
           defs
-            radialGradient(id='planet-gradient', gradientUnits='objectBoundingBox', cx='50%', cy='50%', r='50%')
+            radialGradient(id='planet-gradient', gradientUnits='objectBoundingBox', cx='25%', cy='25%', r='75%')
+              stop(offset='0%', stop-color='#faa', stop-opacity='1')
+              stop(offset='100%', stop-color='#800', stop-opacity='1')
+            radialGradient(id='moon-gradient', gradientUnits='objectBoundingBox', cx='50%', cy='50%', r='50%')
               stop(offset='0%', stop-color='#aaa', stop-opacity='1')
               stop(offset='100%', stop-color='#777', stop-opacity='1')
 

@@ -14,6 +14,7 @@ $(function () {
         r = d3.scale.linear().domain([4, 40]).range([4 * .5, 40 * .5]).clamp(true),
         t = d3.scale.linear().range([0, 1]),
 
+        PLANET_RADIUS = 15,
         padding = 16,
 
         // Detect the appropriate vendor prefix.
@@ -53,8 +54,8 @@ $(function () {
                     'Less than once a month': 93 // i.e., around once every three months
                 },
 
-                PLANET_RADIUS = 10,
-                ORBIT_STEP = 0.1,
+                MOON_RADIUS = 10,
+                ORBIT_STEP = 0.035,
 
                 FREQUENCY_REGEX = /^frequency/,
                 FREQUENCY_INDEX_REGEX = /\d+$/,
@@ -87,7 +88,7 @@ $(function () {
                             id: systems.length,
                             period: PERIODICITIES[systemSource[frequencyKey]],
                             planet_name: systemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
-                            planet_radius: PLANET_RADIUS,
+                            planet_radius: MOON_RADIUS,
                             semimajor_axis: (index + 1) * ORBIT_STEP,
                         };
                     })
@@ -118,7 +119,7 @@ $(function () {
                                 id: systems.length,
                                 period: PERIODICITIES[subsystemSource[frequencyKey]],
                                 planet_name: subsystemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
-                                planet_radius: PLANET_RADIUS,
+                                planet_radius: MOON_RADIUS,
                                 semimajor_axis: (index + 1) * ORBIT_STEP,
                             };
                         })
@@ -144,7 +145,7 @@ $(function () {
 
         systems.forEach(function (s) {
             s.values.forEach(function (p) { p.system = s; });
-            s.radius = d3.max(s.values, function(p) { return x(p.semimajor_axis) + r(p.planet_radius); }) + padding;
+            s.radius = d3.max(s.values, function (p) { return x(p.semimajor_axis) + r(p.planet_radius); }) + padding;
         });
 
         systems.sort(function (a, b) {
@@ -158,6 +159,14 @@ $(function () {
             .attr('title', function (d) { return d.purpose || "(purpose not stated)"; })
             .style("width", function (d) { return d.radius * 2 + "px"; })
             .style("height", function (d) { return d.radius * 2 + "px"; });
+
+        system.append("svg")
+            .attr('class', "planet")
+            .attr('width', function (d) { return d.radius * 2; })
+            .attr('height', function (d) { return d.radius * 2; })
+            .append("circle")
+            .attr("transform", function (d) { return "translate(" + d.radius + "," + d.radius + ")"; })
+            .attr("r", function (d) { return r(PLANET_RADIUS); });
 
         system.append("div")
             .attr('class', "label")
@@ -176,10 +185,10 @@ $(function () {
             .enter().append("circle")
             .attr("r", function (d) { return x(d.semimajor_axis); });
 
-        system.selectAll(".planet")
+        system.selectAll(".moon")
             .data(function (d) { return d.values; })
             .enter().append("svg")
-            .attr("class", "planet")
+            .attr("class", "moon")
             .attr("width", function (d) { return d.system.radius * 2; })
             .attr("height", function (d) { return d.system.radius * 2; })
             .style(prefix + "animation-duration", function (d) { return t(d.period) + "s"; })

@@ -22,10 +22,20 @@ body {
   stroke-dasharray: 2,3;
 }
 
-.planet {
+.planet, .moon {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.planet {
+}
+
+.planet circle {
+  fill: url(#planet-gradient);
+}
+
+.moon {
   -moz-animation-name: rotate;
   -moz-animation-iteration-count: infinite;
   -moz-animation-timing-function: linear;
@@ -37,8 +47,8 @@ body {
   animation-timing-function: linear;
 }
 
-.planet circle {
-  fill: url(#planet-gradient);
+.moon circle {
+  fill: url(#moon-gradient);
 }
 
 @-moz-keyframes rotate {
