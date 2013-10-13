@@ -133,7 +133,8 @@ $(function () {
     // Grab the survey object.
     $.getJSON("/survey/" + surveyId, function (survey) {
         var systems = surveyToSystems(survey),
-            totalRadius = 0;
+        $sun = $("#sun"),
+        totalRadius = Math.max($sun.width(), $sun.height()); // Margin for sun.
 
         console.log(systems);
 
@@ -157,7 +158,6 @@ $(function () {
             .height(totalRadius * 2);
 
         // Adjust the sun at the center.
-        var $sun = $("#sun");
         $sun.css({
             left: totalRadius - ($sun.width() / 2) + "px",
             top: totalRadius - ($sun.height() / 2) + "px"
