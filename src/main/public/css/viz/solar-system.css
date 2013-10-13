@@ -21,7 +21,7 @@ body {
   fill: url(#sun-gradient);
 }
 
-.system-domain, .moon {
+.system-domain, .system > .label, .moon {
   -moz-animation-name: rotate;
   -moz-animation-iteration-count: infinite;
   -moz-animation-timing-function: linear;
@@ -46,6 +46,9 @@ body {
 .system > .label {
   background-color: inherit;
   white-space: normal;
+  -moz-animation-direction: reverse;
+  -webkit-animation-direction: reverse;
+  animation-direction: reverse;
 }
 
 .orbit {

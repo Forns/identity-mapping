@@ -207,7 +207,8 @@ $(function () {
         system.append("div")
             .attr('class', "label")
             .style('width', function (d) { return (d.radius * 2 - 10) + "px"; })
-            .style('top', function (d) { return d.radius + "px"; })
+            .style('top', function (d) { return d.radius + 10 + "px"; })
+            .style(prefix + "animation-duration", function (d) { return t(d.distance / 20) + "s"; })
             .text(function (d) { return d.planet_name; });
 
         system.append("svg")
