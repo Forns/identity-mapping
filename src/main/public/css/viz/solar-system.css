@@ -4,10 +4,34 @@ body {
   text-align: center;
 }
 
-.system {
-  display: inline-block;
-  position: relative;
+#sun, .system-orbit, .system {
+  position: absolute;
   vertical-align: middle;
+}
+
+#sun {
+  width: 30px;
+  height: 30px;
+}
+
+#sun circle {
+  fill: url(#sun-gradient);
+}
+
+.system-orbit, .moon {
+  -moz-animation-name: rotate;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+  -webkit-animation-name: rotate;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  animation-name: rotate;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.system-orbit {
+  border: 1px solid white;
 }
 
 .system > .label {
@@ -36,15 +60,6 @@ body {
 }
 
 .moon {
-  -moz-animation-name: rotate;
-  -moz-animation-iteration-count: infinite;
-  -moz-animation-timing-function: linear;
-  -webkit-animation-name: rotate;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-  animation-name: rotate;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
 }
 
 .moon circle {

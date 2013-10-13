@@ -132,33 +132,47 @@ $(function () {
 
     // Grab the survey object.
     $.getJSON("/survey/" + surveyId, function (survey) {
-        var systems = surveyToSystems(survey);
-/* In case we need to reference the original data structure again...
-
-    d3.csv("/planets.csv", type, function(error, planets) {
-        var systems = d3.nest()
-            .key(function(d) { return d.id; })
-            .entries(planets);
-*/
+        var systems = surveyToSystems(survey),
+            totalRadius = 0;
 
         console.log(systems);
 
         systems.forEach(function (s) {
             s.values.forEach(function (p) { p.system = s; });
             s.radius = d3.max(s.values, function (p) { return x(p.semimajor_axis) + r(p.planet_radius); }) + padding;
+            s.distance = totalRadius + s.radius;
+            totalRadius += s.radius * 2;
         });
 
-        systems.sort(function (a, b) {
-            return a.radius - b.radius;
+        // Resize our solar system according to the total calculated radius.
+        $("#main-content")
+            .width(totalRadius * 2)
+            .height(totalRadius * 2);
+
+        // Adjust the sun at the center.
+        var $sun = $("#sun");
+        $sun.css({
+            left: totalRadius - ($sun.width() / 2) + "px",
+            top: totalRadius - ($sun.height() / 2) + "px"
         });
 
-        var system = d3.select("#main-content").selectAll(".system")
+        var system = d3.select("#main-content").selectAll(".system-orbit")
             .data(systems)
             .enter().append("div")
+            .attr('class', "system-orbit")
+            .style('width', function (d) { return (d.distance + d.radius) * 2 + "px"; })
+            .style('height', function (d) { return (d.distance + d.radius) * 2 + "px"; })
+            .style('left', function (d) { return totalRadius - d.distance - d.radius + "px"; })
+            .style('top', function (d) { return totalRadius - d.distance - d.radius + "px"; })
+            .style(prefix + "animation-duration", function (d) { return t(d.distance / 20) + "s"; })
+            .style(prefix + "transform-origin", function (d) { return (d.distance + d.radius) + "px " + (d.distance + d.radius) + "px"; })
+            .append("div")
             .attr('class', "system")
             .attr('title', function (d) { return d.purpose || "(purpose not stated)"; })
-            .style("width", function (d) { return d.radius * 2 + "px"; })
-            .style("height", function (d) { return d.radius * 2 + "px"; });
+            .style('width', function (d) { return d.radius * 2 + "px"; })
+            .style('height', function (d) { return d.radius * 2 + "px"; })
+            .style('left', function (d) { return d.distance + d.distance + "px"; })
+            .style('top', function (d) { return d.distance + "px"; });
 
         system.append("svg")
             .attr('class', "planet")
