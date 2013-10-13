@@ -137,11 +137,18 @@ $(function () {
 
         console.log(systems);
 
+        // Compute the "distances" of each system from the "sun."
         systems.forEach(function (s) {
             s.values.forEach(function (p) { p.system = s; });
             s.radius = d3.max(s.values, function (p) { return x(p.semimajor_axis) + r(p.planet_radius); }) + padding;
             s.distance = totalRadius + s.radius;
             totalRadius += s.radius * 2;
+        });
+
+        // We want to process our systems from the furthest to the closest to that the smallest orbits
+        // are "on top."
+        systems.sort(function (system1, system2) {
+            return system2.distance - system1.distance;
         });
 
         // Resize our solar system according to the total calculated radius.
@@ -156,19 +163,34 @@ $(function () {
             top: totalRadius - ($sun.height() / 2) + "px"
         });
 
-        var system = d3.select("#main-content").selectAll(".system-orbit")
+        // TODO Lots and lots and lots of consolidation can be done here.
+        var systemDomain = d3.select("#main-content").selectAll(".system-domain")
             .data(systems)
             .enter().append("div")
-            .attr('class', "system-orbit")
+            .attr('class', "system-domain")
+            .attr('title', function (d) { return d.purpose || "(purpose not stated)"; })
             .style('width', function (d) { return (d.distance + d.radius) * 2 + "px"; })
             .style('height', function (d) { return (d.distance + d.radius) * 2 + "px"; })
             .style('left', function (d) { return totalRadius - d.distance - d.radius + "px"; })
             .style('top', function (d) { return totalRadius - d.distance - d.radius + "px"; })
+            .style(prefix + "border-radius", function (d) { return d.distance + d.radius + "px"; })
             .style(prefix + "animation-duration", function (d) { return t(d.distance / 20) + "s"; })
-            .style(prefix + "transform-origin", function (d) { return (d.distance + d.radius) + "px " + (d.distance + d.radius) + "px"; })
-            .append("div")
+            .style(prefix + "transform-origin", function (d) { return (d.distance + d.radius) + "px " + (d.distance + d.radius) + "px"; });
+
+        systemDomain.append("svg")
+            .attr('class', "system-orbit")
+            .attr('width', function (d) { return d.distance * 2; })
+            .attr('height', function (d) { return d.distance * 2; })
+            .style('left', function (d) { return d.radius + "px"; })
+            .style('top', function (d) { return d.radius + "px"; })
+            .style(prefix + "border-radius", function (d) { return d.distance + "px"; })
+            .append("circle")
+            .attr('cx', function (d) { return d.distance; })
+            .attr('cy', function (d) { return d.distance; })
+            .attr('r', function (d) { return d.distance; });
+
+        var system = systemDomain.append("div")
             .attr('class', "system")
-            .attr('title', function (d) { return d.purpose || "(purpose not stated)"; })
             .style('width', function (d) { return d.radius * 2 + "px"; })
             .style('height', function (d) { return d.radius * 2 + "px"; })
             .style('left', function (d) { return d.distance + d.distance + "px"; })

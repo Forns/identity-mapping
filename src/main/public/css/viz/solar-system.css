@@ -4,8 +4,11 @@ body {
   text-align: center;
 }
 
-#sun, .system-orbit, .system {
+#main-content * {
   position: absolute;
+}
+
+#sun, .system-domain, .system {
   vertical-align: middle;
 }
 
@@ -18,7 +21,7 @@ body {
   fill: url(#sun-gradient);
 }
 
-.system-orbit, .moon {
+.system-domain, .moon {
   -moz-animation-name: rotate;
   -moz-animation-iteration-count: infinite;
   -moz-animation-timing-function: linear;
@@ -30,13 +33,18 @@ body {
   animation-timing-function: linear;
 }
 
+.system-domain {
+}
+
 .system-orbit {
-  border: 1px solid white;
+  box-shadow: inset 0 0 64px 24px rgba(0, 0, 255, 0.25);
+  fill: none;
+  stroke: #cc4;
+  stroke-dasharray: 10,5;
 }
 
 .system > .label {
   background-color: inherit;
-  position: absolute;
   white-space: normal;
 }
 
@@ -47,7 +55,6 @@ body {
 }
 
 .planet, .moon {
-  position: absolute;
   top: 0;
   left: 0;
 }
