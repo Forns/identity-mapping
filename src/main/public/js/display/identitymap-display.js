@@ -12,7 +12,7 @@ $(function () {
         // Scales for semimajor axis, planet radius, and planet period.
         x = d3.scale.linear().range([0, 400]),
         r = d3.scale.linear().domain([4, 40]).range([4 * .5, 40 * .5]).clamp(true),
-        t = d3.scale.linear().range([0, 1]),
+        t = d3.scale.linear().range([0, 3]),
 
         PLANET_RADIUS = 15,
         padding = 16,
@@ -198,7 +198,7 @@ $(function () {
             .style('width', function (d) { return (d.distance + d.radius) * 2 + "px"; })
             .style('height', function (d) { return (d.distance + d.radius) * 2 + "px"; })
             .style(prefix + "border-radius", function (d) { return d.distance + d.radius + "px"; })
-            .style(prefix + "animation-duration", function (d) { return t(d.distance / 20) + "s"; })
+            .style(prefix + "animation-duration", function (d) { return t(d.distance / 4) + "s"; })
             .style(prefix + "transform-origin", function (d) { return (d.distance + d.radius) + "px " + (d.distance + d.radius) + "px"; });
 
         systemDomain.append("svg")
@@ -233,7 +233,7 @@ $(function () {
             .attr('class', "label")
             .style('width', function (d) { return (d.radius * 2 - 10) + "px"; })
             .style('top', function (d) { return d.radius + 10 + "px"; })
-            .style(prefix + "animation-duration", function (d) { return t(d.distance / 20) + "s"; })
+            .style(prefix + "animation-duration", function (d) { return t(d.distance / 4) + "s"; })
             .text(function (d) { return d.planet_name; });
 
         system.append("svg")
@@ -253,7 +253,11 @@ $(function () {
             .attr("class", "moon")
             .attr("width", function (d) { return d.system.radius * 2; })
             .attr("height", function (d) { return d.system.radius * 2; })
-            .style(prefix + "animation-duration", function (d) { return t(d.period) + "s"; })
+            .style(prefix + "animation-duration", function (d) {
+                // "Perturb" periodicity by up to 2 days; this adds some variation while
+                // retaining differences in frequencies.
+                return t(d.period + Math.random(2)) + "s";
+            })
             .style(prefix + "transform-origin", function (d) { return d.system.radius + "px " + d.system.radius + "px"; })
             .append("circle")
             .attr("transform", function (d) { return "translate(" + d.system.radius + "," + d.system.radius + ")"; })
