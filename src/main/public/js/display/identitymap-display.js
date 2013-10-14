@@ -30,6 +30,12 @@ $(function () {
             return d;
         },
 
+        // Helper for changing [arch]domain names to identifiers.
+        domainToId = function (domain) {
+            // Guarantee non-numeric first character.
+            return "d-" + domain.toLowerCase().replace(/ /g, "-");
+        },
+
         // Convert the survey object into the "systems" data structure from
         // http://bl.ocks.org/mbostock/5415941
         surveyToSystems = function (survey) {
@@ -79,6 +85,7 @@ $(function () {
                 systemSource = systemSource[systemName];
                 systems.push({
                     key: systems.length,
+                    system_name: systemName,
                     planet_name: systemName,
                     purpose: systemSource.purpose,
                     values: Object.keys(systemSource).filter(function (key) {
@@ -110,7 +117,8 @@ $(function () {
 
                     systems.push({
                         key: systems.length,
-                        planet_name: systemName + ": " + (subsystemSource.definition || subsystemName), // TODO Temp while flat.
+                        system_name: systemName,
+                        planet_name: subsystemSource.definition || subsystemName,
                         purpose: subsystemSource.purpose,
                         values: Object.keys(subsystemSource).filter(function (key) {
                             return key.match(FREQUENCY_REGEX);
@@ -178,7 +186,7 @@ $(function () {
             .style(prefix + "transform-origin", function (d) { return (d.distance + d.radius) + "px " + (d.distance + d.radius) + "px"; });
 
         systemDomain.append("svg")
-            .attr('class', "system-orbit")
+            .attr('class', function (d) { return "system-orbit " + domainToId(d.system_name); })
             .attr('width', function (d) { return d.distance * 2; })
             .attr('height', function (d) { return d.distance * 2; })
             .style('left', function (d) { return d.radius + "px"; })
@@ -201,8 +209,9 @@ $(function () {
             .attr('width', function (d) { return d.radius * 2; })
             .attr('height', function (d) { return d.radius * 2; })
             .append("circle")
-            .attr("transform", function (d) { return "translate(" + d.radius + "," + d.radius + ")"; })
-            .attr("r", function (d) { return r(PLANET_RADIUS); });
+            .attr('transform', function (d) { return "translate(" + d.radius + "," + d.radius + ")"; })
+            .attr('r', function (d) { return r(PLANET_RADIUS); })
+            .style('fill', function (d) { return "url(#" + domainToId(d.system_name) + "-gradient)"; });
 
         system.append("div")
             .attr('class', "label")

@@ -37,10 +37,45 @@ body {
 }
 
 .system-orbit {
-  box-shadow: inset 0 0 64px 24px rgba(0, 0, 255, 0.25);
   fill: none;
-  stroke: #cc4;
   stroke-dasharray: 10,5;
+}
+
+/* Adapted from https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors,
+   must coordinate with gradients in identitymap.jade. */
+.system-orbit.d-blogs {
+  box-shadow: inset 0 0 64px -32px #5254a3;
+  stroke: #9c9ede;
+}
+
+.system-orbit.d-emails {
+  box-shadow: inset 0 0 64px -32px #8ca252;
+  stroke: #cedb9c;
+}
+
+.system-orbit.d-online-forums {
+  box-shadow: inset 0 0 64px -32px #9e9ac8;
+  stroke: #dadaeb;
+}
+
+.system-orbit.d-social-networks {
+  box-shadow: inset 0 0 64px -32px #6baed6;
+  stroke: #c6dbef;
+}
+
+.system-orbit.d-digital-gaming-platforms {
+  box-shadow: inset 0 0 64px -32px #a55194;
+  stroke: #de9ed6;
+}
+
+.system-orbit.d-3d-virtual-worlds {
+  box-shadow: inset 0 0 64px -32px #fd8d3c;
+  stroke: #fdd0a2;
+}
+
+.system-orbit.d-online-dating-sites {
+  box-shadow: inset 0 0 64px -32px #ad494a;
+  stroke: #e7969c;
 }
 
 .system > .label {
