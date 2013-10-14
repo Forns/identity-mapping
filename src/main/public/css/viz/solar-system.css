@@ -21,7 +21,15 @@ body {
   fill: url(#sun-gradient);
 }
 
-.system-domain, .system > .label, .moon {
+.label {
+  background-color: inherit;
+  white-space: normal;
+  -moz-animation-direction: reverse;
+  -webkit-animation-direction: reverse;
+  animation-direction: reverse;
+}
+
+.system-domain > .region, .system > .label, .moon {
   -moz-animation-name: rotate;
   -moz-animation-iteration-count: infinite;
   -moz-animation-timing-function: linear;
@@ -33,41 +41,48 @@ body {
   animation-timing-function: linear;
 }
 
-.system-domain {
-}
-
-.system-domain, .planet, .moon {
+.system-domain > .region, .planet, .moon {
   top: 0;
   left: 0;
 }
 
+.system-domain > .label {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 6px;
+  opacity: 0.25;
+  padding: 0;
+  text-shadow: white 0 0 12px;
+  width: 100%;
+}
+
 /* Adapted from https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors,
    must coordinate with gradients in identitymap.jade. */
-.system-domain-label.d-blogs {
+.system-domain > .label.d-blogs {
   color: #9c9ede;
 }
 
-.system-domain-label.d-emails {
+.system-domain > .label.d-emails {
   color: #cedb9c;
 }
 
-.system-domain-label.d-online-forums {
+.system-domain > .label.d-online-forums {
   color: #dadaeb;
 }
 
-.system-domain-label.d-social-networks {
+.system-domain > .label.d-social-networks {
   color: #c6dbef;
 }
 
-.system-domain-label.d-digital-gaming-platforms {
+.system-domain > .label.d-digital-gaming-platforms {
   color: #de9ed6;
 }
 
-.system-domain-label.d-3d-virtual-worlds {
+.system-domain > .label.d-3d-virtual-worlds {
   color: #fdd0a2;
 }
 
-.system-domain-label.d-online-dating-sites {
+.system-domain > .label.d-online-dating-sites {
   color: #e7969c;
 }
 /* End adaptation. */
@@ -114,14 +129,6 @@ body {
   stroke: #e7969c;
 }
 /* End adaptation. */
-
-.system > .label {
-  background-color: inherit;
-  white-space: normal;
-  -moz-animation-direction: reverse;
-  -webkit-animation-direction: reverse;
-  animation-direction: reverse;
-}
 
 .orbit {
   fill: none;

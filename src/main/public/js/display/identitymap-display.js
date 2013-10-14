@@ -172,17 +172,28 @@ $(function () {
         });
 
         // TODO Lots and lots and lots of consolidation can be done here.
-        var systemDomain = d3.select("#main-content").selectAll(".system-domain")
+        var systemDomainLabelCheck = {},
+            systemDomain = d3.select("#main-content").selectAll(".system-domain")
             .data(systems)
             .enter().append("div")
-            .attr('class', function (d) { return "system-domain-label " + domainToId(d.system_name); })
-            .text(function (d) { return d.system_name; })
+            .attr('class', "system-domain")
             .style('width', function (d) { return (d.distance + d.radius) * 2 + "px"; })
             .style('height', function (d) { return (d.distance + d.radius) * 2 + "px"; })
             .style('left', function (d) { return totalRadius - d.distance - d.radius + "px"; })
-            .style('top', function (d) { return totalRadius - d.distance - d.radius + "px"; })
-            .append("div")
-            .attr('class', "system-domain")
+            .style('top', function (d) { return totalRadius - d.distance - d.radius + "px"; });
+
+        systemDomain.append("div")
+            .attr('class', function (d) { return "label " + domainToId(d.system_name); })
+            .text(function (d) {
+                // We want to apply a label just once.
+                var label = systemDomainLabelCheck[d.system_name] ? "" : d.system_name;
+                systemDomainLabelCheck[d.system_name] = true;
+                return label;
+            })
+            .style('top', function (d) { return d.radius + 24 + "px"; });
+
+        systemDomain = systemDomain.append("div")
+            .attr('class', "region")
             .attr('title', function (d) { return d.purpose || "(purpose not stated)"; })
             .style('width', function (d) { return (d.distance + d.radius) * 2 + "px"; })
             .style('height', function (d) { return (d.distance + d.radius) * 2 + "px"; })
