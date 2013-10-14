@@ -27,6 +27,7 @@ body {
   -moz-animation-direction: reverse;
   -webkit-animation-direction: reverse;
   animation-direction: reverse;
+  left: 0;
 }
 
 .system-domain > .region, .system > .label, .moon {
@@ -41,7 +42,7 @@ body {
   animation-timing-function: linear;
 }
 
-.system-domain > .region, .planet, .moon {
+#sun svg, .system-domain > .region, .orbit, .planet, .moon {
   top: 0;
   left: 0;
 }
