@@ -36,6 +36,42 @@ body {
 .system-domain {
 }
 
+.system-domain, .planet, .moon {
+  top: 0;
+  left: 0;
+}
+
+/* Adapted from https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors,
+   must coordinate with gradients in identitymap.jade. */
+.system-domain-label.d-blogs {
+  color: #9c9ede;
+}
+
+.system-domain-label.d-emails {
+  color: #cedb9c;
+}
+
+.system-domain-label.d-online-forums {
+  color: #dadaeb;
+}
+
+.system-domain-label.d-social-networks {
+  color: #c6dbef;
+}
+
+.system-domain-label.d-digital-gaming-platforms {
+  color: #de9ed6;
+}
+
+.system-domain-label.d-3d-virtual-worlds {
+  color: #fdd0a2;
+}
+
+.system-domain-label.d-online-dating-sites {
+  color: #e7969c;
+}
+/* End adaptation. */
+
 .system-orbit {
   fill: none;
   stroke-dasharray: 10,5;
@@ -77,6 +113,7 @@ body {
   box-shadow: inset 0 0 64px -32px #ad494a;
   stroke: #e7969c;
 }
+/* End adaptation. */
 
 .system > .label {
   background-color: inherit;
@@ -90,11 +127,6 @@ body {
   fill: none;
   stroke: #ccc;
   stroke-dasharray: 2,3;
-}
-
-.planet, .moon {
-  top: 0;
-  left: 0;
 }
 
 .planet {
