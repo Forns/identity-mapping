@@ -163,7 +163,8 @@ $(function () {
         // Resize our solar system according to the total calculated radius.
         $("#main-content")
             .width(totalRadius * 2)
-            .height(totalRadius * 2);
+            .height(totalRadius * 2)
+            .css({ marginTop: (-totalRadius / 2) + "px" });
 
         // Adjust the sun at the center.
         $sun.css({
