@@ -105,6 +105,10 @@ button.big-button-and-cannot-lie {
 /*
  * SITE ACCENTS
  */
+#consent-window .modal-body {
+  max-height: 70% !important;
+}
+
 .loading-hidden {
   display: none;
 }

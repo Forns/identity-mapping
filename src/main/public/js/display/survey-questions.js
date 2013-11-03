@@ -23,7 +23,7 @@ $(function() {
       finalAnswers = {},
       
       // Flags
-      surveyComplete = false,
+      surveyComplete = true,
       
       // Determines whether or not a user's custom domain is actually one that already exists
       usedDomains = {},
@@ -98,6 +98,39 @@ $(function() {
           return "an";
         }
         return "a";
+      },
+      
+      // Modal popup configuration tool
+      modalPopup = function (container, id, title, body, buttons, options, display) {
+        container = $(container);
+        container
+          .append(
+            "<div id='" + id + "' data-backdrop='static' data-keyboard='false' class='modal fade' tabindex='-1' role='dialog' aria-labelledby='model-title' aria-hidden='true'>" +
+              "<div class='modal-dialog'>" +
+                "<div class='modal-content'>" +
+                  "<div class='modal-header'>" +
+                    "<h4 class='modal-title'><span class='glyphicon glyphicon-chevron-right'></span>&nbsp" + title + "</h4>" +
+                  "</div>" +
+                  "<div class='modal-body text-left'>" +
+                    body +
+                  "</div>" +
+                  "<div class='modal-footer'>" +
+                    buttons +
+                  "</div>" +
+                "</div>" +
+              "</div>" +
+            "</div>"
+          );
+          
+        if(display && display.image) {
+          $("#" + id + " .modal-dialog")
+            .addClass("modal-image");
+        } else {
+          $("#" + id + " .modal-dialog")
+            .removeClass("modal-image");
+        }
+          
+        return $("#" + id).modal(options);
       };
       
   /*
@@ -121,6 +154,21 @@ $(function() {
       function () {
         briefing.deleteForm();
         stageI.render(formContainer, function () {
+          // Set up the informed consent modal
+          modalPopup(
+            "body",
+            moduleList.consent.id,
+            moduleList.consent.title,
+            moduleList.consent.billOfRights,
+            moduleList.consent.buttons
+          );
+          
+          // Clicking the agree button will really begin the survey mechanics
+          $("#consent-button")
+            .click(function () {
+              surveyComplete = false;
+            });
+          
           // Quick fix for our two edge case items (emails and blogs)
           // that require different radio labels than their values
           $("[name='Blogs-radio']:radio:nth(0)").val("true");

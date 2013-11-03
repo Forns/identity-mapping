@@ -369,6 +369,41 @@ var countRadio =
 
     // List of modules
     moduleList = {
+      /*
+       * INFORMED CONSENT
+       */
+      consent: {
+        id: "consent-window",
+        title: "Consent to Participate",
+        billOfRights:
+          "After reading the following 7 items, click on the &quot;Agree&quot; button below to begin the survey, or the &quot;Disagree&quot; button to decline to take the survey." +
+          "<ol class='indent-1'><br/>" +
+            "<li><p>I understand that I must be 18 years of age or older to participate in this project</p></li>" +
+            "<li><p>" +
+              "I understand that if I am a participant in this research study, I will be completing a brief survey that will ask me to identify my age, gender, education, " +
+              "and nationality and to describe my participation in a variety of digital domains." +
+            "</p></li>" +
+            "<li><p>" +
+              "I understand that the survey information is completely anonymous. No personal names, account names, user names, IP addresses, or any other form of " +
+              "identifying information will be collected and all survey responses will be stored according to a number and in no way linked to any individual." +
+            "</p></li>" +
+            "<li><p>I understand that the study includes no foreseeable risks or discomforts.</p></li>" +
+            "<li><p>" +
+              "I understand that the possible benefits of the study are that I will contribute to the understanding of how people of different ages, genders, " +
+              "educational levels, and nationalities express their identities through a variety of online forms, and that I will be able to view, share, and / or " +
+              "download a free, color-coded copy of my current digital identity at the conclusion of the survey." +
+            "</p></li>" +
+            "<li><p>I understand that I have the right to refuse to participate in, or to withdraw from, this research at any time without prejudice to me in any respect.</p></li>" +
+            "<li><p>" +
+              "I understand that Dr. Richard Gilbert can be reached via email at <a href='mailto:richard.gilbert@lmu.edu'>richard.gilbert@lmu.edu</a>, and " +
+              "Dr. David Hardy, Chair of the Loyola Marymount University Institutional Review Board can be reached at <a href='mailto:david.hardy@lmu.edu'>david.hardy@lmu.edu</a>," +
+              "if any questions arise regarding any procedures performed as part of this study." +
+            "</p></li>" +
+          "</ol>",
+        buttons:
+          "<a class='btn btn-primary pull-right' href='/'>Disagree</a>" +
+          "<a id='consent-button' class='btn btn-primary pull-left' class='close' data-dismiss='modal' aria-hidden='true'>Agree</a>"
+      },
       
       /*
        * BRIEFING
