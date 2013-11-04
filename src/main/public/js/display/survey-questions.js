@@ -170,6 +170,11 @@ $(function() {
           // Clicking the agree button will really begin the survey mechanics
           $("#consent-button")
             .click(function () {
+              $("html, body")
+                .stop()
+                .animate({
+                  scrollTop: $("body").position().top
+                }, 1);
               surveyComplete = false;
             });
           
