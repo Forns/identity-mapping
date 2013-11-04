@@ -122,12 +122,12 @@ $(function() {
             "</div>"
           );
           
-        if(display && display.image) {
-          $("#" + id + " .modal-dialog")
-            .addClass("modal-image");
+        if(display && display.wide) {
+          $("#" + id)
+            .addClass("modal-wide");
         } else {
-          $("#" + id + " .modal-dialog")
-            .removeClass("modal-image");
+          $("#" + id)
+            .removeClass("modal-wide");
         }
           
         return $("#" + id).modal(options);
@@ -160,7 +160,11 @@ $(function() {
             moduleList.consent.id,
             moduleList.consent.title,
             moduleList.consent.billOfRights,
-            moduleList.consent.buttons
+            moduleList.consent.buttons,
+            {},
+            {
+              wide: true
+            }
           );
           
           // Clicking the agree button will really begin the survey mechanics

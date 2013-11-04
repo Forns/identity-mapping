@@ -109,6 +109,12 @@ button.big-button-and-cannot-lie {
   max-height: 70% !important;
 }
 
+.modal-wide {
+  top: 3% !important;
+  min-width: 800px !important;
+  margin-left: -400px !important;
+}
+
 .loading-hidden {
   display: none;
 }
