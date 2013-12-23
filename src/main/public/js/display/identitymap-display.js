@@ -221,12 +221,16 @@ $(function () {
             .style('left', function (d) { return d.distance + d.distance + "px"; })
             .style('top', function (d) { return d.distance + "px"; });
 
-        system.append("svg")
+        system.append("div")
+            .attr('class', "perspective-adjust")
+            .style(prefix + "transform-origin", function (d) { return d.radius + "px " + d.radius + "px"; })
+            .style(prefix + "animation-duration", function (d) { return t(d.distance / 4) + "s"; })
+            .append("svg")
             .attr('class', "planet")
             .attr('width', function (d) { return d.radius * 2; })
             .attr('height', function (d) { return d.radius * 2; })
             .append("circle")
-            .attr('transform', function (d) { return "translate(" + d.radius + "," + d.radius + ")"; })
+            .attr('transform', function (d) { return "translate(" + d.radius + "," + d.radius + ") scale(1.0,2.0)"; })
             .attr('r', function (d) { return r(PLANET_RADIUS); })
             .style('fill', function (d) { return "url(#" + domainToId(d.system_name) + "-gradient)"; });
 

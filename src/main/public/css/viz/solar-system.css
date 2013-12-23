@@ -36,13 +36,16 @@ body {
 .label {
   background-color: inherit;
   white-space: normal;
-  -moz-animation-direction: reverse;
-  -webkit-animation-direction: reverse;
-  animation-direction: reverse;
   left: 0;
 }
 
-.system-domain > .region, .system > .label, .moon {
+.label, .perspective-adjust {
+  -moz-animation-direction: reverse;
+  -webkit-animation-direction: reverse;
+  animation-direction: reverse;
+}
+
+.system-domain > .region, .system > .label, .moon, .perspective-adjust {
   -moz-animation-name: rotate;
   -moz-animation-iteration-count: infinite;
   -moz-animation-timing-function: linear;
