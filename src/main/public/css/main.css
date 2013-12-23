@@ -105,6 +105,17 @@ button.big-button-and-cannot-lie {
 /*
  * SITE ACCENTS
  */
+.modal-wide .modal-body {
+  height: 100% !important;
+  max-height: 100% !important;
+}
+
+.modal-wide {
+  overflow-y: scroll;
+  top: 3% !important;
+  max-height: 90% !important;
+}
+
 .loading-hidden {
   display: none;
 }
