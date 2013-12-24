@@ -112,7 +112,7 @@ $(function () {
                                 period: PERIODICITIES[subsystemSource[frequencyKey]],
                                 moonName: subsystemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
                                 moonRadius: MOON_RADIUS,
-                                semimajorAxis: (index + ORBIT_START) * ORBIT_STEP,
+                                semimajorAxis: (moonIndex + ORBIT_START) * ORBIT_STEP,
                             };
                         })
                     };
@@ -129,6 +129,7 @@ $(function () {
         totalRadius = Math.max($sun.width(), $sun.height()); // Margin for sun.
 
         // Compute the "distances" of each system from the "sun."
+        // Must be done here because we are relying on the "sun"'s initial dimensions.
         systems.forEach(function (systemDomain) {
             // Radius is the larger of the base radius (which an empty region would get)
             // or the space needed by the planet with the most satellites.
@@ -136,7 +137,7 @@ $(function () {
                 planetRadius = d3.max(systemDomain.planets, function (planet) {
                     planet.radius = d3.max(planet.moons, function (moon) {
                         return x(moon.semimajorAxis) + r(moon.moonRadius)
-                    });
+                    }) + padding;
                     return planet.radius;
                 }) || 0;
 
