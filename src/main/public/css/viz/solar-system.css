@@ -5,9 +5,9 @@ body {
 }
 
 #main-content {
-  -moz-transform: perspective(1000px) rotateX(60deg);
-  -webkit-transform: perspective(1000px) rotateX(60deg);
-  transform: perspective(1000px) rotateX(60deg);
+  -moz-transform: rotateX(60deg);
+  -webkit-transform: rotateX(60deg);
+  transform: rotateX(60deg);
 }
 
 #main-content * {
