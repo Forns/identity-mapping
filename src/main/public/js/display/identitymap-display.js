@@ -144,8 +144,6 @@ $(function () {
         $sun = $("#sun"),
         totalRadius = Math.max($sun.width(), $sun.height()); // Margin for sun.
 
-        console.log(systems);
-
         // Compute the "distances" of each system from the "sun."
         systems.forEach(function (s) {
             s.values.forEach(function (p) { p.system = s; });
@@ -261,12 +259,25 @@ $(function () {
             .style(prefix + "animation-duration", function (d) {
                 // "Perturb" periodicity by up to 2 days; this adds some variation while
                 // retaining differences in frequencies.
-                return t(d.period + Math.random(2)) + "s";
+                d.adjustedPeriod = t(d.period + Math.random(2));
+                return d.adjustedPeriod + "s";
             })
             .style(prefix + "transform-origin", function (d) { return d.system.radius + "px " + d.system.radius + "px"; })
+            .append("g")
+            .attr('class', "orbiter")
+            .attr("transform", function (d) { return "translate(" + (d.system.radius + x(d.semimajor_axis)) + "," + d.system.radius + ")"; })
+            .append("g")
+            .attr('class', "perspective-adjust")
+            .style(prefix + "animation-duration", function (d) {
+                // Such algebra.  Two rotational velocities, traveling the same distance (360 degrees).
+                // Only the periodicities are known (t1, t2).  What is the periodicity when the velocity
+                // is the *sum* of the two velocities?  This:
+                var t1 = d.adjustedPeriod,
+                    t2 = t(d.system.distance / 4);
+                return (t1 * t2 / (t1 + t2)) + "s";
+            })
             .append("circle")
-            .attr("transform", function (d) { return "translate(" + d.system.radius + "," + d.system.radius + ")"; })
-            .attr("cx", function (d) { return x(d.semimajor_axis); })
+            .style(prefix + "transform", function (d) { return "scale(1.0,2.0)"; })
             .attr("r", function (d) { return r(d.planet_radius); });
     });
 });
