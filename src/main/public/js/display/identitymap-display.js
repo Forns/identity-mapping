@@ -61,7 +61,8 @@ $(function () {
                 },
 
                 MOON_RADIUS = 10,
-                ORBIT_STEP = 0.035,
+                ORBIT_STEP = 0.04,
+                ORBIT_START = 2,
 
                 FREQUENCY_REGEX = /^frequency/,
                 FREQUENCY_INDEX_REGEX = /\d+$/,
@@ -96,7 +97,7 @@ $(function () {
                             period: PERIODICITIES[systemSource[frequencyKey]],
                             planet_name: systemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
                             planet_radius: MOON_RADIUS,
-                            semimajor_axis: (index + 1) * ORBIT_STEP,
+                            semimajor_axis: (index + ORBIT_START) * ORBIT_STEP,
                         };
                     })
                 });
@@ -128,7 +129,7 @@ $(function () {
                                 period: PERIODICITIES[subsystemSource[frequencyKey]],
                                 planet_name: subsystemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
                                 planet_radius: MOON_RADIUS,
-                                semimajor_axis: (index + 1) * ORBIT_STEP,
+                                semimajor_axis: (index + ORBIT_START) * ORBIT_STEP,
                             };
                         })
                     });
@@ -237,6 +238,7 @@ $(function () {
             .style('width', function (d) { return (d.radius * 2 - 10) + "px"; })
             .style('top', function (d) { return d.radius + 10 + "px"; })
             .style(prefix + "animation-duration", function (d) { return t(d.distance / 4) + "s"; })
+            .append("span")
             .text(function (d) { return d.planet_name; });
 
         system.append("svg")

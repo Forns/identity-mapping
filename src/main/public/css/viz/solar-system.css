@@ -23,7 +23,8 @@ body {
   height: 60px;
 }
 
-#sun, .label {
+/* Compensate for 3D foreshortening. */
+#sun, .label, .label > span {
   -moz-transform: scaleY(2.0);
   -webkit-transform: scaleY(2.0);
   transform: scaleY(2.0);
