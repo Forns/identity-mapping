@@ -141,7 +141,7 @@ $(function () {
                     return planet.radius;
                 }) || 0;
 
-            systemDomain.radius = Math.max(regionRadius, planetRadius) + padding;
+            systemDomain.radius = Math.max(regionRadius, planetRadius);
             systemDomain.distance = totalRadius + systemDomain.radius;
             totalRadius += systemDomain.radius * 2;
 
