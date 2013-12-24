@@ -102,9 +102,10 @@ $(function () {
                 });
             });
 
-            // TODO Two-level systems should show satellites with satellites.  However, the
-            //      visualization code does not handle this yet, so for now we "flatten" the
-            //      two layers of satellites.
+            // Two-level systems show multiple "planets" within the same orbit.
+            // This serves as the chosen alternative to the other options, which
+            // are to either put multiple orbits in the same region (original version)
+            // or to show two-level systems as satellites with satellites.
             TWO_LEVEL_SYSTEMS.forEach(function (systemName) {
                 var systemSource = survey[systemName];
                 if (!systemSource) {
@@ -154,8 +155,13 @@ $(function () {
         // Compute the "distances" of each system from the "sun."
         systems.forEach(function (s) {
             s.values.forEach(function (p) { p.system = s; });
-//            s.radius = d3.max(s.values, function (p) { return x(p.semimajor_axis) + r(p.planet_radius); }) + padding;
-            s.radius = x(ORBIT_START * ORBIT_STEP) + r(MOON_RADIUS) + padding;
+
+            // Radius is the larger of the base radius (which an empty region would get)
+            // or the space needed by the planet with the most satellites.
+            var regionRadius = x(ORBIT_START * ORBIT_STEP) + r(MOON_RADIUS),
+                planetRadius = d3.max(s.values, function (p) { return x(p.semimajor_axis) + r(p.planet_radius); }) || 0;
+
+            s.radius = Math.max(regionRadius, planetRadius) + padding;
             s.distance = totalRadius + s.radius;
             totalRadius += s.radius * 2;
         });
