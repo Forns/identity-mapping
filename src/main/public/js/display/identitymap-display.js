@@ -228,6 +228,8 @@ $(function () {
 
         var system = systemDomain.append("div")
             .attr('class', "system")
+            // This is invisible if there are no listed accounts.
+            .style('display', function (d) { return d.values.length ? "block" : "none"; })
             .style('width', function (d) { return d.radius * 2 + "px"; })
             .style('height', function (d) { return d.radius * 2 + "px"; })
             .style('left', function (d) { return d.distance + d.distance + "px"; })
