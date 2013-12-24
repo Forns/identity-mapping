@@ -4,6 +4,12 @@ body {
   text-align: center;
 }
 
+#main-content {
+  -moz-transform: rotateX(60deg);
+  -webkit-transform: rotateX(60deg);
+  transform: rotateX(60deg);
+}
+
 #main-content * {
   position: absolute;
 }
@@ -17,6 +23,13 @@ body {
   height: 60px;
 }
 
+/* Compensate for 3D foreshortening. */
+#sun, .label, .label > span {
+  -moz-transform: scaleY(2.0);
+  -webkit-transform: scaleY(2.0);
+  transform: scaleY(2.0);
+}
+
 #sun circle {
   fill: url(#sun-gradient);
 }
@@ -24,13 +37,16 @@ body {
 .label {
   background-color: inherit;
   white-space: normal;
-  -moz-animation-direction: reverse;
-  -webkit-animation-direction: reverse;
-  animation-direction: reverse;
   left: 0;
 }
 
-.system-domain > .region, .system > .label, .moon {
+.label, .perspective-adjust {
+  -moz-animation-direction: reverse;
+  -webkit-animation-direction: reverse;
+  animation-direction: reverse;
+}
+
+.system-domain > .region, .system > .label, .moon, .perspective-adjust {
   -moz-animation-name: rotate;
   -moz-animation-iteration-count: infinite;
   -moz-animation-timing-function: linear;

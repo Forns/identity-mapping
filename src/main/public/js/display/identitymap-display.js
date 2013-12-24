@@ -15,6 +15,10 @@ $(function () {
         t = d3.scale.linear().range([0, 3]),
 
         PLANET_RADIUS = 15,
+        MOON_RADIUS = 10,
+        ORBIT_STEP = 0.04,
+        ORBIT_START = 2,
+
         padding = 16,
 
         // Detect the appropriate vendor prefix.
@@ -43,11 +47,11 @@ $(function () {
             var ONE_LEVEL_SYSTEMS = [ "Blogs", "Emails" ],
 
                 TWO_LEVEL_SYSTEMS = [
-                    "Online Forums",
                     "Social Networks",
+                    "Online Dating Sites",
+                    "Online Forums",
                     "Digital Gaming Platforms",
-                    "3D Virtual Worlds",
-                    "Online Dating Sites"
+                    "3D Virtual Worlds"
                     // TODO Fill this out based on survey modules; heck, maybe even centralize this
                     //      so that *both* the visualization and the survey are reading the same
                     //      data.
@@ -59,9 +63,6 @@ $(function () {
                     'Monthly / Several times a month': 31,
                     'Less than once a month': 93 // i.e., around once every three months
                 },
-
-                MOON_RADIUS = 10,
-                ORBIT_STEP = 0.035,
 
                 FREQUENCY_REGEX = /^frequency/,
                 FREQUENCY_INDEX_REGEX = /\d+$/,
@@ -77,12 +78,11 @@ $(function () {
             // the number of satellites therein.
             ONE_LEVEL_SYSTEMS.forEach(function (systemName) {
                 var systemSource = survey[systemName];
-                if (!systemSource) {
-                    return;
-                }
 
                 // If that archdomain is present, then we go down another level.
-                systemSource = systemSource[systemName];
+                systemSource = systemSource ? systemSource[systemName] : {
+                    purpose: "(n/a)"
+                };
                 systems.push({
                     key: systems.length,
                     system_name: systemName,
@@ -96,18 +96,26 @@ $(function () {
                             period: PERIODICITIES[systemSource[frequencyKey]],
                             planet_name: systemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
                             planet_radius: MOON_RADIUS,
-                            semimajor_axis: (index + 1) * ORBIT_STEP,
+                            semimajor_axis: (index + ORBIT_START) * ORBIT_STEP,
                         };
                     })
                 });
             });
 
-            // TODO Two-level systems should show satellites with satellites.  However, the
-            //      visualization code does not handle this yet, so for now we "flatten" the
-            //      two layers of satellites.
+            // Two-level systems show multiple "planets" within the same orbit.
+            // This serves as the chosen alternative to the other options, which
+            // are to either put multiple orbits in the same region (original version)
+            // or to show two-level systems as satellites with satellites.
             TWO_LEVEL_SYSTEMS.forEach(function (systemName) {
                 var systemSource = survey[systemName];
                 if (!systemSource) {
+                    systems.push({
+                        key: systems.length,
+                        system_name: systemName,
+                        planet_name: systemName,
+                        purpose: "(n/a)",
+                        values: []
+                    });
                     return;
                 }
 
@@ -128,7 +136,7 @@ $(function () {
                                 period: PERIODICITIES[subsystemSource[frequencyKey]],
                                 planet_name: subsystemName + frequencyKey.match(FREQUENCY_INDEX_REGEX),
                                 planet_radius: MOON_RADIUS,
-                                semimajor_axis: (index + 1) * ORBIT_STEP,
+                                semimajor_axis: (index + ORBIT_START) * ORBIT_STEP,
                             };
                         })
                     });
@@ -144,12 +152,16 @@ $(function () {
         $sun = $("#sun"),
         totalRadius = Math.max($sun.width(), $sun.height()); // Margin for sun.
 
-        console.log(systems);
-
         // Compute the "distances" of each system from the "sun."
         systems.forEach(function (s) {
             s.values.forEach(function (p) { p.system = s; });
-            s.radius = d3.max(s.values, function (p) { return x(p.semimajor_axis) + r(p.planet_radius); }) + padding;
+
+            // Radius is the larger of the base radius (which an empty region would get)
+            // or the space needed by the planet with the most satellites.
+            var regionRadius = x(ORBIT_START * ORBIT_STEP) + r(MOON_RADIUS),
+                planetRadius = d3.max(s.values, function (p) { return x(p.semimajor_axis) + r(p.planet_radius); }) || 0;
+
+            s.radius = Math.max(regionRadius, planetRadius) + padding;
             s.distance = totalRadius + s.radius;
             totalRadius += s.radius * 2;
         });
@@ -163,7 +175,8 @@ $(function () {
         // Resize our solar system according to the total calculated radius.
         $("#main-content")
             .width(totalRadius * 2)
-            .height(totalRadius * 2);
+            .height(totalRadius * 2)
+            .css({ marginTop: (-totalRadius / 2) + "px" });
 
         // Adjust the sun at the center.
         $sun.css({
@@ -220,12 +233,16 @@ $(function () {
             .style('left', function (d) { return d.distance + d.distance + "px"; })
             .style('top', function (d) { return d.distance + "px"; });
 
-        system.append("svg")
+        system.append("div")
+            .attr('class', "perspective-adjust")
+            .style(prefix + "transform-origin", function (d) { return d.radius + "px " + d.radius + "px"; })
+            .style(prefix + "animation-duration", function (d) { return t(d.distance / 4) + "s"; })
+            .append("svg")
             .attr('class', "planet")
             .attr('width', function (d) { return d.radius * 2; })
             .attr('height', function (d) { return d.radius * 2; })
             .append("circle")
-            .attr('transform', function (d) { return "translate(" + d.radius + "," + d.radius + ")"; })
+            .attr('transform', function (d) { return "translate(" + d.radius + "," + d.radius + ") scale(1.0,2.0)"; })
             .attr('r', function (d) { return r(PLANET_RADIUS); })
             .style('fill', function (d) { return "url(#" + domainToId(d.system_name) + "-gradient)"; });
 
@@ -234,6 +251,7 @@ $(function () {
             .style('width', function (d) { return (d.radius * 2 - 10) + "px"; })
             .style('top', function (d) { return d.radius + 10 + "px"; })
             .style(prefix + "animation-duration", function (d) { return t(d.distance / 4) + "s"; })
+            .append("span")
             .text(function (d) { return d.planet_name; });
 
         system.append("svg")
@@ -256,12 +274,25 @@ $(function () {
             .style(prefix + "animation-duration", function (d) {
                 // "Perturb" periodicity by up to 2 days; this adds some variation while
                 // retaining differences in frequencies.
-                return t(d.period + Math.random(2)) + "s";
+                d.adjustedPeriod = t(d.period + Math.random(2));
+                return d.adjustedPeriod + "s";
             })
             .style(prefix + "transform-origin", function (d) { return d.system.radius + "px " + d.system.radius + "px"; })
+            .append("g")
+            .attr('class', "orbiter")
+            .attr("transform", function (d) { return "translate(" + (d.system.radius + x(d.semimajor_axis)) + "," + d.system.radius + ")"; })
+            .append("g")
+            .attr('class', "perspective-adjust")
+            .style(prefix + "animation-duration", function (d) {
+                // Such algebra.  Two rotational velocities, traveling the same distance (360 degrees).
+                // Only the periodicities are known (t1, t2).  What is the periodicity when the velocity
+                // is the *sum* of the two velocities?  This:
+                var t1 = d.adjustedPeriod,
+                    t2 = t(d.system.distance / 4);
+                return (t1 * t2 / (t1 + t2)) + "s";
+            })
             .append("circle")
-            .attr("transform", function (d) { return "translate(" + d.system.radius + "," + d.system.radius + ")"; })
-            .attr("cx", function (d) { return x(d.semimajor_axis); })
+            .style(prefix + "transform", function (d) { return "scale(1.0,2.0)"; })
             .attr("r", function (d) { return r(d.planet_radius); });
     });
 });
