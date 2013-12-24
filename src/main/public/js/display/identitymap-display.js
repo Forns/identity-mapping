@@ -43,11 +43,11 @@ $(function () {
             var ONE_LEVEL_SYSTEMS = [ "Blogs", "Emails" ],
 
                 TWO_LEVEL_SYSTEMS = [
-                    "Online Forums",
                     "Social Networks",
+                    "Online Dating Sites",
+                    "Online Forums",
                     "Digital Gaming Platforms",
-                    "3D Virtual Worlds",
-                    "Online Dating Sites"
+                    "3D Virtual Worlds"
                     // TODO Fill this out based on survey modules; heck, maybe even centralize this
                     //      so that *both* the visualization and the survey are reading the same
                     //      data.
