@@ -15,6 +15,10 @@ $(function () {
         t = d3.scale.linear().range([0, 3]),
 
         PLANET_RADIUS = 15,
+        MOON_RADIUS = 10,
+        ORBIT_STEP = 0.04,
+        ORBIT_START = 2,
+
         padding = 16,
 
         // Detect the appropriate vendor prefix.
@@ -60,10 +64,6 @@ $(function () {
                     'Less than once a month': 93 // i.e., around once every three months
                 },
 
-                MOON_RADIUS = 10,
-                ORBIT_STEP = 0.04,
-                ORBIT_START = 2,
-
                 FREQUENCY_REGEX = /^frequency/,
                 FREQUENCY_INDEX_REGEX = /\d+$/,
 
@@ -78,12 +78,11 @@ $(function () {
             // the number of satellites therein.
             ONE_LEVEL_SYSTEMS.forEach(function (systemName) {
                 var systemSource = survey[systemName];
-                if (!systemSource) {
-                    return;
-                }
 
                 // If that archdomain is present, then we go down another level.
-                systemSource = systemSource[systemName];
+                systemSource = systemSource ? systemSource[systemName] : {
+                    purpose: "(n/a)"
+                };
                 systems.push({
                     key: systems.length,
                     system_name: systemName,
@@ -109,6 +108,13 @@ $(function () {
             TWO_LEVEL_SYSTEMS.forEach(function (systemName) {
                 var systemSource = survey[systemName];
                 if (!systemSource) {
+                    systems.push({
+                        key: systems.length,
+                        system_name: systemName,
+                        planet_name: systemName,
+                        purpose: "(n/a)",
+                        values: []
+                    });
                     return;
                 }
 
@@ -148,7 +154,8 @@ $(function () {
         // Compute the "distances" of each system from the "sun."
         systems.forEach(function (s) {
             s.values.forEach(function (p) { p.system = s; });
-            s.radius = d3.max(s.values, function (p) { return x(p.semimajor_axis) + r(p.planet_radius); }) + padding;
+//            s.radius = d3.max(s.values, function (p) { return x(p.semimajor_axis) + r(p.planet_radius); }) + padding;
+            s.radius = x(ORBIT_START * ORBIT_STEP) + r(MOON_RADIUS) + padding;
             s.distance = totalRadius + s.radius;
             totalRadius += s.radius * 2;
         });
