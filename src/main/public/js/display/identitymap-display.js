@@ -146,7 +146,7 @@ $(function () {
             totalRadius += systemDomain.radius * 2;
 
             systemDomain.planets.forEach(function (planet) {
-                planet.distance = systemDomain.distance;
+                planet.distance = systemDomain.distance + ((systemDomain.radius - planet.radius) / 2);
                 planet.system = systemDomain;
                 planet.moons.forEach(function (moon) {
                     moon.system = planet;
@@ -214,8 +214,18 @@ $(function () {
             .attr('title', function (d) { return d.purpose || "(purpose not stated)"; })
             .style('width', function (d) { return d.radius * 2 + "px"; })
             .style('height', function (d) { return d.radius * 2 + "px"; })
-            .style('left', function (d) { return d.distance + d.distance + "px"; })
-            .style('top', function (d) { return d.distance + "px"; });
+            .style('left', function (d) { return d.distance * 2 + "px"; })
+            .style('top', function (d) { return d.distance + ((d.system.radius - d.radius) / 2) + "px"; })
+            .style(prefix + 'transform', function (d, index) {
+                // When a system has multiple planets, we offset each planet evenly along the orbit.
+                // The offset involves translating to the center, rotating, translating back, then
+                // rotating again (so that the labels stay vertically oriented).
+                var distanceOffset = d.distance - ((d.system.radius - d.radius) / 2),
+                    degreeOffset = index * 360 / d.system.planets.length;
+
+                return "translate(-" + distanceOffset + "px,0px) rotate(" + degreeOffset + "deg) " +
+                    "translate(" + distanceOffset + "px,0px) rotate(-" + degreeOffset + "deg)";
+            });
 
         system.append("div")
             .attr('class', "perspective-adjust")
