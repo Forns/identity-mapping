@@ -126,7 +126,7 @@ $(function () {
     $.getJSON("/survey/" + surveyId, function (survey) {
         var systems = surveyToSystems(survey),
         $sun = $("#sun"),
-        totalRadius = Math.max($sun.width(), $sun.height()); // Margin for sun.
+        totalRadius = Math.max($sun.width(), $sun.height()) + padding * 3; // Margin for sun and some padding.
 
         // Compute the "distances" of each system from the "sun."
         // Must be done here because we are relying on the "sun"'s initial dimensions.
