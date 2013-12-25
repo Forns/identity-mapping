@@ -4,10 +4,68 @@ body {
   text-align: center;
 }
 
+.nebula-holder, .nebula {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -moz-animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.nebula-holder {
+  -moz-animation-name: rotate;
+  -moz-animation-timing-function: linear;
+  -moz-animation-duration: 300s;
+  -webkit-animation-name: rotate;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-duration: 300s;
+  animation-name: rotate;
+  animation-timing-function: linear;
+  animation-duration: 300s;
+  z-index: 0;
+}
+
+.nebula {
+  background-color: black;
+  background-image: url(nebula.jpg);
+  -moz-animation-name: zoom;
+  -moz-animation-timing-function: ease-in;
+  -moz-animation-duration: 20s;
+  -webkit-animation-name: zoom;
+  -webkit-animation-timing-function: ease-in;
+  -webkit-animation-duration: 20s;
+  animation-name: zoom;
+  animation-timing-function: ease-in;
+  animation-duration: 20s;
+}
+
+.nebula:nth-child(2) {
+  -moz-animation-duration: 30s;
+  -webkit-animation-duration: 30s;
+  animation-duration: 30s;
+  left: -100px;
+}
+
+.nebula:nth-child(3) {
+  -moz-animation-duration: 40s;
+  -webkit-animation-duration: 40s;
+  animation-duration: 40s;
+  top: -50px;
+  opacity: 0.0;
+}
+
 #main-content {
   -moz-transform: rotateX(60deg);
   -webkit-transform: rotateX(60deg);
   transform: rotateX(60deg);
+  z-index: 10;
+}
+
+#main-content > svg {
+  position: absolute;
+  width: 0;
+  height: 0;
 }
 
 #main-content * {
@@ -180,4 +238,46 @@ body {
 @keyframes rotate {
   from { transform: rotateZ(0deg); }
   to { transform: rotateZ(-360deg); }
+}
+
+@-moz-keyframes zoom {
+  from {
+    opacity: 0.0;
+    -moz-transform: scale(2);
+  }
+  75% {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0.0;
+    -moz-transform: scale(4);
+  }
+}
+
+@-webkit-keyframes zoom {
+  from {
+    opacity: 0.0;
+    -webkit-transform: scale(2);
+  }
+  75% {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0.0;
+    -webkit-transform: scale(4);
+  }
+}
+
+@keyframes zoom {
+  from {
+    opacity: 0.0;
+    transform: scale(2);
+  }
+  75% {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0.0;
+    transform: scale(4);
+  }
 }
