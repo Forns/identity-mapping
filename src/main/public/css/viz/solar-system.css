@@ -80,6 +80,7 @@ body {
 #sun {
   width: 60px;
   height: 60px;
+  z-index: 1000;
 }
 
 /* Compensate for 3D foreshortening. */

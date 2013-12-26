@@ -173,6 +173,16 @@ $(function () {
         });
         $(".nebula-holder, .nebula").css(prefix + "transform-origin", totalRadius + "px " + totalRadius + "px");
 
+        // Use a popover to display demographics.
+        $sun.popover({
+            html: true,
+            content: function () {
+                return $("<p></p>").text("demographics!");
+            },
+            placement: 'bottom',
+            container: 'body'
+        });
+
         // TODO Lots and lots and lots of consolidation can be done here.
         var systemDomain = d3.select("#main-content").selectAll(".system-domain")
             .data(systems)
