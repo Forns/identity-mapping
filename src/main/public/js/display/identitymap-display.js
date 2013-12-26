@@ -174,10 +174,29 @@ $(function () {
         $(".nebula-holder, .nebula").css(prefix + "transform-origin", totalRadius + "px " + totalRadius + "px");
 
         // Use a popover to display demographics.
+        var demographics = survey['Demo'];
         $sun.popover({
             html: true,
             content: function () {
-                return $("<p></p>").text("demographics!");
+                return $("<table></table>").addClass("table table-condensed table-demographics")
+                    .append($("<tbody></tbody>")
+                        .append($("<tr></tr>")
+                            .append($("<th></th>").text("Birth Year"))
+                            .append($("<td></td>").text(demographics['birth-year']))
+                        )
+                        .append($("<tr></tr>")
+                            .append($("<th></th>").text("Sex"))
+                            .append($("<td></td>").text(demographics['sex']))
+                        )
+                        .append($("<tr></tr>")
+                            .append($("<th></th>").text("Country"))
+                            .append($("<td></td>").text(demographics['country']))
+                        )
+                        .append($("<tr></tr>")
+                            .append($("<th></th>").text("Education"))
+                            .append($("<td></td>").text(demographics['education']))
+                        )
+                    );
             },
             placement: 'bottom',
             container: 'body'

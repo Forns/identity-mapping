@@ -94,6 +94,18 @@ body {
   fill: url(#sun-gradient);
 }
 
+table.table-demographics {
+  margin-bottom: 0;
+}
+
+table.table-demographics tbody th {
+  text-align: right;
+}
+
+table.table-demographics tbody th, table.table-demographics tbody td {
+  border: none;
+}
+
 .label {
   background-color: inherit;
   white-space: normal;
