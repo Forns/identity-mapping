@@ -166,11 +166,12 @@ $(function () {
             .height(totalRadius * 2)
             .css({ marginTop: (-totalRadius / 2) + "px" });
 
-        // Adjust the sun at the center.
+        // Adjust the sun at the center.  Nebula animation will also be centered on this.
         $sun.css({
             left: totalRadius - ($sun.width() / 2) + "px",
             top: totalRadius - ($sun.height() / 2) + "px"
         });
+        $(".nebula-holder, .nebula").css(prefix + "transform-origin", totalRadius + "px " + totalRadius + "px");
 
         // TODO Lots and lots and lots of consolidation can be done here.
         var systemDomain = d3.select("#main-content").selectAll(".system-domain")

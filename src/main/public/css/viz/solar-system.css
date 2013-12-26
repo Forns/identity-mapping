@@ -6,8 +6,8 @@ body {
 
 .nebula-holder, .nebula {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 24000px; /* Just to ensure a large-enough field. */
+  height: 24000px;
   -moz-animation-iteration-count: infinite;
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
@@ -16,43 +16,44 @@ body {
 .nebula-holder {
   -moz-animation-name: rotate;
   -moz-animation-timing-function: linear;
-  -moz-animation-duration: 300s;
+  -moz-animation-duration: 3000s;
   -webkit-animation-name: rotate;
   -webkit-animation-timing-function: linear;
-  -webkit-animation-duration: 300s;
+  -webkit-animation-duration: 3000s;
   animation-name: rotate;
   animation-timing-function: linear;
-  animation-duration: 300s;
+  animation-duration: 3000s;
   z-index: 0;
 }
 
 .nebula {
   background-color: black;
-  background-image: url(nebula.jpg);
+  background-image: url(seamless-galaxies-greenish.jpg);
   -moz-animation-name: zoom;
   -moz-animation-timing-function: ease-in;
-  -moz-animation-duration: 20s;
+  -moz-animation-duration: 60s;
   -webkit-animation-name: zoom;
   -webkit-animation-timing-function: ease-in;
-  -webkit-animation-duration: 20s;
+  -webkit-animation-duration: 60s;
   animation-name: zoom;
   animation-timing-function: ease-in;
-  animation-duration: 20s;
+  animation-duration: 60s;
+  left: -500px;
+  top: -500px;
 }
 
 .nebula:nth-child(2) {
-  -moz-animation-duration: 30s;
-  -webkit-animation-duration: 30s;
-  animation-duration: 30s;
-  left: -100px;
+  -moz-animation-duration: 120s;
+  -webkit-animation-duration: 120s;
+  animation-duration: 120s;
+  left: -1000px;
 }
 
 .nebula:nth-child(3) {
-  -moz-animation-duration: 40s;
-  -webkit-animation-duration: 40s;
-  animation-duration: 40s;
-  top: -50px;
-  opacity: 0.0;
+  -moz-animation-duration: 180s;
+  -webkit-animation-duration: 180s;
+  animation-duration: 180s;
+  top: -1000px;
 }
 
 #main-content {
@@ -243,41 +244,50 @@ body {
 @-moz-keyframes zoom {
   from {
     opacity: 0.0;
-    -moz-transform: scale(2);
+    -moz-transform: scale(4);
+  }
+  5% {
+    opacity: 0.05;
   }
   75% {
-    opacity: 0.5;
+    opacity: 0.1;
   }
   to {
     opacity: 0.0;
-    -moz-transform: scale(4);
+    -moz-transform: scale(64);
   }
 }
 
 @-webkit-keyframes zoom {
   from {
     opacity: 0.0;
-    -webkit-transform: scale(2);
+    -webkit-transform: scale(4);
+  }
+  5% {
+    opacity: 0.05;
   }
   75% {
-    opacity: 0.5;
+    opacity: 0.1;
   }
   to {
     opacity: 0.0;
-    -webkit-transform: scale(4);
+    -webkit-transform: scale(64);
   }
 }
 
 @keyframes zoom {
   from {
     opacity: 0.0;
-    transform: scale(2);
+    transform: scale(4);
+  }
+  5% {
+    opacity: 0.05;
   }
   75% {
-    opacity: 0.5;
+    opacity: 0.1;
   }
   to {
     opacity: 0.0;
-    transform: scale(4);
+    transform: scale(64);
   }
 }
