@@ -78,9 +78,20 @@ body {
 }
 
 #sun {
+  border-radius: 30px;
   width: 60px;
   height: 60px;
   z-index: 1000;
+  -moz-transition-duration: 1s;
+  -moz-transition-property: box-shadow;
+  -webkit-transition-duration: 1s;
+  -webkit-transition-property: box-shadow;
+  transition-duration: 1s;
+  transition-property: box-shadow;
+}
+
+#sun:hover {
+  box-shadow: 0 0 64px white;
 }
 
 /* Compensate for 3D foreshortening. */

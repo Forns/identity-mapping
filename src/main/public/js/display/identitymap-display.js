@@ -125,8 +125,9 @@ $(function () {
     // Grab the survey object.
     $.getJSON("/survey/" + surveyId, function (survey) {
         var systems = surveyToSystems(survey),
-        $sun = $("#sun"),
-        totalRadius = Math.max($sun.width(), $sun.height()) + padding * 3; // Margin for sun and some padding.
+            $main = $("#main-content"),
+            $sun = $("#sun"),
+            totalRadius = Math.max($sun.width(), $sun.height()) + padding * 3; // Margin for sun and some padding.
 
         // Compute the "distances" of each system from the "sun."
         // Must be done here because we are relying on the "sun"'s initial dimensions.
@@ -161,46 +162,15 @@ $(function () {
         });
 
         // Resize our solar system according to the total calculated radius.
-        $("#main-content")
-            .width(totalRadius * 2)
+        $main.width(totalRadius * 2)
             .height(totalRadius * 2)
             .css({ marginTop: (-totalRadius / 2) + "px" });
 
-        // Adjust the sun at the center.  Nebula animation will also be centered on this.
-        $sun.css({
-            left: totalRadius - ($sun.width() / 2) + "px",
-            top: totalRadius - ($sun.height() / 2) + "px"
-        });
+        // Set up our "nebula" backgrounds.
         $(".nebula-holder, .nebula").css(prefix + "transform-origin", totalRadius + "px " + totalRadius + "px");
 
-        // Use a popover to display demographics.
-        var demographics = survey['Demo'];
-        $sun.popover({
-            html: true,
-            content: function () {
-                return $("<table></table>").addClass("table table-condensed table-demographics")
-                    .append($("<tbody></tbody>")
-                        .append($("<tr></tr>")
-                            .append($("<th></th>").text("Birth Year"))
-                            .append($("<td></td>").text(demographics['birth-year']))
-                        )
-                        .append($("<tr></tr>")
-                            .append($("<th></th>").text("Sex"))
-                            .append($("<td></td>").text(demographics['sex']))
-                        )
-                        .append($("<tr></tr>")
-                            .append($("<th></th>").text("Country"))
-                            .append($("<td></td>").text(demographics['country']))
-                        )
-                        .append($("<tr></tr>")
-                            .append($("<th></th>").text("Education"))
-                            .append($("<td></td>").text(demographics['education']))
-                        )
-                    );
-            },
-            placement: 'bottom',
-            container: 'body'
-        });
+        // Temporarily take the "sun" out as we build the visualization.
+        $sun.remove();
 
         // TODO Lots and lots and lots of consolidation can be done here.
         var systemDomain = d3.select("#main-content").selectAll(".system-domain")
@@ -318,5 +288,42 @@ $(function () {
             .append("circle")
             .style(prefix + "transform", function (d) { return "scale(1.0,2.0)"; })
             .attr('r', function (d) { return r(d.moonRadius); });
+
+        // Put the sun back and set it up.
+        // Adjust the sun at the center.  Nebula animation will also be centered on this.
+        $main.append($sun);
+        $sun.removeClass("hide").css({
+            left: totalRadius - ($sun.width() / 2) + "px",
+            top: totalRadius - ($sun.height() / 2) + "px"
+        });
+
+        // Use a popover to display demographics.
+        var demographics = survey['Demo'];
+        $sun.popover({
+            html: true,
+            content: function () {
+                return $("<table></table>").addClass("table table-condensed table-demographics")
+                    .append($("<tbody></tbody>")
+                        .append($("<tr></tr>")
+                            .append($("<th></th>").text("Birth Year"))
+                            .append($("<td></td>").text(demographics['birth-year']))
+                        )
+                        .append($("<tr></tr>")
+                            .append($("<th></th>").text("Sex"))
+                            .append($("<td></td>").text(demographics['sex']))
+                        )
+                        .append($("<tr></tr>")
+                            .append($("<th></th>").text("Country"))
+                            .append($("<td></td>").text(demographics['country']))
+                        )
+                        .append($("<tr></tr>")
+                            .append($("<th></th>").text("Education"))
+                            .append($("<td></td>").text(demographics['education']))
+                        )
+                    );
+            },
+            placement: 'bottom',
+            container: 'body'
+        });
     });
 });
