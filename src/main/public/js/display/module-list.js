@@ -378,7 +378,7 @@ var countRadio =
         billOfRights:
           "After reading the following 7 items, click on the &quot;Agree&quot; button below to begin the survey, or the &quot;Disagree&quot; button to decline to take the survey." +
           "<ol class='indent-1'><br/>" +
-            "<li><p>I understand that I must be 18 years of age or older to participate in this project</p></li>" +
+            "<li><p>I understand that I must be 18 years of age or older to participate in this project.</p></li>" +
             "<li><p>" +
               "I understand that if I am a participant in this research study, I will be completing a brief survey that will ask me to identify my age, gender, education, " +
               "and nationality and to describe my participation in a variety of digital domains." +
