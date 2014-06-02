@@ -419,6 +419,9 @@ $(function () {
     // Configure share button
     $("#share-button")
       .click(function () {
+        $("#main-content")
+          .fadeOut(200);
+          
         modalPopup(
           "body",
           "share-popup",
@@ -431,6 +434,13 @@ $(function () {
           "<button type='button' class='btn btn-default' data-dismiss='modal' aria-hidden='true'>Close</button>" +
           "<button id='share-execute' type='button' class='btn btn-primary' aria-hidden='true'>Share!</button>"
         );
+        
+        // HACK to prevent overlapping SVG elements on buttons
+        $("#share-popup")
+          .on("hidden", function () {
+            $("#main-content")
+              .fadeIn(500);
+          });
         
         // Once the modal is up, we need to configure the
         // email sharing
