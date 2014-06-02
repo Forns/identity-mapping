@@ -158,8 +158,9 @@ table.table-demographics tbody th, table.table-demographics tbody td {
 
 /* Adapted from https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors,
    must coordinate with gradients in identitymap.jade. */
-.system-domain > .label.d-blogs {
+.system-domain > .label.d-blogs---personal-websites {
   color: #9c9ede;
+  margin-top: 24px;
 }
 
 .system-domain > .label.d-emails {
@@ -174,7 +175,7 @@ table.table-demographics tbody th, table.table-demographics tbody td {
   color: #c6dbef;
 }
 
-.system-domain > .label.d-digital-gaming-platforms {
+.system-domain > .label.d-digital-games {
   color: #de9ed6;
 }
 
@@ -194,7 +195,7 @@ table.table-demographics tbody th, table.table-demographics tbody td {
 
 /* Adapted from https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors,
    must coordinate with gradients in identitymap.jade. */
-.system-orbit.d-blogs {
+.system-orbit.d-blogs---personal-websites {
   box-shadow: inset 0 0 64px -32px #5254a3;
   stroke: #9c9ede;
 }
@@ -214,7 +215,7 @@ table.table-demographics tbody th, table.table-demographics tbody td {
   stroke: #c6dbef;
 }
 
-.system-orbit.d-digital-gaming-platforms {
+.system-orbit.d-digital-games {
   box-shadow: inset 0 0 64px -32px #a55194;
   stroke: #de9ed6;
 }

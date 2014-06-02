@@ -37,7 +37,7 @@ $(function () {
         // Helper for changing [arch]domain names to identifiers.
         domainToId = function (domain) {
             // Guarantee non-numeric first character.
-            return "d-" + domain.toLowerCase().replace(/ /g, "-");
+            return "d-" + domain.toLowerCase().replace(/[ \/]/g, "-");
         },
 
         // Convert the survey object into the "systems" data structure from
@@ -45,12 +45,12 @@ $(function () {
         surveyToSystems = function (survey) {
             // Special mappings.
             var ARCHDOMAINS = [
-                    "Blogs",
+                    "Blogs / Personal Websites",
                     "Emails",
                     "Social Networks",
                     "Online Dating Sites",
                     "Online Forums",
-                    "Digital Gaming Platforms",
+                    "Digital Games",
                     "3D Virtual Worlds"
                     // TODO Find a way to centralize this so that *both* the visualization and the
                     //      survey are reading the same data (i.e., ideally we shouldn't have to
@@ -184,7 +184,7 @@ $(function () {
 
         systemDomain.append("div")
             .attr('class', function (d) { return "label " + domainToId(d.domainName); })
-            .text(function (d) { return d.domainName; })
+            .text(function (d) { return d.domainName === "Blogs / Personal Websites" ? "Blogs/Websites" : d.domainName; })
             .style('top', function (d) { return d.radius + 24 + "px"; });
 
         systemDomain = systemDomain.append("div")
