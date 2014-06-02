@@ -4,7 +4,12 @@
  * Controller for UI-related routes.
  */
 
-module.exports = function (app, surveyDao, $TM) {
+module.exports = function (tools) {
+  var app = tools.app,
+      surveyDao = tools.surveyDao,
+      $TM = tools.$TM,
+      adminMail = tools.adminMail,
+      request = tools.request;
 
   /*
    * GET /
@@ -86,7 +91,6 @@ module.exports = function (app, surveyDao, $TM) {
    *   Submit survey answers alongside a reCAPTCHA response and
    *   proceed to the identity map
    */
-  var request = require("request");
   app.post("/identitymap", function (req, res) {
     // TODO Validate the answers---we can't take just any body!
 

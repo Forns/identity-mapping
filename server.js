@@ -15,8 +15,10 @@ var express = require('express'),
     webAppPort = process.env.IMP_PORT || 4000,
     security = {},
     lda,
+    adminMail,
     surveyDao,
-    controllers;
+    controllers,
+    tools;
 
 app.enable('trust proxy'); // For remote IP access, needed by reCAPTCHA:
 // http://stackoverflow.com/questions/10849687/how-to-get-remote-client-address
@@ -56,8 +58,21 @@ app.configure('production', function () {
  */
 
 surveyDao = require("./src/main/conf/db-config.js")().surveyDao;
-lda = require("./src/main/conf/lda-config.js")().lda;
-$TM = require("./src/main/conf/topic-modeler-config.js")(surveyDao, lda).$TM;
+lda       = require("./src/main/conf/lda-config.js")().lda;
+$TM       = require("./src/main/conf/topic-modeler-config.js")(surveyDao, lda).$TM;
+adminMail = require('./src/main/conf/mailbox-config.js')().adminMail;
+
+tools = {
+  // Custom toolkits
+  surveyDao: surveyDao,
+  lda: lda,
+  $TM: $TM,
+  adminMail: adminMail,
+  app: app,
+  
+  // NPM Modules
+  request: require("request")
+}
 
 // We will perform our topic modeling once at the get-go, after the connection
 // to the database has had time to set up
@@ -80,7 +95,7 @@ controllers = [
 ];
     
 for (var c in controllers) {
-  require(controllers[c])(app, surveyDao, $TM);
+  require(controllers[c])(tools);
 }
 
 
