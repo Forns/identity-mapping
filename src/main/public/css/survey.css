@@ -95,3 +95,20 @@
   margin-top: 1.25em;
   margin-bottom: -5em;
 }
+
+/*
+ * IDENTITY MAP
+ */
+#periphery-buttons {
+  position: absolute;
+  float: left;
+  text-align: left;
+  z-index: 10000;
+  top: 10px;
+  left: 10px;
+}
+
+.periphery-button {
+  width: 150px;
+  height: 50px;
+}

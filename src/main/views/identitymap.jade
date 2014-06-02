@@ -6,6 +6,9 @@ html
     link(rel='stylesheet', href='/css/bootstrap-responsive.css')
     link(rel='stylesheet', href='/css/viz/solar-system.css')
   body
+    #periphery-buttons
+      span.btn.btn-primary.periphery-button Test1
+      span.btn.btn-primary.periphery-button Test2
     #container
       .nebula-holder
         .nebula
@@ -49,7 +52,7 @@ html
         #sun(class='hide')
           svg
             circle(r='30', cx='30', cy='30')
-
+      
     script(src='../js/lib/jquery-1.9.0.min.js')
     script(src='../js/lib/bootstrap.min.js')
     script(src='../js/lib/d3.v3.min.js')

@@ -674,6 +674,9 @@ $(function() {
                       for (var r in currentModule.responses) {
                         currentQuestion = currentModule.getQuestionById(r.split("-")[0]);
                         crossoverCategory = (currentQuestion.definition) ? currentQuestion.definition : currentQuestion.domain;
+                        if (crossoverCategory === "Blogs") {
+                          crossoverCategory = "Blogs / Personal Websites"
+                        }
                         
                         if (typeof(finalAnswers["Crossover"][crossoverCategory]) === "undefined") {
                           finalAnswers["Crossover"][crossoverCategory] = [];
