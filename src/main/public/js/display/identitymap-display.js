@@ -390,6 +390,7 @@ $(function () {
             .data(crossovers)
             .enter().append("line")
             .attr('class', "crossover-mark")
+            .attr('stroke', function (d) { return $(".planet circle." + d.source).css('fill'); })
             .attr('marker-end', "url(#crossover-head)");
 
         // We can't use just animation CSS with crossovers because they involve

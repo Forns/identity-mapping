@@ -156,18 +156,49 @@ table.table-demographics tbody th, table.table-demographics tbody td {
   width: 100%;
 }
 
+/* Crossover-related styles. */
+
 .crossover-holder {
   position: absolute;
 }
 
+.crossover-holder marker path {
+  fill: green;
+  stroke: green;
+}
+
 line.crossover-mark {
-  stroke: white;
+  stroke-dasharray: 20,5;
   stroke-width: 2;
+  -moz-animation-name: dash;
+  -moz-animation-duration: 1s;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+  -webkit-animation-name: dash;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  animation-name: dash;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 #crossover-head {
   fill: white;
   stroke: white;
+}
+
+@-moz-keyframes dash {
+  from { stroke-dashoffset: 25; }
+}
+
+@-webkit-keyframes dash {
+  from { stroke-dashoffset: 25; }
+}
+
+@keyframes dash {
+  from { stroke-dashoffset: 25; }
 }
 
 /* Adapted from https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors,
