@@ -7,8 +7,13 @@ html
     link(rel='stylesheet', href='/css/viz/solar-system.css')
   body
     #periphery-buttons
-      span.btn.btn-primary.periphery-button Test1
-      span.btn.btn-primary.periphery-button Test2
+      span#share-button.btn.btn-primary.periphery-button
+        span.icon-share.icon-white
+        | &nbsp;Share
+      a(href='/')
+        span.btn.btn-primary.periphery-button
+          span.icon-home.icon-white
+          | &nbsp;Home
     #container
       .nebula-holder
         .nebula

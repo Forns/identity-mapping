@@ -316,3 +316,25 @@ table.table-demographics tbody th, table.table-demographics tbody td {
     transform: scale(64);
   }
 }
+
+/*
+ * SHARING
+ */
+
+#periphery-buttons {
+  position: fixed;
+  float: left;
+  text-align: left;
+  z-index: 10000;
+  top: 10px;
+}
+
+.periphery-button {
+  width: 100px;
+  height: 24px;
+  margin-left: 10px;
+}
+
+#email-textarea {
+  height: 75px;
+}

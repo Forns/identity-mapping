@@ -127,5 +127,41 @@ module.exports = function (tools) {
     );
 
   });
+  
+  /*
+   * POST /share
+   *   Shares an identity map page with a list of email addresses
+   */
+  app.post("/share", function (req, res) {
+    // Firstly, gather the inputs...
+    var inputs = req.body,
+        emails = inputs.emails,
+        surveyId = inputs.surveyId,
+        sharer = (inputs.sharer) ? inputs.sharer : "Somebody",
+        mapAddress = "http://imp.cs.lmu.edu:3000/identitymap/" + surveyId
+        pureEmails = [],
+        badEmails = [];
+        
+    // Next, we'll gather the email addresses that are
+    // actually valid:
+    for (var e in emails) {
+      if (adminMail.validEmail(emails[e])) {
+        pureEmails.push(emails[e]);
+      } else {
+        badEmails.push([emails[e]]);
+      }
+    }
+    
+    // For each good email, we'll send out a link in an email
+    for (var p in pureEmails) {
+      adminMail.shareEmail(
+        pureEmails[p],
+        mapAddress,
+        sharer
+      );
+    }
+    
+    res.send(201, {badEmails: badEmails});
+  });
 
 }

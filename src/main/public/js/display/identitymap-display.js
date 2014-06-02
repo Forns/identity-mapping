@@ -6,8 +6,34 @@
 $(function () {
     // Quick-and-dirty adaptation of http://bl.ocks.org/mbostock/5415941 for proof of concept.
 
-    // Grab the ID from the URL.
-    var surveyId = window.location.href.split("/").pop(),
+    var modalPopup = function (container, id, title, body, buttons, options, display) {
+          container = $(container);
+          $("#" + id).remove();
+          container
+            .append(
+              "<div id='" + id + "' data-backdrop='static' class='modal fade' tabindex='-1' role='dialog' aria-labelledby='model-title' aria-hidden='true'>" +
+                "<div class='modal-dialog'>" +
+                  "<div class='modal-content'>" +
+                    "<div class='modal-header'>" +
+                      "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" +
+                      "<h4 class='modal-title'><span class='glyphicon glyphicon-chevron-right'></span>&nbsp" + title + "</h4>" +
+                    "</div>" +
+                    "<div class='modal-body text-left'>" +
+                      body +
+                    "</div>" +
+                    "<div class='modal-footer'>" +
+                      buttons +
+                    "</div>" +
+                  "</div>" +
+                "</div>" +
+              "</div>"
+            );
+            
+          return $("#" + id).modal(options);
+        },
+    
+        // Grab the ID from the URL.
+        surveyId = window.location.href.split("/").pop(),
 
         // Scales for semimajor axis, planet radius, and planet period.
         x = d3.scale.linear().range([0, 400]),
@@ -326,4 +352,74 @@ $(function () {
             container: 'body'
         });
     });
+    
+    // Configure share button
+    $("#share-button")
+      .click(function () {
+        modalPopup(
+          "body",
+          "share-popup",
+          "Share Identity Map",
+          "<p>Want to share your Identity Map with friends or save your results for yourself?</p>" +
+          "<p>Send a link to this page by email to anyone you'd like! Just enter the addresses in the box below, separated by space, line, or comma!</p>" +
+          "<textarea id='email-textarea'></textarea>" +
+          "<p>Want to let the people you're sharing with know who sent them the link? Enter your name below! (we won't collect this or keep it in any capacity and you can leave it blank if you wish)</p>" +
+          "<input type='text' id='sharer' maxlength='30' />",
+          "<button type='button' class='btn btn-default' data-dismiss='modal' aria-hidden='true'>Close</button>" +
+          "<button id='share-execute' type='button' class='btn btn-primary' aria-hidden='true'>Share!</button>"
+        );
+        
+        // Once the modal is up, we need to configure the
+        // email sharing
+        $("#share-execute")
+          .click(function () {
+            $(this)
+              .attr("disabled", "disabled")
+              .html("Sharing...");
+            
+            var emails = $("#email-textarea").val().split(/[\s,]+/),
+                sharer = $("#sharer").val();
+                
+            $.ajax({
+              type: "POST",
+              url: "/share",
+              data: {
+                emails: emails,
+                surveyId: surveyId,
+                sharer: sharer
+              },
+              success: function (data, textStatus, jqXHR) {
+                var badEmails = (Object.keys(data.badEmails).length) ? data.badEmails : false;
+                
+                // Alert the user of the successful sharing
+                $("#share-popup .modal-body")
+                  .html(
+                    "<h4>Sharing successful!</h4>" +
+                    "<p>We've sent an email with a link to your Identity Map to the emails you've requested.</p>" +
+                    ((badEmails) ? "<p><strong>NOTE:</strong> we couldn't find several of the emails you entered; please verify that they are correct and try sharing again!</p>" +
+                                   "<ul>" +
+                                   (function () {
+                                     var results = "";
+                                     for (var e in badEmails) {
+                                       results += "<li>" + badEmails[e] + "</li>";
+                                     }
+                                     return results;
+                                   })() +
+                                   "</ul><br/>"
+                                 : "") +
+                    "<p>Thanks for participating in the Identity Mapping Project!</p>"
+                  );
+                $("#share-popup .modal-footer")
+                  .html(
+                    "<button type='button' class='btn btn-primary' data-dismiss='modal' aria-hidden='true'>Done!</button>"
+                  );
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                alert("[ERROR] We got an unexpected response from the server.\n" +
+                        "Please contact the IMP investigators.");
+                $("#share-popup").modal("hide");
+              }
+            });
+          });
+      });
 });
