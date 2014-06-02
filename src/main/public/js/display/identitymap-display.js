@@ -364,21 +364,51 @@ $(function () {
         });
 
         // Crossover action!  First some data massaging.
-        var crossovers = [];
+        var crossovers = [],
+            crossoverDomainToId = function (domain) {
+                return domainToId(domain === "Blogs / Personal Websites" ? "blogs" : domain);
+            };
+
         Object.keys(survey.Crossover).forEach(function (source) {
             survey.Crossover[source].forEach(function (destination) {
                 crossovers.push({
-                    source: source,
-                    destination: destination
+                    source: crossoverDomainToId(source),
+                    destination: crossoverDomainToId(destination)
                 });
             });
         });
 
-        var crossoverHolder = d3.select(".crossover-holder").selectAll(".crossover-mark")
+        var crossoverHolder = d3.select("svg.crossover-holder")
+            .attr('width', totalRadius * 2)
+            .attr('height', totalRadius * 2)
+            .style('width', totalRadius * 2 + "px")
+            .style('height', totalRadius * 2 + "px")
+            .style('left', 0)
+            .style('top', totalRadius / 2 + "px");
+
+        crossoverHolder.selectAll("line")
             .data(crossovers)
-            .enter().append("div")
+            .enter().append("line")
             .attr('class', "crossover-mark")
-            .text(function (d) { console.log(d); return d.source + " to " + d.destination; });
+            .attr('marker-end', "url(#crossover-head)");
+
+        // We can't use just animation CSS with crossovers because they involve
+        // multiple elements and multiple transforms.
+        setInterval(function () {
+            $("svg.crossover-holder line").each(function (index, line) {
+                var $line = $(line),
+                    crossover = $line.prop('__data__'),
+                    $sourceCircle = $(".planet circle." + crossover.source),
+                    $destinationCircle = $(".planet circle." + crossover.destination);
+
+                $line.attr({
+                    x1: $sourceCircle.offset().left,
+                    y1: $sourceCircle.offset().top,
+                    x2: $destinationCircle.offset().left,
+                    y2: $destinationCircle.offset().top
+                });
+            });
+        }, 100);
     });
     
     // Configure share button

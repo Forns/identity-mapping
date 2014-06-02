@@ -156,6 +156,20 @@ table.table-demographics tbody th, table.table-demographics tbody td {
   width: 100%;
 }
 
+.crossover-holder {
+  position: absolute;
+}
+
+line.crossover-mark {
+  stroke: white;
+  stroke-width: 2;
+}
+
+#crossover-head {
+  fill: white;
+  stroke: white;
+}
+
 /* Adapted from https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors,
    must coordinate with gradients in identitymap.jade. */
 .system-domain > .label.d-blogs---personal-websites {
