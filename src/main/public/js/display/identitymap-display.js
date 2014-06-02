@@ -399,13 +399,17 @@ $(function () {
                 var $line = $(line),
                     crossover = $line.prop('__data__'),
                     $sourceCircle = $(".planet circle." + crossover.source),
-                    $destinationCircle = $(".planet circle." + crossover.destination);
+                    $destinationCircle = $(".planet circle." + crossover.destination),
+                    sourceOffset = $sourceCircle.offset(),
+                    destinationOffset = $destinationCircle.offset(),
+                    sourceRadius = +$sourceCircle.attr('r'),
+                    destinationRadius = +$destinationCircle.attr('r');
 
                 $line.attr({
-                    x1: $sourceCircle.offset().left,
-                    y1: $sourceCircle.offset().top,
-                    x2: $destinationCircle.offset().left,
-                    y2: $destinationCircle.offset().top
+                    x1: sourceOffset.left + sourceRadius,
+                    y1: sourceOffset.top + sourceRadius,
+                    x2: destinationOffset.left + destinationRadius,
+                    y2: destinationOffset.top + destinationRadius
                 });
             });
         }, 100);
