@@ -246,6 +246,7 @@ $(function () {
             .attr('width', function (d) { return d.radius * 2; })
             .attr('height', function (d) { return d.radius * 2; })
             .append("circle")
+            .attr('class', function (d) { return domainToId(d.planetName); })
             .attr('transform', function (d) { return "translate(" + d.radius + "," + d.radius + ") scale(1.0,2.0)"; })
             .attr('r', function (d) { return r(d.planetRadius); })
             .style('fill', function (d) { return "url(#" + domainToId(d.system.domainName) + "-gradient)"; });
@@ -335,5 +336,22 @@ $(function () {
             placement: 'bottom',
             container: 'body'
         });
+
+        // Crossover action!  First some data massaging.
+        var crossovers = [];
+        Object.keys(survey.Crossover).forEach(function (source) {
+            survey.Crossover[source].forEach(function (destination) {
+                crossovers.push({
+                    source: source,
+                    destination: destination
+                });
+            });
+        });
+
+        var crossoverHolder = d3.select(".crossover-holder").selectAll(".crossover-mark")
+            .data(crossovers)
+            .enter().append("div")
+            .attr('class', "crossover-mark")
+            .text(function (d) { console.log(d); return d.source + " to " + d.destination; });
     });
 });
