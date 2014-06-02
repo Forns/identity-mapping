@@ -58,6 +58,11 @@ $(function () {
                     //      the future.
                 ],
 
+                OLD_ARCHDOMAINS = {
+                    'Blogs / Personal Websites': "Blogs",
+                    'Digital Games': "Digital Gaming Platforms"
+                },
+
                 PERIODICITIES = {
                     'Daily': 1,
                     'Weekly / Several times a week': 7,
@@ -90,6 +95,11 @@ $(function () {
                     systemSource = survey[domainName];
 
                 systems.push(systemDomain);
+
+                // Check for backward-compatibility archdomains.
+                if (!systemSource && OLD_ARCHDOMAINS[domainName]) {
+                    systemSource = survey[OLD_ARCHDOMAINS[domainName]];
+                }
 
                 // If no domains, then we're done.
                 if (!systemSource) {
