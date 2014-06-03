@@ -384,14 +384,38 @@ $(function () {
             .style('width', totalRadius * 2 + "px")
             .style('height', totalRadius * 2 + "px")
             .style('left', 0)
-            .style('top', totalRadius / 2 + "px");
+            .style('top', totalRadius / 2 + "px"),
+
+            getGradientUrl = function (domain) {
+                return $(".planet circle." + domain.source).css('fill');
+            },
+
+            getGradientColor = function (domain) {
+                var url = getGradientUrl(domain);
+                return $(url.substr(4, url.length - 5)).find("stop:first-child").attr('stop-color');
+            };
+
+        d3.select("svg.crossover-holder > defs").selectAll("marker")
+            .data(crossovers)
+            .enter().append("marker")
+            .attr('id', function (d, i) { return "crossover-marker-" + i; })
+            .attr('viewBox', "0 0 10 10")
+            .attr('refX', 16)
+            .attr('refY', 5)
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
+            .attr('orient', "auto")
+            .append("path")
+            .attr('d', "M 0 0 L 10 5 L 0 10 z")
+            .style('fill', getGradientColor)
+            .style('stroke', getGradientColor);
 
         crossoverHolder.selectAll("line")
             .data(crossovers)
             .enter().append("line")
             .attr('class', "crossover-mark")
-            .attr('stroke', function (d) { return $(".planet circle." + d.source).css('fill'); })
-            .attr('marker-end', "url(#crossover-head)");
+            .attr('stroke', getGradientUrl)
+            .attr('marker-end', function (d, i) { return "url(#crossover-marker-" + i + ")"; });
 
         // We can't use just animation CSS with crossovers because they involve
         // multiple elements and multiple transforms.

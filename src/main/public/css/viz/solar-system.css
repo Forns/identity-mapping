@@ -162,11 +162,6 @@ table.table-demographics tbody th, table.table-demographics tbody td {
   position: absolute;
 }
 
-.crossover-holder marker path {
-  fill: green;
-  stroke: green;
-}
-
 line.crossover-mark {
   stroke-dasharray: 20,5;
   stroke-width: 2;
