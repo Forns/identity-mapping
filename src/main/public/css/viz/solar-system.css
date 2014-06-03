@@ -162,7 +162,8 @@ table.table-demographics tbody th, table.table-demographics tbody td {
   position: absolute;
 }
 
-line.crossover-mark {
+path.crossover-mark {
+  fill: none;
   stroke-dasharray: 20,5;
   stroke-width: 2;
   -moz-animation-name: dash;

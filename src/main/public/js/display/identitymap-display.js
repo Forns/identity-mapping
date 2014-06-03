@@ -386,8 +386,12 @@ $(function () {
             .style('left', 0)
             .style('top', totalRadius / 2 + "px"),
 
+            getPlanet = function (domainName) {
+                return $(".planet circle." + domainName);
+            },
+
             getGradientUrl = function (domain) {
-                return $(".planet circle." + domain.source).css('fill');
+                return getPlanet(domain.source).css('fill');
             },
 
             getGradientColor = function (domain) {
@@ -410,9 +414,9 @@ $(function () {
             .style('fill', getGradientColor)
             .style('stroke', getGradientColor);
 
-        crossoverHolder.selectAll("line")
+        crossoverHolder.selectAll("path.crossover-mark")
             .data(crossovers)
-            .enter().append("line")
+            .enter().append("path")
             .attr('class', "crossover-mark")
             .attr('stroke', getGradientUrl)
             .attr('marker-end', function (d, i) { return "url(#crossover-marker-" + i + ")"; });
@@ -420,21 +424,35 @@ $(function () {
         // We can't use just animation CSS with crossovers because they involve
         // multiple elements and multiple transforms.
         setInterval(function () {
-            $("svg.crossover-holder line").each(function (index, line) {
-                var $line = $(line),
-                    crossover = $line.prop('__data__'),
-                    $sourceCircle = $(".planet circle." + crossover.source),
-                    $destinationCircle = $(".planet circle." + crossover.destination),
+            $("svg.crossover-holder path.crossover-mark").each(function (index, path) {
+                var $path = $(path),
+                    crossover = $path.prop('__data__'),
+                    $sourceCircle = getPlanet(crossover.source),
+                    $destinationCircle = getPlanet(crossover.destination),
                     sourceOffset = $sourceCircle.offset(),
                     destinationOffset = $destinationCircle.offset(),
                     sourceRadius = +$sourceCircle.attr('r'),
-                    destinationRadius = +$destinationCircle.attr('r');
+                    destinationRadius = +$destinationCircle.attr('r'),
+                    sourceX = sourceOffset.left + sourceRadius,
+                    sourceY = sourceOffset.top + sourceRadius,
+                    destinationX = destinationOffset.left + destinationRadius,
+                    destinationY = destinationOffset.top + destinationRadius,
 
-                $line.attr({
-                    x1: sourceOffset.left + sourceRadius,
-                    y1: sourceOffset.top + sourceRadius,
-                    x2: destinationOffset.left + destinationRadius,
-                    y2: destinationOffset.top + destinationRadius
+                    // Normally this would be vector library stuff, but oh well, one time only...
+                    vectorX = destinationX - sourceX,
+                    vectorY = destinationY - sourceY,
+                    midpointX = (sourceX + destinationX) / 2,
+                    midpointY = (sourceY + destinationY) / 2,
+                    normalX = -vectorY,
+                    normalY = vectorX,
+                    normalLength = Math.sqrt(normalX * normalX + normalY * normalY),
+                    controlX = midpointX + (normalX / 8),
+                    controlY = midpointY + (normalY / 8);
+
+                $path.attr({
+                    d: "M" + sourceX + " " + sourceY +
+                        " Q " + controlX + " " + controlY + " " +
+                        destinationX + " " + destinationY
                 });
             });
         }, 100);
