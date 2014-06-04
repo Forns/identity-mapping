@@ -468,13 +468,26 @@ $(function () {
           "body",
           "share-popup",
           "Share Identity Map",
+          "<div class='form-horizontal'>" +
           "<p>Want to share your Identity Map with friends or save your results for yourself?</p>" +
           "<p>Send a link to this page by email to anyone you'd like! Just enter the addresses in the box below, separated by space, line, or comma!</p>" +
-          "<textarea id='email-textarea'></textarea>" +
+          "<div class='control-group'>" +
+            "<label class='control-label' for='email-textarea'>Recipient(s)</label>" +
+            "<div class='controls'>" +
+              "<textarea id='email-textarea'></textarea>" +
+            "</div>" +
+          "</div>" +
           "<p>Want to let the people you're sharing with know who sent them the link? Enter your name below! (we won't collect this or keep it in any capacity and you can leave it blank if you wish)</p>" +
-          "<input type='text' id='sharer' maxlength='30' />",
-          "<button type='button' class='btn btn-default' data-dismiss='modal' aria-hidden='true'>Close</button>" +
-          "<button id='share-execute' type='button' class='btn btn-primary' aria-hidden='true'>Share!</button>"
+          "<div class='control-group'>" +
+            "<label class='control-label' for='sharer'>Name</label>" +
+            "<div class='controls'>" +
+              "<input type='text' id='sharer' maxlength='30'/>" +
+            "</div>" +
+          "</div>",
+          "<button type='button' class='btn btn-default' data-dismiss='modal' aria-hidden='true'>Cancel</button>" +
+          "<button id='share-execute' type='button' class='btn btn-primary' aria-hidden='true'>" +
+            "<i class='icon-envelope icon-white'></i> " +
+            "Share!</button>"
         );
         
         // HACK to prevent overlapping SVG elements on buttons
