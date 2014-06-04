@@ -46,7 +46,7 @@ module.exports = function () {
     adminMail.sendMail(
       email,
       sharer + " Shared Their Identity Map With You!",
-      "<h3>The Indentity Mapping Project</h3>" +
+      "<h3>The Identity Mapping Project</h3>" +
       "<p>The goal of the Identity Mapping Project is to " + 
       "generate thousands (if not millions) of identity maps " + 
       "from around the globe and chart the nature of identity " + 
@@ -55,12 +55,14 @@ module.exports = function () {
       "expressed in a variety of online forms.</p>" +
       
       "<p>" + sharer + " completed their identity map and wanted to show you!</p>" +
-      "<p><a href='" + link + "' target='_blank'>Click here to see their map!</a></p>" +
+      "<p><a href='" + link + "' target='_blank'>Click here to see their map!</a><br/>" +
+      "(alternately, copy and paste the following into your browser):<br/>" + link + "</p>" +
       
       "<p>Interested in generating your own identity map and discovering more about the project?</p>" +
-      "<p><a href='http://imp.cs.lmu.edu:3000' target='_blank'>Click here to learn more!</a></p>" +
+      "<p><a href='http://imp.cs.lmu.edu' target='_blank'>Click here to learn more!</a><br/>" +
+      "(alternately, copy and paste the following into your browser):<br/>http://imp.cs.lmu.edu</p>" +
       
-      "<p>Thanks for your interest in the Identity Mapping Project! Have a great day.</p>"
+      "<p>Thanks for your interest in the Identity Mapping Project!</p>"
     );
   };
   
