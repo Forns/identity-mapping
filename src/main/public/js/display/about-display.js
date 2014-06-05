@@ -18,7 +18,7 @@ $(function () {
         {
           text:
             "<strong>The goal</strong> of the Identity Mapping Project is to generate thousands (if not millions) of identity maps " +
-            "from around the globe and chart the nature of identity in the today&rsquo;s digital world. " +
+            "from around the globe and chart the nature of identity in today&rsquo;s digital world. " +
             "An \"identity map\" shows how active someone is online and how their identity is expressed in a variety of online forms."
         },
         
