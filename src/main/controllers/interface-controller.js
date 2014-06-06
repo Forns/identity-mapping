@@ -138,7 +138,7 @@ module.exports = function (tools) {
         emails = inputs.emails,
         surveyId = inputs.surveyId,
         sharer = (inputs.sharer) ? inputs.sharer : "Somebody",
-        mapAddress = "http://imp.cs.lmu.edu:3000/identitymap/" + surveyId
+        mapAddress = "http://imp.cs.lmu.edu/identitymap/" + surveyId
         pureEmails = [],
         badEmails = [];
         

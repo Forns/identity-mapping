@@ -432,7 +432,7 @@ var countRadio =
             
             {
               text:
-                "<strong>After you complete the survey</strong>, you&rsquo;ll be able to see, share, and download a free color-coded map of your current identity."
+                "<strong>After you complete the survey</strong>, you&rsquo;ll be able to see and share a free color-coded map of your current identity."
             },
             
             {
