@@ -247,7 +247,6 @@ $(function () {
             .data(function (d) { return d.planets; })
             .enter().append("div")
             .attr('class', "system")
-            .attr('title', function (d) { return d.purpose || "(purpose not stated)"; })
             .style('width', function (d) { return d.radius * 2 + "px"; })
             .style('height', function (d) { return d.radius * 2 + "px"; })
             .style('left', function (d) { return d.distance * 2 + "px"; })
@@ -284,6 +283,14 @@ $(function () {
             .style(prefix + "animation-duration", function (d) { return t(d.distance / 4) + "s"; })
             .append("span")
             .text(function (d) { return d.planetName; });
+
+        system.append("div")
+            .attr('class', "label purpose obscured")
+            .style('width', function (d) { return (d.radius * 4 - 10) + "px"; })
+            .style('top', function (d) { return d.radius + 10 + "px"; })
+            .style(prefix + "animation-duration", function (d) { return t(d.distance / 4) + "s"; })
+            .append("span")
+            .text(function (d) { return d.purpose || "(purpose not stated)"; });
 
         system.append("svg")
             .attr('class', "orbit")
@@ -361,6 +368,8 @@ $(function () {
             },
             placement: 'bottom',
             container: 'body'
+        }).click(function (event) {
+            $(".system .purpose").toggleClass("obscured");
         });
 
         // Crossover action!  First some data massaging.

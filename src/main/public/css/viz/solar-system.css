@@ -129,6 +129,10 @@ table.table-demographics tbody th, table.table-demographics tbody td {
   animation-direction: reverse;
 }
 
+.purpose.obscured {
+  visibility: hidden;
+}
+
 .system-domain > .region, .system > .label, .moon, .perspective-adjust {
   -moz-animation-name: rotate;
   -moz-animation-iteration-count: infinite;
@@ -139,6 +143,11 @@ table.table-demographics tbody th, table.table-demographics tbody td {
   animation-name: rotate;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+
+.purpose {
+  color: lightgray;
+  font-weight: normal;
 }
 
 #sun svg, .system-domain > .region, .orbit, .planet, .moon {
