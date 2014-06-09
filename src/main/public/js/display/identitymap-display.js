@@ -400,7 +400,9 @@ $(function () {
             },
 
             getGradientUrl = function (domain) {
-                return getPlanet(domain.source).css('fill');
+                // Unfortunately, browser incompatibility with gradients forces this.
+                var needsUrl = navigator.userAgent.match(/Safari/) && !navigator.userAgent.match(/Chrome/) && !navigator.userAgent.match(/Firefox/);
+                return (needsUrl ? "url(" : "") + getPlanet(domain.source).css('fill') + (needsUrl ? ")" : "");
             },
 
             getGradientColor = function (domain) {
