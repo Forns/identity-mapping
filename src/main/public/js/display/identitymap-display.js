@@ -71,8 +71,8 @@ $(function () {
         surveyToSystems = function (survey) {
             // Special mappings.
             var ARCHDOMAINS = [
-                    "Blogs / Personal Websites",
                     "Emails",
+                    "Blogs / Personal Websites",
                     "Social Networks",
                     "Online Dating Sites",
                     "Online Forums",
