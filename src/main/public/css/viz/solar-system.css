@@ -4,6 +4,10 @@ body {
   text-align: center;
 }
 
+#container {
+  margin-top: 32px;
+}
+
 .nebula-holder, .nebula {
   position: absolute;
   width: 24000px; /* Just to ensure a large-enough field. */
@@ -168,6 +172,7 @@ table.table-demographics tbody th, table.table-demographics tbody td {
 /* Crossover-related styles. */
 
 .crossover-holder {
+  margin-top: -32px; /* Compensates for #container. */
   position: absolute;
 }
 
