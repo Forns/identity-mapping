@@ -41,7 +41,7 @@ module.exports = function (tools) {
    *   Render the identitymap report section
    */
   app.get("/identitymap/:id?", function (req, res) {
-    res.render("identitymap", {layout: true});
+    res.render("identitymap", {layout: true, url: req.url});
   });
 
   /*

@@ -37,6 +37,11 @@ $(function () {
         
         {
           text:
+            "<strong>Contact</strong> us with any questions or comments at <a href='mailto:identitymapping@gmail.com'>identitymapping@gmail.com</a>"
+        },
+        
+        {
+          text:
             "<strong>Thank you</strong> for your interest in the Identity Mapping Project!",
           input:
             "<button id='survey-button' class='btn btn-info pull-right'>Map My Identity</button>" +

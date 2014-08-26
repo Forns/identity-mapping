@@ -6,15 +6,27 @@ html
     link(rel='stylesheet', href='/css/bootstrap.css')
     link(rel='stylesheet', href='/css/bootstrap-responsive.css')
     link(rel='stylesheet', href='/css/viz/solar-system.css')
+    link(rel='stylesheet', href='/css/elusive-webfont.css')
   body
+    #fb-root
     #periphery-buttons
-      span#share-button.btn.btn-primary.periphery-button
-        span.icon-share.icon-white
-        | &nbsp;Share
       a(href='/')
         span.btn.btn-primary.periphery-button
           span.icon-home.icon-white
           | &nbsp;Home
+      span#share-button.btn.btn-primary.periphery-button
+        span.icon-envelope.icon-white
+        | &nbsp;Email
+      a#fb-button.btn.btn-primary.periphery-button(href="http://www.facebook.com/sharer/sharer.php?u=#{url}", target="_blank")
+        span.el-icon-facebook
+        | &nbsp;Share
+      a#fb-button.btn.btn-primary.periphery-button(href="https://twitter.com/intent/tweet?text=I%20just%20mapped%20my%20digital%20identity%20and%20you%20can%20too%20-%20#{url}", target="_blank")
+        span.el-icon-twitter
+        | &nbsp;Tweet
+      a#fb-button.btn.btn-primary.periphery-button(href="https://plus.google.com/share?url=#{url}", target="_blank")
+        span.el-icon-googleplus
+        | &nbsp;Share
+      
     #container
       .nebula-holder
         .nebula
