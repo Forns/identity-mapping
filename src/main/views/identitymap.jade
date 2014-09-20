@@ -23,19 +23,15 @@ html
             | &nbsp;Details
 
         .btn-group
-          button#share-button.btn.btn-primary.periphery-button
+          button#share-button.btn.btn-primary.periphery-button(title="Send Email", data-toggle="tooltip", data-trigger="hover", data-placement="bottom", data-container="body")
             span.icon-envelope.icon-white
-            | &nbsp;Email
-          a#fb-button.btn.btn-primary.periphery-button(href="http://www.facebook.com/sharer/sharer.php?u=#{url}", target="_blank")
+          a#fb-button.btn.btn-primary.periphery-button(href="http://www.facebook.com/sharer/sharer.php?u=#{url}", target="_blank", title="Share on Facebook", data-toggle="tooltip", data-trigger="hover", data-placement="bottom", data-container="body")
             span.el-icon-facebook
-            | &nbsp;Share
-          a.btn.btn-primary.periphery-button(href="https://twitter.com/intent/tweet?text=I%20just%20mapped%20my%20digital%20identity%20and%20you%20can%20too%20-%20#{url}", target="_blank")
+          a.btn.btn-primary.periphery-button(href="https://twitter.com/intent/tweet?text=I%20just%20mapped%20my%20digital%20identity%20and%20you%20can%20too%20-%20#{url}", target="_blank", title="Tweet", data-toggle="tooltip", data-trigger="hover", data-placement="bottom", data-container="body")
             span.el-icon-twitter
-            | &nbsp;Tweet
-          a.btn.btn-primary.periphery-button(href="https://plus.google.com/share?url=#{url}", target="_blank")
+          a.btn.btn-primary.periphery-button(href="https://plus.google.com/share?url=#{url}", target="_blank", title="Share on Google+", data-toggle="tooltip", data-trigger="hover", data-placement="bottom", data-container="body")
             span.el-icon-googleplus
-            | &nbsp;Share
-      
+
     #container
       .nebula-holder
         .nebula
@@ -87,26 +83,41 @@ html
     .legend-template.hidden
       .row-fluid.legend-item
         .span2
-          svg.system-orbit(width="24", height="96")
-            path(d="M23,95 C-5,95 -5,0 23,0", stroke="#9c9ede", stroke-width="2")
-        .span10 Large orbits represent categories of digital domains.  These categories are colored differently, but the colors themselves do not have a particular meeting.
+          svg(width="24", height="24")
+            circle.sun(r='12', cx='12', cy='12')
+        .span10 The
+          b  SUN
+          |  represents the physical self.
       .row-fluid.legend-item
         .span2
           svg(width="24", height="24")
             circle(r="10", cx="12", cy="12", fill="url(#d-blogs---personal-websites-gradient)")
-        .span10 Each category has zero or more planets, based on whether you have an account in that digital domain.
+        .span10 Each category has zero or more
+          b  PLANETS
+          | , based on your number of accounts in that digital domain.
       .row-fluid.legend-item
         .span2
           svg(width="24", height="24")
             circle(r="5", cx="18", cy="12", fill="url(#moon-gradient)")
-        .span10 Each planet has one or more gray moons, one for each account that you provided.
+        .span10 Each planet has one or more
+          b  GRAY MOONS
+          | , one for each account that you provided.  The
+          b  ORBIT SPEED
+          |  of each moon corresponds to how frequently you use the corresponding account.
       .row-fluid.legend-item
-        .span10.offset2 The orbit speed of each moon corresponds to how frequently you use the corresponding account.
+        .span2
+          svg.system-orbit(width="24", height="96")
+            path(d="M23,95 C-5,95 -5,0 23,0", stroke="#9c9ede", stroke-width="2")
+        .span10
+          b LARGE ORBITS
+          |  represent categories of digital domains.  These categories are colored for differentiation, but the colors themselves do not have a particular meaning.
       .row-fluid.legend-item
         .span2
           svg(width="24", height="80")
             path.crossover-mark(d="M0,0 Q18,22 18,44 Q18,66 0,86", stroke="#9c9ede", stroke-width="2", marker-mid="url(#legend-crossover-marker)" marker-end="url(#legend-crossover-marker)")
-        .span10 Finally, arrows and animation indicate crossover accounts, where a persona from one digital domain also appears in another.
+        .span10 Finally,
+          b  ANIMATED ARROWS
+          |  indicate crossover accounts, where a virtual persona from an original digital domain moves to another.
 
     script(src='../js/lib/jquery-1.9.0.min.js')
     script(src='../js/lib/bootstrap.min.js')

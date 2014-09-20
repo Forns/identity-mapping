@@ -159,6 +159,7 @@ $(function () {
         };
 
     // Set up the legend popover.
+    $(".periphery-button").tooltip();
     $(".legend-button").popover({
         html: true,
         placement: 'bottom',

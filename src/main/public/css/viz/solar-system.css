@@ -105,7 +105,7 @@ body {
   transform: scaleY(2.0);
 }
 
-#sun circle {
+#sun circle, .sun {
   fill: url(#sun-gradient);
 }
 
