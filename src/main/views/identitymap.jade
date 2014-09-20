@@ -46,6 +46,8 @@ html
       #main-content
         svg
           defs
+            marker#legend-crossover-marker(viewBox="0 0 10 10", refX="16", refY="5", markerWidth="6", markerHeight="6", orient="auto")
+              path(d="M 0 0 L 10 5 L 0 10 z", style="fill: #9c9ede; stroke: #9c9ede;")
             radialGradient(id='sun-gradient', gradientUnits='objectBoundingBox', cx='50%', cy='50%', r='60%')
               stop(offset='0%', stop-color='#fff', stop-opacity='1')
               stop(offset='100%', stop-color='#860', stop-opacity='1')
@@ -103,8 +105,8 @@ html
       .row-fluid.legend-item
         .span2
           svg(width="24", height="80")
-            path.crossover-mark(d="M0,0 Q23,0 16,88", stroke="#9c9ede", stroke-width="2", marker-end="url(#crossover-marker-1)")
-        .span10 Finally, animated arrows indicate crossover accounts, where a persona from one digital domain also appears in another.
+            path.crossover-mark(d="M0,0 Q18,22 18,44 Q18,66 0,86", stroke="#9c9ede", stroke-width="2", marker-mid="url(#legend-crossover-marker)" marker-end="url(#legend-crossover-marker)")
+        .span10 Finally, arrows and animation indicate crossover accounts, where a persona from one digital domain also appears in another.
 
     script(src='../js/lib/jquery-1.9.0.min.js')
     script(src='../js/lib/bootstrap.min.js')
