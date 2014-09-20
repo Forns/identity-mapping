@@ -9,7 +9,8 @@ module.exports = function (tools) {
       surveyDao = tools.surveyDao,
       $TM = tools.$TM,
       adminMail = tools.adminMail,
-      request = tools.request;
+      request = tools.request,
+      SITE_DOMAIN = "imp.cs.lmu.edu:4000";
 
   /*
    * GET /
@@ -41,7 +42,7 @@ module.exports = function (tools) {
    *   Render the identitymap report section
    */
   app.get("/identitymap/:id?", function (req, res) {
-    res.render("identitymap", {layout: true, url: req.url});
+    res.render("identitymap", {layout: true, url: SITE_DOMAIN + req.url});
   });
 
   /*
