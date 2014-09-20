@@ -10,7 +10,8 @@ module.exports = function (tools) {
       $TM = tools.$TM,
       adminMail = tools.adminMail,
       request = tools.request,
-      SITE_DOMAIN = "imp.cs.lmu.edu:4000";
+      status = tools.status,
+      SITE_DOMAIN = status.SITE_DOMAIN;
 
   /*
    * GET /

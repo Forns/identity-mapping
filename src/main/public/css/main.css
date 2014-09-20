@@ -28,7 +28,6 @@ body {
 }
 
 #header {
-  padding: 20px;
   background: #ffffff; /* Old browsers */
   background: -moz-linear-gradient(top, #ffffff 0%, #e0e0e0 50%, #ffffff 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#e0e0e0), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
@@ -40,6 +39,32 @@ body {
   box-shadow: 3px 3px 15px #000;
   -moz-box-shadow: 3px 3px 15px #000;
   -webkit-box-shadow: 3px 3px 15px #000;
+}
+
+.header-img {
+  display: inline-block;
+  width: 180px;
+  height: 95px;
+  margin: 10px;
+  padding: 20px;
+  border: 2px solid black;
+  background-color: white;
+}
+
+#header h1 {
+  position: absolute;
+  font-size: 50px;
+  top: 50%;
+  margin-top: -25px;
+  left: 0;
+  right: 0;
+}
+
+#header-container {
+  position: relative;
+  width: 800px;
+  height: 160px;
+  margin: 0 auto;
 }
 
 #container {

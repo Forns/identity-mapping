@@ -18,7 +18,11 @@ var express = require('express'),
     adminMail,
     surveyDao,
     controllers,
-    tools;
+    tools,
+    
+    status = {
+      SITE_DOMAIN: "imp.cs.lmu.edu:4000"
+    };
 
 app.enable('trust proxy'); // For remote IP access, needed by reCAPTCHA:
 // http://stackoverflow.com/questions/10849687/how-to-get-remote-client-address
@@ -60,7 +64,7 @@ app.configure('production', function () {
 surveyDao = require("./src/main/conf/db-config.js")().surveyDao;
 lda       = require("./src/main/conf/lda-config.js")().lda;
 $TM       = require("./src/main/conf/topic-modeler-config.js")(surveyDao, lda).$TM;
-adminMail = require('./src/main/conf/mailbox-config.js')().adminMail;
+adminMail = require('./src/main/conf/mailbox-config.js')(status).adminMail;
 
 tools = {
   // Custom toolkits
@@ -69,6 +73,7 @@ tools = {
   $TM: $TM,
   adminMail: adminMail,
   app: app,
+  status: status,
   
   // NPM Modules
   request: require("request")

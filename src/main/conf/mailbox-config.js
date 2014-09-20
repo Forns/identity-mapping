@@ -4,7 +4,7 @@
  * Configures administrative mailboxes.
  */
 
-module.exports = function () {
+module.exports = function (status) {
   var nodemailer = require("nodemailer"),
       environment = process.env,
       mailOptions = {
@@ -54,13 +54,12 @@ module.exports = function () {
       "shows how active someone is online and how their identity is " + 
       "expressed in a variety of online forms.</p>" +
       
-      "<p>" + sharer + " completed their identity map and wanted to show you!</p>" +
-      "<p><a href='" + link + "' target='_blank'>Click here to see their map!</a><br/>" +
+      "<p>" + sharer + " completed an identity map and wanted to show you!</p>" +
+      "<p><a href='" + link + "' target='_blank'>Click here to see the map!</a><br/>" +
       "(alternately, copy and paste the following into your browser):<br/>" + link + "</p>" +
       
-      "<p>Interested in generating your own identity map and discovering more about the project?</p>" +
-      "<p><a href='http://imp.cs.lmu.edu' target='_blank'>Click here to learn more!</a><br/>" +
-      "(alternately, copy and paste the following into your browser):<br/>http://imp.cs.lmu.edu</p>" +
+      "<p>Interested in generating your own identity map? <a href='http://imp.cs.lmu.edu' target='_blank'>Click here to begin!</a></p>" +
+      "<p>(or copy and paste the following into your browser):<br/>" + status.SITE_DOMAIN + "</p>" +
       
       "<p>Thanks for your interest in the Identity Mapping Project!</p>"
     );
