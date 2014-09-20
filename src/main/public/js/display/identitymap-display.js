@@ -513,8 +513,20 @@ $(function () {
 
         // We can't use just animation CSS with crossovers because they involve
         // multiple elements and multiple transforms.
-        var frame = (function () {
-            window.requestAnimationFrame(frame);
+        var lastFrame = null;
+        var frame = (function (timestamp) {
+            // Do some governing.
+            if (isNaN(lastFrame)) {
+                lastFrame = timestamp;
+            } else {
+                if (timestamp - lastFrame < 50) {
+                    window.requestAnimationFrame(frame);
+                    return;
+                } else {
+                    lastFrame = timestamp;
+                }
+            }
+
             $("svg.crossover-holder path.crossover-mark").each(function (index, path) {
                 var $path = $(path),
                     crossover = $path.prop('__data__'),
@@ -551,6 +563,8 @@ $(function () {
 
                 $path.attr({ d: d });
             });
+
+            window.requestAnimationFrame(frame);
         });
 
         frame();
