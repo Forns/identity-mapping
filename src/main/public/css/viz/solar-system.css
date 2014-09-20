@@ -5,7 +5,7 @@ body {
 }
 
 #container {
-  margin-top: 32px;
+  margin-top: 48px;
 }
 
 .nebula-holder, .nebula {
@@ -172,7 +172,7 @@ table.table-demographics tbody th, table.table-demographics tbody td {
 /* Crossover-related styles. */
 
 .crossover-holder {
-  margin-top: -32px; /* Compensates for #container. */
+  margin-top: -48px; /* Compensates for #container. */
   position: absolute;
 }
 
@@ -384,8 +384,8 @@ path.crossover-mark {
   top: 10px;
 }
 
-.periphery-button {
-  margin-left: 10px;
+#periphery-buttons .btn-toolbar {
+  margin: 0 10px;
 }
 
 #email-textarea {
