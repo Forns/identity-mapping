@@ -295,13 +295,13 @@ $(function () {
             .append("span")
             .text(function (d) { return d.planetName; });
 
-        system.append("div")
+        var purpose = system.append("div")
             .attr('class', "label purpose obscured")
-            .style('width', function (d) { return (d.radius * 4 - 10) + "px"; })
+            .style('width', function (d) { return (d.radius * 6) + "px"; })
             .style('top', function (d) { return d.radius + 10 + "px"; })
             .style(prefix + "animation-duration", function (d) { return t(d.distance / 4) + "s"; })
             .append("span")
-            .text(function (d) { return d.purpose || "(purpose not stated)"; });
+            .text(function (d) { return d.planetName.toUpperCase() + ": " + (d.purpose || "(purpose not stated)"); });
 
         system.append("svg")
             .attr('class', "orbit")
@@ -513,8 +513,20 @@ $(function () {
 
         // We can't use just animation CSS with crossovers because they involve
         // multiple elements and multiple transforms.
-        var frame = (function () {
-            window.requestAnimationFrame(frame);
+        var lastFrame = null;
+        var frame = (function (timestamp) {
+            // Do some governing.
+            if (isNaN(lastFrame)) {
+                lastFrame = timestamp;
+            } else {
+                if (timestamp - lastFrame < 50) {
+                    window.requestAnimationFrame(frame);
+                    return;
+                } else {
+                    lastFrame = timestamp;
+                }
+            }
+
             $("svg.crossover-holder path.crossover-mark").each(function (index, path) {
                 var $path = $(path),
                     crossover = $path.prop('__data__'),
@@ -551,6 +563,8 @@ $(function () {
 
                 $path.attr({ d: d });
             });
+
+            window.requestAnimationFrame(frame);
         });
 
         frame();
