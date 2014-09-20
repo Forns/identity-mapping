@@ -149,9 +149,14 @@ table.table-demographics tbody th, table.table-demographics tbody td {
   animation-timing-function: linear;
 }
 
-.purpose {
-  color: lightgray;
+.purpose > span {
+  background-color: #ffffdd;
+  border-radius: 12px;
+  color: black;
   font-weight: normal;
+  opacity: 0.8;
+  padding: 12px;
+  text-align: left;
 }
 
 #sun svg, .system-domain > .region, .orbit, .planet, .moon {

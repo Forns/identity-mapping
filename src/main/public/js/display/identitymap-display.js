@@ -295,13 +295,13 @@ $(function () {
             .append("span")
             .text(function (d) { return d.planetName; });
 
-        system.append("div")
+        var purpose = system.append("div")
             .attr('class', "label purpose obscured")
-            .style('width', function (d) { return (d.radius * 4 - 10) + "px"; })
+            .style('width', function (d) { return (d.radius * 6) + "px"; })
             .style('top', function (d) { return d.radius + 10 + "px"; })
             .style(prefix + "animation-duration", function (d) { return t(d.distance / 4) + "s"; })
             .append("span")
-            .text(function (d) { return d.purpose || "(purpose not stated)"; });
+            .text(function (d) { return d.planetName.toUpperCase() + ": " + (d.purpose || "(purpose not stated)"); });
 
         system.append("svg")
             .attr('class', "orbit")
