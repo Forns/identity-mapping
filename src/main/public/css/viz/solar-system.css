@@ -391,3 +391,7 @@ path.crossover-mark {
 #email-textarea {
   height: 75px;
 }
+
+.legend-item {
+  margin: 10px 0;
+}

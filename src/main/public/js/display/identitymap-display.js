@@ -158,6 +158,16 @@ $(function () {
             return systems;
         };
 
+    // Set up the legend popover.
+    $(".legend-button").popover({
+        html: true,
+        placement: 'bottom',
+        content: function () {
+            return $(".legend-template").clone().removeClass("hidden");
+        },
+        container: "#periphery-buttons"
+    });
+
     // Grab the survey object.
     $.getJSON("/survey/" + surveyId, function (survey) {
         var systems = surveyToSystems(survey),
@@ -378,7 +388,7 @@ $(function () {
                 return domainToId(domain === "Blogs / Personal Websites" ? "blogs" : domain);
             };
 
-        Object.keys(survey.Crossover).forEach(function (source) {
+        Object.keys(survey.Crossover || { } /* In the event of no Crossover. */).forEach(function (source) {
             survey.Crossover[source].forEach(function (destination) {
                 crossovers.push({
                     source: crossoverDomainToId(source),
