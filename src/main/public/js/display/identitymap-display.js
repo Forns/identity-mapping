@@ -413,6 +413,10 @@ $(function () {
                 return $(".planet circle." + domainName);
             },
 
+            getCrossover = function (d, i) {
+                return "url(#crossover-marker-" + i + ")";
+            },
+
             getGradientUrl = function (domain) {
                 // Unfortunately, browser incompatibility with gradients forces this.
                 var needsUrl = navigator.userAgent.match(/Safari/) && !navigator.userAgent.match(/Chrome/) && !navigator.userAgent.match(/Firefox/);
@@ -444,7 +448,8 @@ $(function () {
             .enter().append("path")
             .attr('class', "crossover-mark")
             .attr('stroke', getGradientUrl)
-            .attr('marker-end', function (d, i) { return "url(#crossover-marker-" + i + ")"; });
+            .attr('marker-mid', getCrossover)
+            .attr('marker-end', getCrossover);
 
         // iPhone/iPad/iPod compatibility check---kill animation (and skip animating crossovers).
         if (/(iPad|iPhone|iPod)/g.test(navigator.userAgent)) {
@@ -483,6 +488,28 @@ $(function () {
         }());
 // End polyfill
 
+        // Helper function for crossover computation: "bow" as in "drawing a bow-and-arrow."
+        var bow = function (source, count, divisor) {
+            var destination = source.next,
+                vectorX = destination.x - source.x,
+                vectorY = destination.y - source.y,
+                midpointX = (source.x + destination.x) / 2,
+                midpointY = (source.y + destination.y) / 2,
+                normalX = -vectorY,
+                normalY = vectorX,
+                midpoint = {
+                    x: midpointX + (normalX / divisor),
+                    y: midpointY + (normalY / divisor),
+                    next: destination
+                };
+
+            source.next = midpoint;
+            if (count > 1) {
+                bow(source, count - 1, divisor * 2);
+                bow(midpoint, count - 1, divisor * 2);
+            }
+        };
+
         // We can't use just animation CSS with crossovers because they involve
         // multiple elements and multiple transforms.
         var frame = (function () {
@@ -496,27 +523,32 @@ $(function () {
                     destinationOffset = $destinationCircle.offset(),
                     sourceRadius = +$sourceCircle.attr('r'),
                     destinationRadius = +$destinationCircle.attr('r'),
-                    sourceX = sourceOffset.left + sourceRadius,
-                    sourceY = sourceOffset.top + sourceRadius,
-                    destinationX = destinationOffset.left + destinationRadius,
-                    destinationY = destinationOffset.top + destinationRadius,
 
-                    // Normally this would be vector library stuff, but oh well, one time only...
-                    vectorX = destinationX - sourceX,
-                    vectorY = destinationY - sourceY,
-                    midpointX = (sourceX + destinationX) / 2,
-                    midpointY = (sourceY + destinationY) / 2,
-                    normalX = -vectorY,
-                    normalY = vectorX,
-                    normalLength = Math.sqrt(normalX * normalX + normalY * normalY),
-                    controlX = midpointX + (normalX / 8),
-                    controlY = midpointY + (normalY / 8);
+                    destination = {
+                        x: destinationOffset.left + destinationRadius,
+                        y: destinationOffset.top + destinationRadius
+                    },
 
-                $path.attr({
-                    d: "M" + sourceX + " " + sourceY +
-                        " Q " + controlX + " " + controlY + " " +
-                        destinationX + " " + destinationY
-                });
+                    source = {
+                        x: sourceOffset.left + sourceRadius,
+                        y: sourceOffset.top + sourceRadius,
+                        next: destination
+                    };
+
+                bow(source, 3, 8);
+                var current = source,
+                    d = "M";
+
+                while (current) {
+                    d += current.x + "," + current.y;
+                    if (current.next) {
+                        current = current.next;
+                        d += " Q" + current.x + "," + current.y + " ";
+                    }
+                    current = current.next;
+                }
+
+                $path.attr({ d: d });
             });
         });
 
