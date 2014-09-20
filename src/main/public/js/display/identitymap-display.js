@@ -346,7 +346,7 @@ $(function () {
         // Put the sun back and set it up.
         // Adjust the sun at the center.  Nebula animation will also be centered on this.
         $main.append($sun);
-        $sun.removeClass("hide").css({
+        $sun.removeClass("hidden").css({
             left: totalRadius - ($sun.width() / 2) + "px",
             top: totalRadius - ($sun.height() / 2) + "px"
         });
@@ -377,9 +377,13 @@ $(function () {
                     );
             },
             placement: 'bottom',
+            trigger: 'manual',
             container: 'body'
-        }).click(function (event) {
+        });
+
+        $(".details-button").click(function (event) {
             $(".system .purpose").toggleClass("obscured");
+            $sun.popover('toggle').toggleClass("shine");
         });
 
         // Crossover action!  First some data massaging.

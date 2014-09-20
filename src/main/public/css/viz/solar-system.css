@@ -94,7 +94,7 @@ body {
   transition-property: box-shadow;
 }
 
-#sun:hover {
+#sun:hover, #sun.shine {
   box-shadow: 0 0 64px white;
 }
 
