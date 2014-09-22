@@ -21,7 +21,7 @@ var express = require('express'),
     tools,
     
     status = {
-      SITE_DOMAIN: "imp.cs.lmu.edu:4000"
+      SITE_DOMAIN: "http://imp.cs.lmu.edu:4000"
     };
 
 app.enable('trust proxy'); // For remote IP access, needed by reCAPTCHA:

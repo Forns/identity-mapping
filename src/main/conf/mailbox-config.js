@@ -13,7 +13,14 @@ module.exports = function (status) {
           user: environment.IMP_EMAIL_USER,
           pass: environment.IMP_EMAIL_PASS
         }
-      };
+      },
+      
+      mailHeader = "<div style='background-color: #e9eaef; height: 60px; line-height: 60px; width: 100%; position: relative; z-index: -10; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25); box-shadow: 3px 3px 15px #000; -moz-box-shadow: 3px 3px 15px #000; -webkit-box-shadow: 3px 3px 15px #000;'>" +
+                       "<a href='http://www.lmu.edu/' style='float: right; background-color: white; padding-left: 10px;'>" +
+                         "<img src='" + status.SITE_DOMAIN + "/assets/lmu-logo.png' style='height: 60px; width: 114px;' />" +
+                       "</a>" +
+                       "<h2 style='font-size: 24px; margin-left: 10px;'>Identity Mapping Project</h2>" +
+                     "</div>";
       
   if (!environment.IMP_EMAIL_USER) {
     console.log("[X] MAIL: Problem with node mailer environment credentials IMP_EMAIL_USER");
@@ -33,7 +40,7 @@ module.exports = function (status) {
       from: "Identity Mapping Project <" + environment.IMP_EMAIL_USER + ">",
       to: recipient,
       subject: subject,
-      html: message
+      html: mailHeader + message
     });
   };
   
@@ -46,7 +53,6 @@ module.exports = function (status) {
     adminMail.sendMail(
       email,
       sharer + " Shared Their Identity Map With You!",
-      "<h3>The Identity Mapping Project</h3>" +
       "<p>The goal of the Identity Mapping Project is to " + 
       "generate thousands (if not millions) of identity maps " + 
       "from around the globe and chart the nature of identity " + 
