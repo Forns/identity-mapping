@@ -992,7 +992,7 @@ var countRadio =
             text:
               "<strong>Thank you</strong> for participating in the Identity Mapping Project! To submit your answers and view your personalized identity map, please type the word images into the text box below and then click on the <i>Create My Identity</i> button." +
               "<div id='recaptcha_div'></div>" +
-              "<script>Recaptcha.create('6Lf2WuQSAAAAAL7cWlCKEmYM9VdtyOecTNpbBZXc', 'recaptcha_div', { theme: 'clean', callback: Recaptcha.focus_response_field });</script>"
+              "<script>Recaptcha.create('6LcmK_sSAAAAAHrPhy4O1E0a1LJfz9Di7siJ4rfP', 'recaptcha_div', { theme: 'clean', callback: Recaptcha.focus_response_field });</script>"
           }
         ],
         modal:
