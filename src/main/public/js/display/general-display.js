@@ -22,6 +22,7 @@ $(function () {
       faceCount = faceList.length,
       faceRepeat = 4,
       faceContainer = $("<div id='face-grid' class='face-margins-even'></div>"),
+      lmuLogo = $("#lmu-logo"),
       // The ideal, css set margins for the case grid;
       // They are defined here soas to be invariant to later adjustment
       faceContainerMarginLeft = -80,
@@ -64,6 +65,13 @@ $(function () {
     var faceWidth = 180 + 2 * parseInt($(".face-img").css("margin")),
         effectiveWindow = $(window).width() - faceContainerMarginLeft - faceContainerMarginRight;
     
+    // Make sure our logo doesn't get in the way of the title
+    if ($(window).width() < 1100) {
+      lmuLogo.hide();
+    } else {
+      lmuLogo.show();
+    }
+    
     // If we can fit an even number of tiles into the grid, then we'll do so
     if (Math.floor(effectiveWindow / faceWidth) % 2 === 0) {
       faceContainer
@@ -90,4 +98,5 @@ $(function () {
       clearInterval(faceInterval);
     }
   });
+  
 });

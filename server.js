@@ -76,7 +76,8 @@ tools = {
   status: status,
   
   // NPM Modules
-  request: require("request")
+  request: require("request"),
+  sechash: require("sechash")
 }
 
 // We will perform our topic modeling once at the get-go, after the connection
@@ -96,7 +97,8 @@ setInterval(function () {
  */
 
 controllers = [
-  './src/main/controllers/interface-controller.js'
+  './src/main/controllers/interface-controller.js',
+  './src/main/controllers/admin-controller.js'
 ];
     
 for (var c in controllers) {

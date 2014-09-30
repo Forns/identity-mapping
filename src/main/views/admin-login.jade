@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  br
+  div.container
+    div.row
+      div.span12.well
+        form#login-form(role="form")
+          div.control-group
+            label.control-label(for="password") Password
+            input#password.form-control(type="password", placeholder="Password", maxlength="100")
+          div.control-group
+            div.controls
+              button#login-button.btn.btn-default(type="submit") Sign In
+        br
+        #login-error.text-center.alert-danger.hidden
+          p Invalid Username / Password

@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  br
+  div.container
+    div.row
+      div.span12.well.text-left
+        a.btn.btn-default(href="/logout").pull-right Log Out
+        a.btn.btn-default(href="/").pull-right Home
+        h3 Admin Control Panel
+        hr
+        table.table.table-striped
+          thead
+            tr
+              th Attribute
+              th Value
+          tbody
+            tr
+              th(style="width: 25%;") Surveys Received
+              td#count -
+            tr
+              th Average Age
+              td#avgAge -
+            tr
+              th Percent Male
+              td#avgMale -
+            tr
+              th Percent Female
+              td#avgFemale -

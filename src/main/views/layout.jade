@@ -12,8 +12,12 @@ html
     script(src='../js/lib/bootstrap.min.js')
     script(src='../js/util/include.js')
     script(src='../js/util/init.js')
+    if (scripts)
+      each s, index in scripts
+        script(src='#{s}')
+    
   body
-    img(src="/assets/lmu-logo.png").pull-right.header-img
+    img#lmu-logo(src="/assets/lmu-logo.png").pull-right.header-img
     #header
       div
         #header-container.text-center

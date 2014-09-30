@@ -90,6 +90,29 @@ module.exports = function () {
       }
     });
   };
+  
+  // Returns an array of the matching documents in the indicated collection
+  SurveyDao.prototype.search = function (col, query, callback) {
+    this.db.collection(col, function (error, currentCollection) {
+      if (error) {
+        callback(error);
+      } else {
+        currentCollection.find(
+          query,
+          // Omit password fields in any search
+          {
+            password: 0
+          }
+        ).toArray(function (error, results) {
+          if (error) {
+            callback(error);
+          } else {
+            callback(null, results);
+          }
+        });
+      }
+    });
+  };
 
   // Save a response.
   SurveyDao.prototype.save = function (surveyResponse, callback) {
