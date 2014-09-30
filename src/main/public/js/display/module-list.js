@@ -390,8 +390,8 @@ var countRadio =
             "<li><p>I understand that the study includes no foreseeable risks or discomforts.</p></li>" +
             "<li><p>" +
               "I understand that the possible benefits of the study are that I will contribute to the understanding of how people of different ages, genders, " +
-              "educational levels, and nationalities express their identities through a variety of online forms, and that I will be able to view, share, and / or " +
-              "download a free, color-coded copy of my current digital identity at the conclusion of the survey." +
+              "educational levels, and nationalities express their identities through a variety of online forms, and that I will be able to view or share" +
+              "a free, color-coded copy of my current digital identity at the conclusion of the survey." +
             "</p></li>" +
             "<li><p>I understand that I have the right to refuse to participate in, or to withdraw from, this research at any time without prejudice to me in any respect.</p></li>" +
             "<li><p>" +
@@ -410,7 +410,7 @@ var countRadio =
        */
       briefing: {
         id: "mod-briefing",
-        title: "Complete the Identity Mapping Survey and Download a Free Map of Your Identity",
+        title: "Complete the Identity Mapping Survey and View a Free Map of Your Identity",
         questions:
           [
             {
@@ -432,7 +432,7 @@ var countRadio =
             
             {
               text:
-                "<strong>After you complete the survey</strong>, you&rsquo;ll be able to see and share a free color-coded map of your current identity."
+                "<strong>After you complete the survey</strong>, you&rsquo;ll be able to view and share a free color-coded map of your current identity."
             },
             
             {
@@ -990,7 +990,7 @@ var countRadio =
         questions: [
           {
             text:
-              "<strong>Thank you</strong> for participating in the Identity Mapping Project! To submit your answers and see your personalized identity map, please type the word images into the text box below and then click on the <i>Create My Identity</i> button." +
+              "<strong>Thank you</strong> for participating in the Identity Mapping Project! To submit your answers and view your personalized identity map, please type the word images into the text box below and then click on the <i>Create My Identity</i> button." +
               "<div id='recaptcha_div'></div>" +
               "<script>Recaptcha.create('6Lf2WuQSAAAAAL7cWlCKEmYM9VdtyOecTNpbBZXc', 'recaptcha_div', { theme: 'clean', callback: Recaptcha.focus_response_field });</script>"
           }

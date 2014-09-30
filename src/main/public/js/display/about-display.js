@@ -32,7 +32,7 @@ $(function () {
         {
           text:
             "<strong>To participate</strong> in the project, just click on the \"Map My Identity\" button below or on the home page and complete " +
-            "the brief, anonymous survey. After you're done, you can see and share a free color-coded map of your identity."
+            "the brief, anonymous survey. After you're done, you can view and share a free color-coded map of your identity."
         },
         
         {
