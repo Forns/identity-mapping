@@ -437,6 +437,11 @@ var countRadio =
             
             {
               text:
+                "<strong>Duration:</strong> the survey takes approximately 20 minutes to complete. Feel free to take as much time as you need, but do not close the browser window or your progress will be lost!"
+            },
+            
+            {
+              text:
                 "<strong>Please Note:</strong> Your responses are completely anonymous and we will not ask for any identifying information such as email addresses or account names. " + 
                 "We are only interested in whether, and to what extent, you have a presence in a particular digital domain. " +
                 "As such, please answer each question as honestly and fully as possible so we can obtain accurate information."
