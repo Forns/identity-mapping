@@ -437,7 +437,7 @@ var countRadio =
             
             {
               text:
-                "<strong>Duration:</strong> the survey takes approximately 20 minutes to complete. Feel free to take as much time as you need, but do not close the browser window or your progress will be lost!"
+                "<strong>Duration:</strong> The survey takes approximately <strong>20 minutes</strong> to complete. Feel free to take as much time as you need, but do not close the browser window or your progress will be lost!"
             },
             
             {
