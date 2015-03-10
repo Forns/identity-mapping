@@ -127,4 +127,89 @@ module.exports = function (tools) {
     );
   });
   
+  app.post("/admin-aggregates", function (req, res) {
+    var inputs = req.body,
+        domains = inputs.domains,
+        gender = inputs.gender,
+        age = inputs.age,
+        edu = inputs.edu,
+        query = {};
+    
+    // If any domains were selected, then create an "or" query over
+    // them
+    if (domains && domains.length) {
+      var dQuery = {$or: []}
+      for (var d in domains) {
+        var toAdd = {};
+        toAdd[domains[d]] = {$exists: 1};
+        dQuery.$or.push(toAdd);
+      }
+      console.log(dQuery);
+      query = dQuery;
+    }
+    
+    // Now we'll add any demographic query information
+    if (age) {
+      var thirtyYearsBack = new Date().getFullYear() - 30;
+      query["Demo.birth-year"] = (age === "under30")
+        ? {$lt: "" + thirtyYearsBack}
+        : {$gte: "" + thirtyYearsBack};
+    }
+    if (edu) {
+      query["Demo.education"] = (edu === "no")
+        ? {$lt: "13"}
+        : {$gte: "13"};
+    }
+    if (gender) {
+      query["Demo.sex"] = inputs.gender;
+    }
+    
+    // First get a tally of all surveys
+    surveyDao.search(
+      "surveys",
+      {},
+      function (err, results) {
+        if (err) {
+          console.error(err);
+          res.send(500);
+        }
+        var count = results.length;
+        
+        // Then perform the sub-query
+        surveyDao.search(
+          "surveys",
+          query,
+          function (err, results) {
+            if (err) {
+              console.error(err);
+              res.send(500);
+            }
+            
+            var result = {
+              totalCount: count,
+              filteredCount: results.length,
+              filteredDomains: 0,
+              filteredProfiles: 0
+            };
+            
+            for (var r in results) {
+              for (var d in domains) {
+                var currentDomain = results[r][domains[d]],
+                    domainKeys = Object.keys(currentDomain);
+                
+                result.filteredDomains += domainKeys.length;
+                for (var k in domainKeys) {
+                  result.filteredProfiles += Object.keys(currentDomain[domainKeys[k]]).length;
+                }
+              }
+            }
+            
+            res.send(200, result);
+          }
+        );
+        
+      }
+    );
+  });
+  
 }

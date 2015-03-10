@@ -27,3 +27,80 @@ block content
             tr
               th Percent Female
               td#avgFemale -
+
+    div.row
+      div.span12.well.text-left
+        h3 Aggregates
+        hr
+        form.form-horizontal
+        
+          div.span4.control-group
+            label.control-label(for="gender") Gender
+            div.controls
+              label.radio
+                input(type="radio", name="gender", value="", checked)
+                | Any
+              label.radio
+                input(type="radio", name="gender", value="Male")
+                | Male
+              label.radio
+                input(type="radio", name="gender", value="Female")
+                | Female
+              label.radio
+                input(type="radio", name="gender", value="Transgender")
+                | Transgender
+                
+          div.span4.control-group
+            label.control-label(for="age") Age
+            div.controls
+              label.radio
+                input(type="radio", name="age", value="", checked)
+                | Any
+              label.radio
+                input(type="radio", name="age", value="under30")
+                | Under 30
+              label.radio
+                input(type="radio", name="age", value="over30")
+                | 30 or Over
+                
+          div.span4.control-group
+            label.control-label(for="education") Education
+            div.controls
+              label.radio
+                input(type="radio", name="education", value="", checked)
+                | Any
+              label.radio
+                input(type="radio", name="education", value="no")
+                | No college
+              label.radio
+                input(type="radio", name="education", value="yes")
+                | Some college
+              
+          div.span4.control-group
+            label.control-label(for="domains") Domains
+            div.controls
+              label.checkbox
+                input(type="checkbox", name="domains", value="Blogs")
+                | Blogs
+              label.checkbox
+                input(type="checkbox", name="domains", value="Online Forums")
+                | Online Forums
+              label.checkbox
+                input(type="checkbox", name="domains", value="Social Networks")
+                | Social Networks
+              label.checkbox
+                input(type="checkbox", name="domains", value="Online Dating Sites")
+                | Online Dating Sites
+              label.checkbox
+                input(type="checkbox", name="domains", value="Digital Games")
+                | Digital Games
+              label.checkbox
+                input(type="checkbox", name="domains", value="3D Virtual Worlds")
+                | 3D Virtual Worlds
+              label.checkbox
+                input(type="checkbox", name="domains", value="Emails")
+                | Emails
+            
+          div.span12.control-group
+            div.controls
+              a.btn.btn-primary#submit-button Submit
