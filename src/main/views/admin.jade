@@ -77,30 +77,59 @@ block content
                 | Some college
               
           div.span4.control-group
-            label.control-label(for="domains") Domains
+            label.control-label(for="domains") Archdomains
             div.controls
-              label.checkbox
-                input(type="checkbox", name="domains", value="Blogs")
+              label.radio
+                input(type="radio", name="domains", value="Blogs")
                 | Blogs
-              label.checkbox
-                input(type="checkbox", name="domains", value="Online Forums")
+              label.radio
+                input(type="radio", name="domains", value="Online Forums")
                 | Online Forums
-              label.checkbox
-                input(type="checkbox", name="domains", value="Social Networks")
+              label.radio
+                input(type="radio", name="domains", value="Social Networks")
                 | Social Networks
-              label.checkbox
-                input(type="checkbox", name="domains", value="Online Dating Sites")
+              label.radio
+                input(type="radio", name="domains", value="Online Dating Sites")
                 | Online Dating Sites
-              label.checkbox
-                input(type="checkbox", name="domains", value="Digital Games")
+              label.radio
+                input(type="radio", name="domains", value="Digital Games")
                 | Digital Games
-              label.checkbox
-                input(type="checkbox", name="domains", value="3D Virtual Worlds")
+              label.radio
+                input(type="radio", name="domains", value="3D Virtual Worlds")
                 | 3D Virtual Worlds
-              label.checkbox
-                input(type="checkbox", name="domains", value="Emails")
+              label.radio
+                input(type="radio", name="domains", value="Emails")
                 | Emails
             
           div.span12.control-group
             div.controls
               a.btn.btn-primary#submit-button Submit
+        
+        div.span11
+          hr
+          h3 Results
+          table#aggregate-results.table.table-bordered
+            thead
+              tr
+                th Item
+                th Value
+            tbody
+              tr
+                td Surveys with a match on the filter
+                td#filter-match
+              tr
+                td Proportion of filter matches over ALL surveys
+                td#filter-match-average
+              tr
+                td Average number of filter domains over ALL surveys
+                td#total-domain-average
+              tr
+                td Average number of filter profiles over ALL surveys
+                td#total-profile-average
+              tr
+                td Average number of domains amongst filter matches
+                td#filter-domain-average
+              tr
+                td Average number of profiles amongst filter matches
+                td#filter-profile-average 
+          

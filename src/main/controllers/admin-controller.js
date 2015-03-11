@@ -127,6 +127,22 @@ module.exports = function (tools) {
     );
   });
   
+  /*
+   * Expects inputs of the format:
+   * {
+   *   domains: ["archdomain1", "archdomain2", ...], // currently only supporting 1 archdomain at a time
+   *   age: "" | "under30" | "over30",
+   *   edu: "" | "no" | "yes" // for no college or some college
+   * }
+   * 
+   * Will return object with various aggregate statistics:
+   * {
+   *   totalCount: total number of surveys,
+   *   filteredCount: total number of surveys matching the filter,
+   *   filteredDomains: total number of domains amongst those matched by the filter,
+   *   filteredProfiles: total number of domain profiles amongst those matched by the filter
+   * }
+   */
   app.post("/admin-aggregates", function (req, res) {
     var inputs = req.body,
         domains = inputs.domains,
@@ -144,7 +160,6 @@ module.exports = function (tools) {
         toAdd[domains[d]] = {$exists: 1};
         dQuery.$or.push(toAdd);
       }
-      console.log(dQuery);
       query = dQuery;
     }
     
@@ -199,7 +214,14 @@ module.exports = function (tools) {
                 
                 result.filteredDomains += domainKeys.length;
                 for (var k in domainKeys) {
-                  result.filteredProfiles += Object.keys(currentDomain[domainKeys[k]]).length;
+                  var currentItem = currentDomain[domainKeys[k]],
+                      itemKeys = Object.keys(currentItem);
+                      
+                  for (var c in itemKeys) {
+                    if (itemKeys[c].substring(0, 9) === "frequency") {
+                      result.filteredProfiles += 1;
+                    }
+                  }
                 }
               }
             }

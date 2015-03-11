@@ -32,14 +32,24 @@ $(function () {
         data.domains.push($(this).val());
       });
       
-      console.log(data);
-      
       $.ajax({
         url: "/admin-aggregates",
         type: "POST",
         data: data,
         success: function (results, textStatus, jqXHR) {
-          console.log(results);
+          var filterMatches = results.filteredCount,
+              totalDomainAverage = results.filteredDomains / results.totalCount,
+              totalProfileAverage = results.filteredProfiles / results.totalCount,
+              filterAverage = filterMatches / results.totalCount,
+              domainAverage = results.filteredDomains / filterMatches,
+              profileAverage = results.filteredProfiles / filterMatches;
+          
+          $("#filter-match").text(filterMatches);
+          $("#total-domain-average").text(totalDomainAverage.toFixed(2));
+          $("#total-profile-average").text(totalProfileAverage.toFixed(2));
+          $("#filter-match-average").text(filterAverage.toFixed(2));
+          $("#filter-domain-average").text(domainAverage.toFixed(2));
+          $("#filter-profile-average").text(profileAverage.toFixed(2));
         }
       });
     });
