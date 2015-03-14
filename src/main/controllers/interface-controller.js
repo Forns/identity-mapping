@@ -108,7 +108,7 @@ module.exports = function (tools) {
         }
       },
       function (error, response, body) {
-        var result = body.split("\n");
+        var result = (body || "").split("\n");
         if (result[0] === "true") {
           // If the reCAPTCHA checks out, write the response to the database.
           surveyDao.save(req.body.survey, function (error, surveyResponse) {
