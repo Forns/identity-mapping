@@ -14,6 +14,15 @@ module.exports = function (tools) {
       sechash = tools.sechash,
       SITE_DOMAIN = status.SITE_DOMAIN;
 
+  var extend = require('jquery-extend');
+
+  var aggregateResults = function (surveys) {
+    return surveys.reduce(function (aggregate, current, index, array) {
+        extend(aggregate, current);
+        return aggregate;
+      }, { });
+  };
+
   /*
    * GET ROUTES
    */
@@ -126,24 +135,11 @@ module.exports = function (tools) {
       }
     );
   });
-  
+
   /*
-   * Expects inputs of the format:
-   * {
-   *   domains: ["archdomain1", "archdomain2", ...], // currently only supporting 1 archdomain at a time
-   *   age: "" | "under30" | "over30",
-   *   edu: "" | "no" | "yes" // for no college or some college
-   * }
-   * 
-   * Will return object with various aggregate statistics:
-   * {
-   *   totalCount: total number of surveys,
-   *   filteredCount: total number of surveys matching the filter,
-   *   filteredDomains: total number of domains amongst those matched by the filter,
-   *   filteredProfiles: total number of domain profiles amongst those matched by the filter
-   * }
+   * callback is a function (err, results, count, domains) { }.
    */
-  app.post("/admin-aggregates", function (req, res) {
+  var processAggregateQuery = function (req, res, callback) {
     var inputs = req.body,
         domains = inputs.domains,
         gender = inputs.gender,
@@ -189,12 +185,38 @@ module.exports = function (tools) {
           res.send(500);
         }
         var count = results.length;
-        
+
         // Then perform the sub-query
         surveyDao.search(
           "surveys",
           query,
           function (err, results) {
+            callback(err, results, count, domains);
+          }
+        );
+      }
+    );
+  };
+
+  /*
+   * Expects inputs of the format:
+   * {
+   *   domains: ["archdomain1", "archdomain2", ...], // currently only supporting 1 archdomain at a time
+   *   age: "" | "under30" | "over30",
+   *   edu: "" | "no" | "yes" // for no college or some college
+   * }
+   * 
+   * Will return object with various aggregate statistics:
+   * {
+   *   totalCount: total number of surveys,
+   *   filteredCount: total number of surveys matching the filter,
+   *   filteredDomains: total number of domains amongst those matched by the filter,
+   *   filteredProfiles: total number of domain profiles amongst those matched by the filter
+   * }
+   */
+  app.post("/admin-aggregates", function (req, res) {
+    processAggregateQuery(req, res,
+          function (err, results, count, domains) {
             if (err) {
               console.error(err);
               res.send(500);
@@ -228,10 +250,7 @@ module.exports = function (tools) {
             
             res.send(200, result);
           }
-        );
-        
-      }
     );
   });
-  
+
 }
