@@ -312,37 +312,35 @@ module.exports = function (tools) {
    * }
    */
   app.post("/admin-aggregates", function (req, res) {
-    processAggregateQuery(req, res,
-          function (results, count, domains) {
-            var result = {
-              totalCount: count,
-              filteredCount: results.length,
-              filteredDomains: 0,
-              filteredProfiles: 0
-            };
+    processAggregateQuery(req, res, function (results, count, domains) {
+      var result = {
+        totalCount: count,
+        filteredCount: results.length,
+        filteredDomains: 0,
+        filteredProfiles: 0
+      };
+        
+      for (var r in results) {
+        for (var d in domains) {
+          var currentDomain = results[r][domains[d]],
+              domainKeys = Object.keys(currentDomain);
             
-            for (var r in results) {
-              for (var d in domains) {
-                var currentDomain = results[r][domains[d]],
-                    domainKeys = Object.keys(currentDomain);
-                
-                result.filteredDomains += domainKeys.length;
-                for (var k in domainKeys) {
-                  var currentItem = currentDomain[domainKeys[k]],
-                      itemKeys = Object.keys(currentItem);
-                      
-                  for (var c in itemKeys) {
-                    if (itemKeys[c].substring(0, 9) === "frequency") {
-                      result.filteredProfiles += 1;
-                    }
-                  }
-                }
+          result.filteredDomains += domainKeys.length;
+          for (var k in domainKeys) {
+            var currentItem = currentDomain[domainKeys[k]],
+                itemKeys = Object.keys(currentItem);
+                  
+            for (var c in itemKeys) {
+              if (itemKeys[c].substring(0, 9) === "frequency") {
+                result.filteredProfiles += 1;
               }
             }
-            
-            res.send(200, result);
           }
-    );
+        }
+      }
+        
+      res.send(200, result);
+    });
   });
 
   app.post("/aggregate-map", function (req, res) {
