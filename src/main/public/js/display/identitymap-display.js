@@ -170,7 +170,7 @@ $(function () {
     });
 
     // Grab the survey object.
-    $.getJSON("/survey/" + surveyId, function (survey) {
+    var renderIdentityMap = function (survey) {
         var systems = surveyToSystems(survey),
             $main = $("#main-content"),
             $sun = $("#sun"),
@@ -568,7 +568,13 @@ $(function () {
         });
 
         frame();
-    });
+    };
+
+    if (window.identitymap) {
+        renderIdentityMap(identitymap);
+    } else {
+        $.getJSON("/survey/" + surveyId, renderIdentityMap);
+    }
 
     // Configure share button
     $("#share-button")
