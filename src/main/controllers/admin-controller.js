@@ -41,9 +41,46 @@ module.exports = function (tools) {
   },
 
   accumulateDomain = function (aggregate, addition) {
+    // Can't really think of a good way to aggregate satellites right now,
+    // so we make that a straight-up extend (i.e., the final aggregate will
+    // be the maximum number of satellites).
+    //
+    // But for purpose, we seek to concatenate strings.
+    var aggregatePurpose = aggregate.purpose || "",
+        additionPurpose = addition.purpose || "",
+        result = extend({ }, aggregate, addition);
+
+    result.purpose = aggregatePurpose + (aggregatePurpose ? "\n" : "") + "• " + additionPurpose;
+    return result;
+  },
+
+  accumulateArchdomain = function (aggregate, addition) {
+    var result = extend({ }, aggregate);
+    Object.keys(addition).forEach(function (key) {
+      if (aggregate[key]) {
+        result[key] = accumulateDomain(aggregate[key], addition[key]);
+      } else {
+        result[key] = addition[key];
+      }
+    });
+    return result;
   },
 
   accumulateCrossover = function (aggregate, addition) {
+    var result = extend({ }, aggregate);
+    Object.keys(addition).forEach(function (key) {
+      if (aggregate[key]) {
+        // Crossover attributes are all expected to be arrays.
+        addition[key].filter(function (archdomain) {
+          return aggregate[key].indexOf(archdomain) === -1;
+        }).forEach(function (archdomain) {
+          result[key].push(archdomain);
+        });
+      } else {
+        result[key] = addition[key];
+      }
+    });
+    return result;
   },
 
   aggregateResults = function (surveys) {
@@ -53,21 +90,23 @@ module.exports = function (tools) {
         { 'birth-year': 0, sex: "", country: "", education: 0 };
       demographics = accumulateDemographics(demographics, current.Demo, array.length);
 
-//      var domain = (index > 0) ? extend({ }, aggregate) : { };
-//      Object.keys(current).filter(function (key) {
-//        return key !== 'Demo' && key !== 'Crossover';
-//      }).forEach(function (key) {
-//        if (aggregate[key]) {
-//          aggregate[key] = accumulateDomain(aggregate[key], current[key]);
-//        } else {
-//          aggregate[key] = current[key];
-//        }
-//      });
+      var result = (index > 0) ? extend({ }, aggregate) : { };
+      Object.keys(current).filter(function (key) {
+        return key !== 'Demo' && key !== 'Crossover';
+      }).forEach(function (key) {
+        if (aggregate[key]) {
+          result[key] = accumulateArchdomain(aggregate[key], current[key]);
+        } else {
+          result[key] = current[key];
+        }
+      });
 
-      extend(aggregate, current);
-      aggregate.Demo = demographics;
+      var crossover = (index > 0) ? extend({ }, aggregate.Crossover) : { };
+      crossover = accumulateCrossover(crossover, current.Crossover || { });
 
-      return aggregate;
+      result.Demo = demographics;
+      result.Crossover = crossover;
+      return result;
     }, { });
   };
 
