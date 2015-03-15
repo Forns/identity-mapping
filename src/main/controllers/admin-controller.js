@@ -16,11 +16,59 @@ module.exports = function (tools) {
 
   var extend = require('jquery-extend');
 
-  var aggregateResults = function (surveys) {
+  /*
+   * Aggregator functions.
+   */
+  var accumulateNumber = function (aggregate, addition, total) {
+    return (+aggregate || 0) + ((+addition || 0) / total);
+  },
+
+  accumulateString = function (aggregate, addition) {
+    var currentText = aggregate || "";
+    if (addition && (currentText.indexOf(addition) === -1)) {
+      currentText += (currentText ? ", " : "") + addition;
+    }
+    return currentText;
+  },
+
+  accumulateDemographics = function (aggregate, addition, total) {
+    return {
+      'birth-year': accumulateNumber(aggregate['birth-year'], addition['birth-year'], total),
+      sex: accumulateString(aggregate.sex, addition.sex),
+      country: accumulateString(aggregate.country, addition.country),
+      education: accumulateNumber(aggregate.education, addition.education, total)
+    };
+  },
+
+  accumulateDomain = function (aggregate, addition) {
+  },
+
+  accumulateCrossover = function (aggregate, addition) {
+  },
+
+  aggregateResults = function (surveys) {
     return surveys.reduce(function (aggregate, current, index, array) {
-        extend(aggregate, current);
-        return aggregate;
-      }, { });
+      var demographics = (index > 0) ?
+        extend({ }, aggregate.Demo) :
+        { 'birth-year': 0, sex: "", country: "", education: 0 };
+      demographics = accumulateDemographics(demographics, current.Demo, array.length);
+
+//      var domain = (index > 0) ? extend({ }, aggregate) : { };
+//      Object.keys(current).filter(function (key) {
+//        return key !== 'Demo' && key !== 'Crossover';
+//      }).forEach(function (key) {
+//        if (aggregate[key]) {
+//          aggregate[key] = accumulateDomain(aggregate[key], current[key]);
+//        } else {
+//          aggregate[key] = current[key];
+//        }
+//      });
+
+      extend(aggregate, current);
+      aggregate.Demo = demographics;
+
+      return aggregate;
+    }, { });
   };
 
   /*
@@ -137,7 +185,7 @@ module.exports = function (tools) {
   });
 
   /*
-   * callback is a function (err, results, count, domains) { }.
+   * callback is a function (results, count, domains) { }.
    */
   var processAggregateQuery = function (req, res, callback) {
     var inputs = req.body,
@@ -146,7 +194,12 @@ module.exports = function (tools) {
         age = inputs.age,
         edu = inputs.edu,
         query = {};
-    
+
+    // FIXME Cheap hack to [temporarily] accommodate non-array form submission
+    if (typeof(domains) === "string"){
+      domains = [domains];
+    }
+
     // If any domains were selected, then create an "or" query over
     // them
     if (domains && domains.length) {
@@ -191,7 +244,12 @@ module.exports = function (tools) {
           "surveys",
           query,
           function (err, results) {
-            callback(err, results, count, domains);
+            if (err) {
+              console.error(err);
+              res.send(500);
+            }
+            
+            callback(results, count, domains);
           }
         );
       }
@@ -216,12 +274,7 @@ module.exports = function (tools) {
    */
   app.post("/admin-aggregates", function (req, res) {
     processAggregateQuery(req, res,
-          function (err, results, count, domains) {
-            if (err) {
-              console.error(err);
-              res.send(500);
-            }
-            
+          function (results, count, domains) {
             var result = {
               totalCount: count,
               filteredCount: results.length,
@@ -250,6 +303,18 @@ module.exports = function (tools) {
             
             res.send(200, result);
           }
+    );
+  });
+
+  app.post("/aggregate-map", function (req, res) {
+    processAggregateQuery(req, res,
+      function (results, count, domains) {
+        res.render("identitymap", {
+          layout: true,
+          url: SITE_DOMAIN + req.url,
+          identitymap: aggregateResults(results)
+        });
+      }
     );
   });
 

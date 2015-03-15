@@ -32,7 +32,7 @@ block content
       div.span12.well.text-left
         h3 Aggregates
         hr
-        form.form-horizontal
+        form.form-horizontal(action="/aggregate-map", method="POST")
         
           div.span4.control-group
             label.control-label(for="gender") Gender
@@ -103,7 +103,8 @@ block content
             
           div.span12.control-group
             div.controls
-              a.btn.btn-primary#submit-button Submit
+              a.btn.btn-primary#submit-button Display Values
+              input.btn.btn-primary(type="submit", value="Display Visualization")
         
         div.span11
           hr
