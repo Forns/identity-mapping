@@ -8,7 +8,6 @@ $(function () {
       displayCrossovers = function (details, crossoverSources, table) {
         table.html("");
         for (var c in crossoverSources) {
-          console.log(crossoverSources[c]);
           var currentSource = crossoverSources[c],
               currentDests = Object.keys(details[currentSource]);
           

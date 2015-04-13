@@ -386,8 +386,6 @@ module.exports = function (tools) {
           var crossoverSources = Object.keys(results[r].Crossover),
               archdomainMap = extractArchdomains(results[r]);
               
-          console.log(archdomainMap);
-          
           for (var c in crossoverSources) {
             var currentSource = crossoverSources[c],
                 currentDests = results[r].Crossover[currentSource];
