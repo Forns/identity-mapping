@@ -306,15 +306,33 @@ module.exports = function (tools) {
    * or increments its count by one otherwise
    */
   var addCrossoverDetail = function (currentDetails, source, dest) {
-    if (!currentDetails[source]) {
-      currentDetails[source] = {};
-    }
-    if (currentDetails[source][dest]) {
-      currentDetails[source][dest]++;
-    } else {
-      currentDetails[source][dest] = 1;
-    }
-  }
+        if (!currentDetails[source]) {
+          currentDetails[source] = {};
+        }
+        if (currentDetails[source][dest]) {
+          currentDetails[source][dest]++;
+        } else {
+          currentDetails[source][dest] = 1;
+        }
+      },
+      
+      /*
+       * Returns a map of domains to their parent archdomains for parsing
+       * user-defined domains in terms of their general classification
+       */
+      extractArchdomains = function (survey) {
+        var result = {};
+        
+        Object.keys(survey).forEach(function (k) {
+          if (k === "Demo" || k === "Crossover") {return;}
+          var currentDomains = survey[k];
+          Object.keys(currentDomains).forEach(function (d) {
+            result[d] = k;
+          });
+        });
+        
+        return result;
+      }
 
   /*
    * Expects inputs of the format:
@@ -340,7 +358,8 @@ module.exports = function (tools) {
         filteredDomains: 0,
         filteredProfiles: 0,
         crossoverCount: 0,
-        crossoverDetails: {}
+        crossoverDetails: {},
+        archCrossoverDetails: {}
       };
         
       for (var r in results) {
@@ -364,7 +383,10 @@ module.exports = function (tools) {
         
         // Add crossover counts and details
         if (results[r].Crossover) {
-          var crossoverSources = Object.keys(results[r].Crossover);
+          var crossoverSources = Object.keys(results[r].Crossover),
+              archdomainMap = extractArchdomains(results[r]);
+              
+          console.log(archdomainMap);
           
           for (var c in crossoverSources) {
             var currentSource = crossoverSources[c],
@@ -372,6 +394,7 @@ module.exports = function (tools) {
                 
             for (var d in currentDests) {
               addCrossoverDetail(result.crossoverDetails, currentSource, currentDests[d]);
+              addCrossoverDetail(result.archCrossoverDetails, archdomainMap[currentSource], archdomainMap[currentDests[d]]);
               result.crossoverCount++;
             }
           }
