@@ -357,12 +357,23 @@ module.exports = function (tools) {
         filteredCount: results.length,
         filteredDomains: 0,
         filteredProfiles: 0,
+        countryInfo: {},
         crossoverCount: 0,
         crossoverDetails: {},
         archCrossoverDetails: {}
       };
         
       for (var r in results) {
+        // Add country information
+        var currentDemo = results[r].Demo,
+            currentCountry = currentDemo.country;
+            
+        if (currentCountry && currentCountry !== "Please select...") {
+          result.countryInfo[currentCountry] = (result.countryInfo[currentCountry]) 
+                                             ? result.countryInfo[currentCountry] + 1
+                                             : 1;
+        }
+        
         // Add aggregate counts
         for (var d in domains) {
           var currentDomain = results[r][domains[d]],

@@ -79,7 +79,10 @@ $(function () {
               profileAverage = results.filteredProfiles / filterMatches,
               crossoverAverage = results.crossoverCount / filterMatches,
               crossoverSources = Object.keys(results.crossoverDetails),
-              archCrossovers = Object.keys(results.archCrossoverDetails);
+              archCrossovers = Object.keys(results.archCrossoverDetails),
+              countries = results.countryInfo,
+              countriesSorted = Object.keys(countries).sort(),
+              countriesTable = $("#country-results tbody");
           
           // Descriptives
           $("#filter-match").text(filterMatches);
@@ -89,6 +92,19 @@ $(function () {
           $("#filter-domain-average").text(domainAverage.toFixed(2));
           $("#filter-profile-average").text(profileAverage.toFixed(2));
           $("#filter-crossover-average").text(crossoverAverage.toFixed(2));
+          
+          // Clear countries table, then report new results
+          countriesTable.html("");
+          for (var c in countriesSorted) {
+            var currentName = countriesSorted[c];
+            countriesTable.append(
+              "<tr>" +
+                "<td>" + currentName + "</td>" +
+                "<td>" + countries[currentName] + "</td>" +
+                "<td>" + (countries[currentName] / filterMatches).toFixed(2) + "</td>" +
+              "</tr>"
+            );
+          }
           
           // Crossovers
           displayCrossovers(results.crossoverDetails, crossoverSources, $("#crossover-results tbody"));

@@ -38,6 +38,7 @@ block content
             label.control-label(for="country") Country
             div.controls
               #country-select
+              p.help-block Leave as "Please select..." for "Any" country
               
           div.span5.control-group
             label.control-label(for="gender") Gender
@@ -145,7 +146,17 @@ block content
               tr
                 td Average number of crossovers amongst filter matches
                 td#filter-crossover-average
-                
+        
+        div.span11
+          hr
+          h3 Country Information
+          table#country-results.table.table-bordered
+            thead
+              tr
+                th Country
+                th Count
+                th Proportion
+            tbody
                 
         div.span11
           hr
