@@ -223,7 +223,7 @@ module.exports = function (tools) {
       }
     );
   });
-
+  
   /*
    * callback is a function (results, count, domains) { }.
    */
@@ -300,20 +300,39 @@ module.exports = function (tools) {
     );
   };
 
+
   /*
    * Adds a crossover account to the given object if it doesn't yet exist,
    * or increments its count by one otherwise
    */
   var addCrossoverDetail = function (currentDetails, source, dest) {
-    if (!currentDetails[source]) {
-      currentDetails[source] = {};
-    }
-    if (currentDetails[source][dest]) {
-      currentDetails[source][dest]++;
-    } else {
-      currentDetails[source][dest] = 1;
-    }
-  }
+        if (!currentDetails[source]) {
+          currentDetails[source] = {};
+        }
+        if (currentDetails[source][dest]) {
+          currentDetails[source][dest]++;
+        } else {
+          currentDetails[source][dest] = 1;
+        }
+      },
+      
+      /*
+       * Returns a map of domains to their parent archdomains for parsing
+       * user-defined domains in terms of their general classification
+       */
+      extractArchdomains = function (survey) {
+        var result = {};
+        
+        Object.keys(survey).forEach(function (k) {
+          if (k === "Demo" || k === "Crossover") {return;}
+          var currentDomains = survey[k];
+          Object.keys(currentDomains).forEach(function (d) {
+            result[d] = k;
+          });
+        });
+        
+        return result;
+      }
 
   /*
    * Expects inputs of the format:
@@ -338,11 +357,23 @@ module.exports = function (tools) {
         filteredCount: results.length,
         filteredDomains: 0,
         filteredProfiles: 0,
+        countryInfo: {},
         crossoverCount: 0,
-        crossoverDetails: {}
+        crossoverDetails: {},
+        archCrossoverDetails: {}
       };
         
       for (var r in results) {
+        // Add country information
+        var currentDemo = results[r].Demo,
+            currentCountry = currentDemo.country;
+            
+        if (currentCountry && currentCountry !== "Please select...") {
+          result.countryInfo[currentCountry] = (result.countryInfo[currentCountry]) 
+                                             ? result.countryInfo[currentCountry] + 1
+                                             : 1;
+        }
+        
         // Add aggregate counts
         for (var d in domains) {
           var currentDomain = results[r][domains[d]],
@@ -352,7 +383,7 @@ module.exports = function (tools) {
           for (var k in domainKeys) {
             var currentItem = currentDomain[domainKeys[k]],
                 itemKeys = Object.keys(currentItem);
-
+                
             for (var c in itemKeys) {
               if (itemKeys[c].substring(0, 9) === "frequency") {
                 result.filteredProfiles += 1;
@@ -363,14 +394,16 @@ module.exports = function (tools) {
         
         // Add crossover counts and details
         if (results[r].Crossover) {
-          var crossoverSources = Object.keys(results[r].Crossover);
-          
+          var crossoverSources = Object.keys(results[r].Crossover),
+              archdomainMap = extractArchdomains(results[r]);
+              
           for (var c in crossoverSources) {
             var currentSource = crossoverSources[c],
                 currentDests = results[r].Crossover[currentSource];
                 
             for (var d in currentDests) {
               addCrossoverDetail(result.crossoverDetails, currentSource, currentDests[d]);
+              addCrossoverDetail(result.archCrossoverDetails, archdomainMap[currentSource], archdomainMap[currentDests[d]]);
               result.crossoverCount++;
             }
           }

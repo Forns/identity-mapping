@@ -3,7 +3,30 @@
  */
 
 $(function () {
-  var totalSurveys;
+  var totalSurveys,
+  
+      displayCrossovers = function (details, crossoverSources, table) {
+        table.html("");
+        for (var c in crossoverSources) {
+          var currentSource = crossoverSources[c],
+              currentDests = Object.keys(details[currentSource]);
+          
+          for (var d in currentDests) {
+            var currentCount = details[currentSource][currentDests[d]];
+            if (currentSource === "undefined" || currentDests[d] === "undefined") {
+              continue;
+            }
+            
+            table.append(
+              "<tr>" +
+                "<td>" + currentSource + "</td>" +
+                "<td>" + currentDests[d] + "</td>" +
+                "<td>" + currentCount + "</td>" +
+              "</tr>"
+            );
+          }
+        }
+      };
   
   // Setup country select
   $("#country-select").html(
@@ -45,6 +68,9 @@ $(function () {
         type: "POST",
         data: data,
         success: function (results, textStatus, jqXHR) {
+          
+          console.log(results);
+          
           var filterMatches = results.filteredCount,
               totalDomainAverage = results.filteredDomains / results.totalCount,
               totalProfileAverage = results.filteredProfiles / results.totalCount,
@@ -52,7 +78,11 @@ $(function () {
               domainAverage = results.filteredDomains / filterMatches,
               profileAverage = results.filteredProfiles / filterMatches,
               crossoverAverage = results.crossoverCount / filterMatches,
-              crossoverSources = Object.keys(results.crossoverDetails);
+              crossoverSources = Object.keys(results.crossoverDetails),
+              archCrossovers = Object.keys(results.archCrossoverDetails),
+              countries = results.countryInfo,
+              countriesSorted = Object.keys(countries).sort(),
+              countriesTable = $("#country-results tbody");
           
           // Descriptives
           $("#filter-match").text(filterMatches);
@@ -63,25 +93,22 @@ $(function () {
           $("#filter-profile-average").text(profileAverage.toFixed(2));
           $("#filter-crossover-average").text(crossoverAverage.toFixed(2));
           
-          // Crossovers
-          $("#crossover-results tbody").html("");
-          for (var c in crossoverSources) {
-            var currentSource = crossoverSources[c],
-                currentDests = Object.keys(results.crossoverDetails[currentSource]);
-                
-            for (var d in currentDests) {
-              var currentCount = results.crossoverDetails[currentSource][currentDests[d]];
-              
-              $("#crossover-results tbody").append(
-                "<tr>" +
-                  "<td>" + currentSource + "</td>" +
-                  "<td>" + currentDests[d] + "</td>" +
-                  "<td>" + currentCount + "</td>" +
-                "</tr>"
-              );
-            }
+          // Clear countries table, then report new results
+          countriesTable.html("");
+          for (var c in countriesSorted) {
+            var currentName = countriesSorted[c];
+            countriesTable.append(
+              "<tr>" +
+                "<td>" + currentName + "</td>" +
+                "<td>" + countries[currentName] + "</td>" +
+                "<td>" + (countries[currentName] / filterMatches).toFixed(2) + "</td>" +
+              "</tr>"
+            );
           }
-          console.log(results);
+          
+          // Crossovers
+          displayCrossovers(results.crossoverDetails, crossoverSources, $("#crossover-results tbody"));
+          displayCrossovers(results.archCrossoverDetails, archCrossovers, $("#arch-crossover-results tbody"));
         }
       });
     });
