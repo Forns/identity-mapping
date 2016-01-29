@@ -419,14 +419,12 @@ $(function () {
             },
 
             getGradientUrl = function (domain) {
-                // Unfortunately, browser incompatibility with gradients forces this.
-                var needsUrl = navigator.userAgent.match(/Safari/) && !navigator.userAgent.match(/Chrome/) && !navigator.userAgent.match(/Firefox/);
-                return (needsUrl ? "url(" : "") + getPlanet(domain.source).css('fill') + (needsUrl ? ")" : "");
+                return getPlanet(domain.source).css('fill');
             },
 
             getGradientColor = function (domain) {
                 var url = getGradientUrl(domain);
-                return $(url.substr(4, url.length - 5)).find("stop:first-child").attr('stop-color');
+                return $(url.substr(4, url.length - 5).replace(/"/g, "")).find("stop:first-child").attr('stop-color');
             };
 
         d3.select("svg.crossover-holder > defs").selectAll("marker")

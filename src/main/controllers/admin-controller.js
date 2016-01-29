@@ -128,6 +128,7 @@ module.exports = function (tools) {
       res.render("admin", {
         layout: true,
         scripts: [
+          "js/display/module-list.js",
           "js/display/admin-display.js"
         ]
       });
@@ -232,6 +233,7 @@ module.exports = function (tools) {
         gender = inputs.gender,
         age = inputs.age,
         edu = inputs.edu,
+        country = inputs.country,
         query = {};
 
     // FIXME Cheap hack to [temporarily] accommodate non-array form submission
@@ -266,6 +268,9 @@ module.exports = function (tools) {
     if (gender) {
       query["Demo.sex"] = inputs.gender;
     }
+    if (country) {
+      query["Demo.country"] = country;
+    }
     
     // First get a tally of all surveys
     surveyDao.search(
@@ -296,6 +301,21 @@ module.exports = function (tools) {
   };
 
   /*
+   * Adds a crossover account to the given object if it doesn't yet exist,
+   * or increments its count by one otherwise
+   */
+  var addCrossoverDetail = function (currentDetails, source, dest) {
+    if (!currentDetails[source]) {
+      currentDetails[source] = {};
+    }
+    if (currentDetails[source][dest]) {
+      currentDetails[source][dest]++;
+    } else {
+      currentDetails[source][dest] = 1;
+    }
+  }
+
+  /*
    * Expects inputs of the format:
    * {
    *   domains: ["archdomain1", "archdomain2", ...], // currently only supporting 1 archdomain at a time
@@ -317,23 +337,41 @@ module.exports = function (tools) {
         totalCount: count,
         filteredCount: results.length,
         filteredDomains: 0,
-        filteredProfiles: 0
+        filteredProfiles: 0,
+        crossoverCount: 0,
+        crossoverDetails: {}
       };
         
       for (var r in results) {
+        // Add aggregate counts
         for (var d in domains) {
           var currentDomain = results[r][domains[d]],
               domainKeys = Object.keys(currentDomain);
-            
+          
           result.filteredDomains += domainKeys.length;
           for (var k in domainKeys) {
             var currentItem = currentDomain[domainKeys[k]],
                 itemKeys = Object.keys(currentItem);
-                  
+
             for (var c in itemKeys) {
               if (itemKeys[c].substring(0, 9) === "frequency") {
                 result.filteredProfiles += 1;
               }
+            }
+          }
+        }
+        
+        // Add crossover counts and details
+        if (results[r].Crossover) {
+          var crossoverSources = Object.keys(results[r].Crossover);
+          
+          for (var c in crossoverSources) {
+            var currentSource = crossoverSources[c],
+                currentDests = results[r].Crossover[currentSource];
+                
+            for (var d in currentDests) {
+              addCrossoverDetail(result.crossoverDetails, currentSource, currentDests[d]);
+              result.crossoverCount++;
             }
           }
         }

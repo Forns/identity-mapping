@@ -34,7 +34,12 @@ block content
         hr
         form.form-horizontal(action="/aggregate-map", method="POST")
         
-          div.span4.control-group
+          div.span10.control-group
+            label.control-label(for="country") Country
+            div.controls
+              #country-select
+              
+          div.span5.control-group
             label.control-label(for="gender") Gender
             div.controls
               label.radio
@@ -50,7 +55,7 @@ block content
                 input(type="radio", name="gender", value="Transgender")
                 | Transgender
                 
-          div.span4.control-group
+          div.span5.control-group
             label.control-label(for="age") Age
             div.controls
               label.radio
@@ -63,7 +68,7 @@ block content
                 input(type="radio", name="age", value="over30")
                 | 30 or Over
                 
-          div.span4.control-group
+          div.span5.control-group
             label.control-label(for="education") Education
             div.controls
               label.radio
@@ -79,6 +84,9 @@ block content
           div.span4.control-group
             label.control-label(for="domains") Archdomains
             div.controls
+              label.radio
+                input(type="radio", name="domains", value="")
+                | None
               label.radio
                 input(type="radio", name="domains", value="Blogs / Personal Websites")
                 | Blogs
@@ -109,7 +117,7 @@ block content
         
         div.span11
           hr
-          h3 Results
+          h3 Descriptives
           table#aggregate-results.table.table-bordered
             thead
               tr
@@ -133,5 +141,20 @@ block content
                 td#filter-domain-average
               tr
                 td Average number of profiles amongst filter matches
-                td#filter-profile-average 
+                td#filter-profile-average
+              tr
+                td Average number of crossovers amongst filter matches
+                td#filter-crossover-average
+                
+                
+        div.span11
+          hr
+          h3 Crossovers
+          table#crossover-results.table.table-bordered
+            thead
+              tr
+                th Source
+                th Destination
+                th Count
+            tbody
           
